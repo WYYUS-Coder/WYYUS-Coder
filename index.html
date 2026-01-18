@@ -411,7 +411,6 @@
                         <div class="input-group">
                             <input type="number" id="boxWeight" value="16" style="width:50px;">
                             <span style="color:#ccc">/</span>
-                            <!-- 修改此处：宽度从 50px 改为 80px -->
                             <input type="number" id="boxNum" value="50" style="width:80px;">
                         </div>
                     </div>
@@ -492,9 +491,18 @@
                     </div>
                     <div class="input-row">
                         <label>储存方式</label>
-                        <select id="storageType" style="width:100%;">
+                        <select id="storageType" style="width:130px;">
                             <option value="local">第三方本土仓</option>
                             <option value="fbt">FBT仓</option>
+                        </select>
+                    </div>
+
+                    <!-- 尾程运输方式 (新增) -->
+                    <div class="input-row" id="logisticsModeItem">
+                        <label>尾程运输方式</label>
+                        <select id="logisticsMode" style="width:130px;">
+                            <option value="tts" selected>TTS</option>
+                            <option value="cbt">CBT</option>
                         </select>
                     </div>
 
@@ -530,6 +538,15 @@
                                 <option value="0">Zone 1</option><option value="1">Zone 2</option><option value="2">Zone 3</option><option value="3">Zone 4</option><option value="4">Zone 5</option><option value="5">Zone 6</option><option value="6">Zone 7</option><option value="7">Zone 8</option>
                             </select>
                         </div>
+                        <!-- CBT 分区选择 (新增) -->
+                        <div class="input-row hide" id="cbtZoneItem">
+                            <label>CBT 分区</label>
+                            <select id="cbtZone" style="width:130px;">
+                                <option value="avg" selected>🌍全区平均</option>
+                                <option value="0">Zone 1</option><option value="1">Zone 2</option><option value="2">Zone 3</option><option value="3">Zone 4</option><option value="4">Zone 5</option><option value="5">Zone 6</option><option value="6">Zone 7</option><option value="7">Zone 8</option>
+                            </select>
+                        </div>
+
                         <div class="input-row" id="localOutFeeItem">
                             <label>出库费 (USD)</label>
                             <div class="input-group">
@@ -554,14 +571,16 @@
                         </div>
                     </div>
                     <div class="result-bar" id="ttsFeeItem">
-                        <label>✅ TTS/尾程 (USD)</label>
+                        <!-- ID用于JS动态修改标签 -->
+                        <label><span id="lastMileLabel">TTS/尾程</span> (USD)</label>
                         <div class="input-group">
                             <span id="ttsFeeUsd" class="val-blue">4.80 USD</span>
                             <span class="sub-text" id="ttsFeeRmb">≈ 33.60 RMB</span>
                         </div>
                     </div>
                     <div class="result-bar" id="storageTtsTotalItem" style="background:#fff8e8; border:1px solid #ffb300;">
-                        <label>✅ 仓库+TTS合计</label>
+                        <!-- ID用于JS动态修改标签 -->
+                        <label><span id="storageTotalLabel">仓库+TTS合计</span></label>
                         <div class="input-group">
                             <span id="storageTtsTotalUsd" class="highlight-green" style="color:#0078d7 !important; font-size:16px !important;">5.60 USD</span>
                             <span class="sub-text" id="storageTtsTotalRmb" style="color:#0078d7; font-weight:bold; font-size:16px;">≈ 39.20 RMB</span>
@@ -623,9 +642,28 @@
 
                     <hr class="divider">
 
-                    <div class="input-row"><label>达人佣金 (%)</label><input type="number" id="commissionRate" value="0" step="0.01"></div>
-                    <div class="input-row"><label>平台佣金 (%)</label><input type="number" id="platformRate" value="6" step="0.01"></div>
-                    <div class="input-row"><label>货损+退货 (%)</label><input type="number" id="damageRate" value="0" step="0.01"></div>
+                    <!-- 修改后的佣金输入区域 -->
+                    <div class="input-row">
+                        <label>达人佣金比例 (%)</label>
+                        <div class="input-group">
+                            <input type="number" id="commissionRate" value="0" step="0.01">
+                            <span class="sub-text" id="commAmountUsd">= 0.00 USD</span>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <label>平台佣金比例 (%)</label>
+                        <div class="input-group">
+                            <input type="number" id="platformRate" value="6" step="0.01">
+                            <span class="sub-text" id="platAmountUsd">= 0.00 USD</span>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <label>货损+退货比例 (%)</label>
+                        <div class="input-group">
+                            <input type="number" id="damageRate" value="0" step="0.01">
+                            <span class="sub-text" id="dmgAmountUsd">= 0.00 USD</span>
+                        </div>
+                    </div>
 
                     <div class="result-bar" style="background:#fff8e8; border:1px solid #ffb300;">
                         <label>✅ 佣金&货损合计</label>
@@ -739,6 +777,33 @@
         </div>
     </div>
 
+    <!-- 达人寄样测算 -->
+    <details class="details-box" id="details-sample">
+        <summary class="details-summary">🎁 此定价策略下-达人寄样成本测算</summary>
+        <div class="details-content">
+            <!-- 增加 style="padding: 0 12px;" 以对齐下方 result-bar 的内容 -->
+            <div class="input-row" style="padding: 0 12px;">
+                <label>🎁 寄样数量 (个)</label>
+                <input type="number" id="sampleNum" value="200" step="1">
+            </div>
+            <div class="result-bar">
+                <label>💸 寄样总成本</label>
+                <div class="input-group">
+                    <span id="sampleCostUsd" class="val-blue">0.00 USD</span>
+                    <span class="sub-text" id="sampleCostRmb">≈ 0.00 RMB</span>
+                </div>
+            </div>
+            <div class="result-bar" style="background:#e6f9e9; border:1px solid #28a745;">
+                <label style="color:#155724;">🎯 回本需销售 (单)</label>
+                <span id="sampleBreakEven" class="highlight-green" style="font-size:16px !important;">0</span>
+            </div>
+            <!-- 增加 style="padding: 0 12px;" 以对齐 result-bar 的内容 -->
+            <div style="font-size:12px; color:#999; margin-top:8px; line-height:1.4; padding: 0 12px;">
+                注：此测算回本需销售多少单量为预估，因为广告佣金低于公开佣金，自然流出单和广告出单佣金比例不一样。若广告佣金出单比例多，回本需销售的单量比公开佣金少。
+            </div>
+        </div>
+    </details>
+
     <!-- TTS 价卡 -->
     <details class="details-box" id="details-tts">
         <summary class="details-summary">🚚 TTS价卡26.1.15版</summary>
@@ -748,9 +813,18 @@
         </div>
     </details>
 
+    <!-- CBT 价卡 (新增) -->
+    <details class="details-box" id="details-cbt">
+        <summary class="details-summary">🚚 CBT价卡26.1.15版</summary>
+        <div class="details-content">
+            <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。以下展示Zone 1-8及全区平均价。重量向上取整匹配。</div>
+            <div id="cbtTableContainer"></div>
+        </div>
+    </details>
+
     <!-- FBT 价卡 -->
     <details class="details-box" id="details-fbt">
-        <summary class="details-summary">🏬 FBT价卡26.1.15版</summary>
+        <summary class="details-summary">🚚 FBT价卡26.1.15版</summary>
         <div class="details-content">
             <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。<b>显示金额为对应数量的总配送费（单价×数量）</b>，直观展示多件成本。</div>
             <div id="fbtTableContainer"></div>
@@ -761,29 +835,49 @@
     <details class="details-box" id="details-logic">
         <summary class="details-summary">📋 完整计算逻辑说明（最终精准版）</summary>
         <div class="details-content">
-            <p>▶ <strong>TTS/尾程运费：</strong>已内置2026最新价卡 (Zone 1-8)。可选择特定分区或系统自动计算8个区的平均价。</p>
-            <p>▶ <strong>优惠券逻辑更新：</strong>购买数量超过6个时，系统自动沿用“买6个”的优惠券金额，不再归零。</p>
-            <p>▶ <strong>FBT退出政策：</strong>已内置2026最新价卡，选择"退出"模式且订单金额(扣除优惠券后)＜$30，强制客户支付$5.99运费，卖家获$0.75/件补贴。</p>
-            <p>▶ <strong>基础换算规则：</strong>所有 USD 金额 × 汇率 = 对应 RMB 金额 | 所有 RMB 金额 ÷ 汇率 = 对应 USD 金额</p>
-            <p>▶ <strong>货值计算：</strong>拿货总价 = 拿货价 × 拿货个数 + 其他费用</p>
-            <p>▶ <strong>头程运费计算：</strong>箱子总重量 = 单箱重量 × 总箱数 | 产品总数 = 单箱装数 × 总箱数 | 头程总价 = 总重量 × 运输单价 | 单个平摊头程费 = 头程总价 ÷ 产品总数</p>
-            <p>▶ <strong>打包费计算：</strong>总打包费 = 单个打包费 × 产品总数</p>
-            <p>▶ <strong>核心产品成本：</strong>总费用 = 拿货总价+头程总价+总打包费 | 单个产品成本 = 总费用 ÷ 拿货个数</p>
-            <p>▶ <strong>定价计算：</strong>客户最终支付总价 = (产品定价×发货个数) - 对应档位优惠券总额 (最低为0，无负数)，【双方分担/客户全担模式叠加客户承担运费】</p>
-            <p>▶ <strong>平摊单价：</strong>平摊单个实际支付价 = 客户最终支付总价 ÷ 发货产品个数</p>
-            <p>▶ <strong>仓库费计算：</strong>第三方本土仓 = 出库操作费 + 续件出库操作费 × (发货产品个数-1) | FBT仓=FBT一口价费用 (系统自动根据官方费率表匹配)</p>
-            <p>▶ <strong>运费承担核心规则：</strong>第三方本土仓-商家包邮=商家承担全额TTS | 第三方本土仓-客户全担=客户承担TTS | FBT仓-商家包邮=商家承担全额FBT | FBT仓-客户全担=客户承担FBT</p>
-            <p>▶ <strong>客户运费阶梯规则：</strong>双方分担模式下 → 0~1个=1.99USD |1~2个=2.99USD|2~3个=3.99USD|3~4个=4.99USD|4~5个=5.99USD|5~6个=6.99USD|6+个=7.99USD 全部可修改</p>
-            <p>▶ <strong>佣金货损计算：</strong>达人佣金/平台佣金/货损费用 = 客户最终支付总价 × 对应比例(%)</p>
-            <p>▶ <strong>最终总成本精准规则【1】：</strong>第三方本土仓+商家包邮 = 单品成本×发货数+本次发货仓库费用+TTS+佣金货损综合费用</p>
-            <p>▶ <strong>最终总成本精准规则【2】：</strong>第三方本土仓+双方分担 = 单品成本×发货数+本次发货仓库费用+TTS+佣金货损综合费用</p>
-            <p>▶ <strong>最终总成本精准规则【3】：</strong>第三方本土仓+客户全担 = 单品成本×发货数+本次发货仓库费用+佣金货损综合费用</p>
-            <p>▶ <strong>最终总成本精准规则【4】：</strong>FBT仓+商家包邮 = 单品成本×发货数+FBT费用+佣金货损综合费用</p>
-            <p>▶ <strong>最终总成本精准规则【5】：</strong>FBT仓+双方分担 = 单品成本×发货数+FBT费用+佣金货损综合费用</p>
-            <p>▶ <strong>最终总成本精准规则【6】：</strong>FBT仓+客户全担 = 单品成本×发货数+佣金货损综合费用</p>
-            <p>▶ <strong>实际收入计算：</strong>商家包邮=客户最终支付总价 | 双方分担=客户最终支付总价 | 客户全担=客户最终支付总价</p>
-            <p>▶ <strong>利润相关：</strong>最终利润 = 实际收入 - 最终总成本 | 销售利润率 = (最终利润 ÷ 最终支付总价) × 100%</p>
-            <p>▶ <strong>保本ROI：</strong>最终利润＞0 = 最终支付总价 ÷ 最终利润 | 最终利润≤0 显示【无法保本】</p>
+            <p><strong>一、基础汇率与货值</strong><br>
+            • 汇率计算：RMB金额 ÷ 汇率 = USD金额；USD金额 × 汇率 = RMB金额。<br>
+            • 拿货总价 = 拿货单价 × 拿货个数 + 其他杂费。<br>
+            • 单个产品采购成本 = (拿货总价 + 头程总价 + 总打包费) ÷ 拿货个数。</p>
+
+            <p><strong>二、头程物流成本</strong><br>
+            • 计费重规则：材积重 = (长×宽×高) ÷ 6000，与实重取大值。<br>
+            • 头程总价 = 总重量(或材积重) × 运输单价。<br>
+            • 单个平摊头程 = 头程总价 ÷ 总采购数量。</p>
+
+            <p><strong>三、尾程物流与仓库 (TTS/CBT/FBT)</strong><br>
+            • <strong>第三方本土仓</strong>：成本 = 库内操作费(首件+续件) + 尾程运费。<br>
+            &nbsp;&nbsp;- 若选择 <strong>TTS</strong>：按 TTS 价卡计算。<br>
+            &nbsp;&nbsp;- 若选择 <strong>CBT</strong>：按 CBT 价卡计算。<br>
+            • <strong>FBT仓</strong>：成本 = FBT一口价(含操作与配送，内置官方价卡)。<br>
+            • <strong>运费承担方式</strong>：
+                <br>&nbsp;&nbsp;- 商家包邮：商家支付全额运费。
+                <br>&nbsp;&nbsp;- 客户全担：客户支付全额运费。
+                <br>&nbsp;&nbsp;- 共同承担：客户支付固定阶梯运费，剩余由商家支付。
+            </p>
+
+            <p><strong>四、FBT特殊政策规则</strong><br>
+            • <strong>默认标准(Standard)</strong>：强制商家包邮，商家承担所有FBT费用。<br>
+            • <strong>退出政策(Opt-Out)</strong>：
+                <br>&nbsp;&nbsp;- 订单金额(扣券后) ≥ $30：商家包邮。
+                <br>&nbsp;&nbsp;- 订单金额(扣券后) < $30：客户强制付$5.99运费，商家获得$0.75/件补贴。
+            </p>
+
+            <p><strong>五、平台费用与佣金</strong><br>
+            • <strong>达人佣金</strong> = (客户最终支付金额 - 客户承担运费) × 佣金比例。<br>
+            • <strong>平台佣金</strong> = 客户最终支付金额 × 佣金比例。<br>
+            • <strong>货损/退货</strong> = 客户最终支付金额 × 比例。</p>
+
+            <p><strong>六、利润与ROI</strong><br>
+            • <strong>最终总成本</strong> = 单品采购头程成本 + 尾程物流(商家承担部分) + 仓库/FBT费 + 佣金 + 货损。<br>
+            • <strong>实际收入</strong> = 客户最终支付总额 (含客户运费)。<br>
+            • <strong>最终利润</strong> = 实际收入 - 最终总成本。<br>
+            • <strong>ROI</strong> = 最终利润 > 0 ? (实际收入 ÷ 最终利润) : 无法保本。</p>
+
+            <p><strong>七、达人寄样成本</strong><br>
+            • <strong>本土仓寄样</strong> = (单品采购头程成本 + 库内操作费 + 尾程运费(TTS或CBT)) × 寄样数量。<br>
+            • <strong>FBT仓寄样</strong> = (单品采购头程成本 + FBT一口价费用) × 寄样数量。<br>
+            • <strong>回本单量</strong> = 寄样总成本 ÷ 单单利润 (向上取整)。</p>
         </div>
     </details>
 
@@ -808,6 +902,20 @@
         { maxLb: 10.0, prices: [7.11, 7.22, 7.69, 8.33, 9.34, 9.84, 10.82, 11.99] }, 
         { maxLb: 15.0, prices: [8.64, 8.75, 9.26, 9.71, 11.12, 12.50, 14.50, 16.27] }, 
         { maxLb: 20.0, prices: [9.51, 9.77, 10.47, 10.92, 13.08, 14.87, 17.46, 19.83] }
+    ];
+
+    const CBT_DATA = [
+        { maxLb: 0.25, prices: [2.99, 3.08, 3.23, 3.30, 3.46, 3.53, 3.60, 3.73] },
+        { maxLb: 0.50, prices: [3.35, 3.46, 3.63, 3.74, 3.80, 3.84, 3.90, 4.02] },
+        { maxLb: 0.75, prices: [3.53, 3.66, 3.85, 3.99, 4.22, 4.35, 4.47, 4.61] },
+        { maxLb: 1.00, prices: [3.65, 3.78, 4.00, 4.18, 4.62, 4.73, 5.21, 5.34] },
+        { maxLb: 2.00, prices: [3.94, 4.15, 4.42, 4.71, 5.50, 5.70, 6.19, 6.38] },
+        { maxLb: 3.00, prices: [4.12, 4.35, 4.58, 4.94, 5.83, 6.05, 6.60, 6.90] },
+        { maxLb: 4.00, prices: [4.23, 4.48, 4.80, 5.24, 6.17, 6.40, 7.03, 7.41] },
+        { maxLb: 5.00, prices: [4.28, 4.56, 5.23, 5.67, 6.50, 6.71, 7.35, 7.80] },
+        { maxLb: 10.0, prices: [4.84, 5.24, 5.92, 6.41, 7.88, 8.25, 9.14, 9.34] },
+        { maxLb: 15.0, prices: [5.44, 6.04, 6.94, 7.42, 9.83, 10.43, 11.24, 11.32] },
+        { maxLb: 20.0, prices: [6.21, 7.06, 7.86, 8.58, 11.53, 12.27, 13.25, 13.48] }
     ];
 
     const FBT_DATA = [
@@ -850,6 +958,18 @@
         ttsHtml += `</tbody></table>`;
         document.getElementById('ttsTableContainer').innerHTML = ttsHtml;
 
+        // CBT 表格
+        let cbtHtml = `<table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>Zone 1</th><th>Zone 2</th><th>Zone 3</th><th>Zone 4</th><th>Zone 5</th><th>Zone 6</th><th>Zone 7</th><th>Zone 8</th><th>平均</th></tr></thead><tbody>`;
+        CBT_DATA.forEach(row => {
+            const avg = (row.prices.reduce((a,b)=>a+b, 0) / row.prices.length).toFixed(2);
+            const g = Math.round(row.maxLb * 453.59237);
+            cbtHtml += `<tr><td>≤ ${row.maxLb}</td><td>≤ ${g}</td>`;
+            row.prices.forEach(p => cbtHtml += `<td>${p.toFixed(2)}</td>`);
+            cbtHtml += `<td class="rate-hl">${avg}</td></tr>`;
+        });
+        cbtHtml += `</tbody></table>`;
+        document.getElementById('cbtTableContainer').innerHTML = cbtHtml;
+
         // FBT 表格 - 修改为显示总费用 (单价 * 数量)
         // 修正：最后一列标题改为 "≥ 4件总费"
         let fbtHtml = `<table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>1件总费</th><th>2件总费</th><th>3件总费</th><th>≥ 4件总费</th></tr></thead><tbody>`;
@@ -883,6 +1003,13 @@
         return selectedRow.prices[parseInt(zoneIdx)];
     }
 
+    function getCbtFee(weightG, zoneIdx) {
+        const lb = weightG / 453.59237; 
+        let selectedRow = CBT_DATA.find(r => lb <= r.maxLb) || CBT_DATA[CBT_DATA.length - 1];
+        if (zoneIdx === 'avg') return selectedRow.prices.reduce((a, b) => a + b, 0) / selectedRow.prices.length;
+        return selectedRow.prices[parseInt(zoneIdx)];
+    }
+
     function getFbtUnitRate(weightG, qty) {
         const lb = weightG / 453.59237;
         let colIdx = qty >= 4 ? 3 : qty - 1;
@@ -902,25 +1029,32 @@
 
     document.getElementById('storageType').addEventListener('change', function() {
         const type = this.value;
+        const fbtPolicy = document.getElementById('fbtPolicy').value; 
         const postTypeSelect = document.getElementById('postType');
+        const logisticsModeItem = document.getElementById('logisticsModeItem');
+        
         if (type === 'local') {
             postTypeSelect.value = 'merchantFree';
             postTypeSelect.disabled = false;
+            logisticsModeItem.classList.remove('hide'); // Show TTS/CBT selection for Local
         } else {
-            const fbtPolicy = document.getElementById('fbtPolicy');
-            fbtPolicy.value = 'standard'; 
+            const fbtPolicyEl = document.getElementById('fbtPolicy');
+            fbtPolicyEl.value = 'standard';
             postTypeSelect.value = 'merchantFree';
-            postTypeSelect.disabled = false;
+            postTypeSelect.disabled = true;
+            logisticsModeItem.classList.add('hide'); // Hide TTS/CBT selection for FBT
         }
         calculate(); 
     });
+
+    document.getElementById('logisticsMode').addEventListener('change', calculate);
 
     document.getElementById('fbtPolicy').addEventListener('change', function() {
         const policy = this.value;
         const postTypeSelect = document.getElementById('postType');
         if (policy === 'standard') {
             postTypeSelect.value = 'merchantFree';
-            postTypeSelect.disabled = false;
+            postTypeSelect.disabled = true;
         } else {
             postTypeSelect.value = 'bothShare';
             postTypeSelect.disabled = true;
@@ -930,12 +1064,21 @@
 
     function calculate() {
         const storageType = document.getElementById('storageType').value;
+        const logisticsMode = document.getElementById('logisticsMode').value;
         const fbtPolicy = document.getElementById('fbtPolicy').value;
         const postTypeSelect = document.getElementById('postType');
         
-        if (storageType === 'fbt' && fbtPolicy === 'optOut') {
-            postTypeSelect.value = 'bothShare'; 
-            postTypeSelect.disabled = true;    
+        // Ensure locks are enforced during calculation
+        if (storageType === 'fbt') {
+            if (fbtPolicy === 'standard') {
+                postTypeSelect.value = 'merchantFree'; 
+                postTypeSelect.disabled = true;
+            } else if (fbtPolicy === 'optOut') {
+                postTypeSelect.value = 'bothShare'; 
+                postTypeSelect.disabled = true;    
+            }
+        } else {
+             postTypeSelect.disabled = false;
         }
 
         calcVolWeight();
@@ -977,25 +1120,45 @@
         document.getElementById('fbtPolicyItem').classList.toggle('hide', !isFbt);
         document.getElementById('localArea').classList.toggle('hide', isFbt);
         
-        let whFeeUSD = 0, ttsUSD = 0;
+        // Show/Hide Logistics Mode (TTS/CBT) selector based on storage type
+        document.getElementById('logisticsModeItem').classList.toggle('hide', isFbt);
+
+        let whFeeUSD = 0, lastMileUSD = 0;
+        
         if (isFbt) {
             const fbtRate = getFbtUnitRate(getVal('productWeight'), saleQty);
             const fbtTotal = fbtRate * saleQty;
             document.getElementById('fbtOnePrice').innerText = fbtTotal.toFixed(2);
             setTxt('fbtOnePriceRmb', `≈ ${formatNum(fbtTotal*rate)} RMB`);
-            whFeeUSD = fbtTotal;
+            whFeeUSD = fbtTotal; // FBT price includes "last mile" in a way, but we treat it as warehouse fee here for structure
         } else {
+            // Local Warehouse Logic
             whFeeUSD = getVal('localOutFee') + (Math.max(0, saleQty-1) * getVal('localAddOutFee'));
-            ttsUSD = getTtsFee(sendWeight, document.getElementById('ttsZone').value);
+            
+            // TTS vs CBT Logic
+            if (logisticsMode === 'cbt') {
+                document.getElementById('ttsZoneItem').classList.add('hide');
+                document.getElementById('cbtZoneItem').classList.remove('hide');
+                lastMileUSD = getCbtFee(sendWeight, document.getElementById('cbtZone').value);
+                setTxt('lastMileLabel', 'CBT/尾程');
+                setTxt('storageTotalLabel', '仓库+CBT合计');
+            } else {
+                document.getElementById('ttsZoneItem').classList.remove('hide');
+                document.getElementById('cbtZoneItem').classList.add('hide');
+                lastMileUSD = getTtsFee(sendWeight, document.getElementById('ttsZone').value);
+                setTxt('lastMileLabel', 'TTS/尾程');
+                setTxt('storageTotalLabel', '仓库+TTS合计');
+            }
         }
+
         setTxt('localOutFeeRmb', `≈ ${formatNum(getVal('localOutFee')*rate)} RMB`);
         setTxt('localAddOutFeeRmb', `≈ ${formatNum(getVal('localAddOutFee')*rate)} RMB`);
         setTxt('storagePerProduct', `${formatNum(whFeeUSD)} USD`); setTxt('storagePerProductRmb', `≈ ${formatNum(whFeeUSD*rate)} RMB`);
         
         document.getElementById('ttsFeeItem').classList.toggle('hide', isFbt); 
-        setTxt('ttsFeeUsd', `${formatNum(ttsUSD)} USD`); setTxt('ttsFeeRmb', `≈ ${formatNum(ttsUSD*rate)} RMB`); 
+        setTxt('ttsFeeUsd', `${formatNum(lastMileUSD)} USD`); setTxt('ttsFeeRmb', `≈ ${formatNum(lastMileUSD*rate)} RMB`); 
         
-        const stTtsTotal = whFeeUSD + ttsUSD;
+        const stTtsTotal = whFeeUSD + lastMileUSD;
         setTxt('storageTtsTotalUsd', `${formatNum(stTtsTotal)} USD`); 
         setTxt('storageTtsTotalRmb', `≈ ${formatNum(stTtsTotal*rate)} RMB`); 
         document.getElementById('storageTtsTotalItem').classList.toggle('hide', isFbt); 
@@ -1008,7 +1171,7 @@
         }
 
         const postType = document.getElementById('postType').value;
-        const logisticsCost = isFbt ? whFeeUSD : ttsUSD; 
+        const logisticsCost = isFbt ? whFeeUSD : lastMileUSD; 
         
         let merchPost = 0, custPost = 0, fbtReimburse = 0;
         let forcedPost = false;
@@ -1041,7 +1204,28 @@
         document.getElementById('customerPostStepBox').classList.toggle('hide', postType !== 'bothShare' || forcedPost);
         document.getElementById('fbtReimburseItem').classList.toggle('hide', !forcedPost);
         setTxt('fbtReimburse', `${formatNum(fbtReimburse)} USD`);
+        
+        const revenue = orderVal + displayCust;
+        setTxt('finalPriceText', `${formatNum(revenue)} USD`); setTxt('finalPriceRmb', `≈ ${formatNum(revenue*rate)} RMB`);
+        setTxt('avgPrice', `${formatNum(revenue/saleQty)} USD`); setTxt('avgPriceRmb', formatNum((revenue/saleQty)*rate));
 
+        // 达人佣金计算逻辑更新：基于 (最终支付 - 运费)
+        const affiliateBase = Math.max(0, revenue - displayCust);
+        const comm = affiliateBase * (getVal('commissionRate')/100);
+        
+        // 平台佣金和货损 依然基于总Revenue (含运费)
+        const plat = revenue * (getVal('platformRate')/100);
+        const dmg = revenue * (getVal('damageRate')/100);
+
+        // 更新佣金显示的金额
+        setTxt('commAmountUsd', `= ${formatNum(comm)} USD`);
+        setTxt('platAmountUsd', `= ${formatNum(plat)} USD`);
+        setTxt('dmgAmountUsd', `= ${formatNum(dmg)} USD`);
+
+        const totalFee = comm + plat + dmg;
+        setTxt('totalCostUsd', `${formatNum(totalFee)} USD`); setTxt('totalCostRmb', `${formatNum(totalFee*rate)} RMB`);
+
+        // 预览表格循环计算
         for(let i=1; i<=6; i++){
             const cp = getVal('coupon'+i);
             const totP = salePrice * i;
@@ -1053,7 +1237,14 @@
                     cPost = getCustomerPostStep(i);
                 } else if(postType === 'customerAll') {
                     if(isFbt) cPost = getFbtUnitRate(getVal('productWeight'), i) * i;
-                    else cPost = getTtsFee(getVal('productWeight') * i, document.getElementById('ttsZone').value);
+                    else {
+                        // Check logistics mode for table calc
+                        if (logisticsMode === 'cbt') {
+                            cPost = getCbtFee(getVal('productWeight') * i, document.getElementById('cbtZone').value);
+                        } else {
+                            cPost = getTtsFee(getVal('productWeight') * i, document.getElementById('ttsZone').value);
+                        }
+                    }
                 }
             }
             const finalP = Math.max(0, totP - cp + cPost); 
@@ -1068,10 +1259,22 @@
                 costFull_i = ft - sub;
             } else {
                 let wh = getVal('localOutFee') + (Math.max(0, i-1) * getVal('localAddOutFee'));
-                let tts = getTtsFee(getVal('productWeight') * i, document.getElementById('ttsZone').value);
-                costFull_i = wh + tts;
+                let lm = 0;
+                if(logisticsMode === 'cbt') {
+                    lm = getCbtFee(getVal('productWeight') * i, document.getElementById('cbtZone').value);
+                } else {
+                    lm = getTtsFee(getVal('productWeight') * i, document.getElementById('ttsZone').value);
+                }
+                costFull_i = wh + lm;
             }
-            let fees_i = finalP * ((getVal('commissionRate') + getVal('platformRate') + getVal('damageRate')) / 100);
+            
+            // 预览表内部的佣金计算也需要同步更新逻辑
+            let commBase_i = Math.max(0, finalP - cPost);
+            let comm_i = commBase_i * (getVal('commissionRate')/100);
+            let plat_i = finalP * (getVal('platformRate')/100);
+            let dmg_i = finalP * (getVal('damageRate')/100);
+            let fees_i = comm_i + plat_i + dmg_i;
+
             let profit_i = finalP - costProd_i - costFull_i - fees_i;
             let profitClass = profit_i > 0 ? 'prof-pos' : 'prof-neg';
 
@@ -1082,20 +1285,10 @@
         setTxt('autoCouponText', `${formatNum(couponVal)} USD (买${saleQty})`);
         setTxt('autoCouponRmb', `≈ ${formatNum(couponVal*rate)} RMB`);
         
-        const revenue = orderVal + displayCust;
-        setTxt('finalPriceText', `${formatNum(revenue)} USD`); setTxt('finalPriceRmb', `≈ ${formatNum(revenue*rate)} RMB`);
-        setTxt('avgPrice', `${formatNum(revenue/saleQty)} USD`); setTxt('avgPriceRmb', formatNum((revenue/saleQty)*rate));
-
-        const comm = revenue * (getVal('commissionRate')/100);
-        const plat = revenue * (getVal('platformRate')/100);
-        const dmg = revenue * (getVal('damageRate')/100);
-        const totalFee = comm + plat + dmg;
-        setTxt('totalCostUsd', `${formatNum(totalFee)} USD`); setTxt('totalCostRmb', `${formatNum(totalFee*rate)} RMB`);
-
         const costProd = unitCostUSD * saleQty;
         let costFull = 0;
         if(isFbt) costFull = whFeeUSD - fbtReimburse; 
-        else costFull = whFeeUSD + ttsUSD;
+        else costFull = whFeeUSD + lastMileUSD; // Use calculated lastMileUSD (TTS or CBT)
         
         const finalCost = costProd + costFull + totalFee;
         const profit = revenue - finalCost;
@@ -1104,7 +1297,7 @@
         setTxt('finalAllCostUsd', `${formatNum(finalCost)} USD`); setTxt('finalAllCostRmb', `≈ ${formatNum(finalCost*rate)} RMB`);
         setTxt('actualIncomeUsd', `${formatNum(revenue)} USD`); setTxt('actualIncomeRmb', `≈ ${formatNum(revenue*rate)} RMB`);
         
-        let platNet = isFbt ? (revenue - whFeeUSD - plat) : (revenue - ttsUSD - plat);
+        let platNet = isFbt ? (revenue - whFeeUSD - plat) : (revenue - lastMileUSD - plat);
         setTxt('platformNetIncomeUsd', `${formatNum(platNet)} USD`); setTxt('platformNetIncomeRmb', `≈ ${formatNum(platNet*rate)} RMB`);
 
         setTxt('finalProfitUsd', `${formatNum(profit)} USD`); setTxt('finalProfitRmb', `≈ ${formatNum(profit*rate)} RMB`);
@@ -1120,9 +1313,42 @@
             pBox.classList.add('bg-red', 'card-danger-thick'); 
         }
 
+        // --- 寄样测算逻辑 (新增) ---
+        const sampleNum = getVal('sampleNum');
+        // 单个寄样履约成本计算：
+        // 逻辑：本土仓 = 库内(whFeeUSD) + TTS(ttsUSD)
+        // 逻辑：FBT仓 = FBT一口价(whFeeUSD)
+        let sampleFulfillmentCost = 0;
+        if(isFbt) {
+            sampleFulfillmentCost = whFeeUSD; // FBT仓的 whFeeUSD 已经是包含配送的一口价
+        } else {
+            // 本土仓：出库费(whFeeUSD) + TTS/CBT
+            // whFeeUSD is calculated above as Local Out + Add Out
+            // lastMileUSD is calculated above based on selected Zone
+            // NOTE: For sample calculation, typically we might want to use AVERAGE if not specified, 
+            // but here we use the currently selected Zone logic for consistency with the main calc.
+            sampleFulfillmentCost = whFeeUSD + lastMileUSD;
+        }
+        
+        const singleSampleCost = unitCostUSD + sampleFulfillmentCost;
+        const totalSampleCost = singleSampleCost * sampleNum;
+        
+        setTxt('sampleCostUsd', `${formatNum(totalSampleCost)} USD`);
+        setTxt('sampleCostRmb', `≈ ${formatNum(totalSampleCost * rate)} RMB`);
+
+        // 回本单量计算
+        let breakEvenSales = 0;
+        if(profit > 0) {
+            breakEvenSales = Math.ceil(totalSampleCost / profit); // 向上取整
+        } else {
+            breakEvenSales = "∞"; // 无法回本
+        }
+        setTxt('sampleBreakEven', breakEvenSales);
+
+
         // --- 全局红色警示逻辑 ---
         const normalCards = ['card-base', 'card-ship', 'card-summary', 'card-warehouse', 'card-fees', 'card-pricing'];
-        const redDetails = ['details-tts', 'details-fbt', 'details-logic'];
+        const redDetails = ['details-sample', 'details-tts', 'details-cbt', 'details-fbt', 'details-logic'];
         
         // 普通卡片变红 (细边框)
         normalCards.forEach(id => {
@@ -1176,10 +1402,19 @@
         const fbtPolicy = document.getElementById('fbtPolicy').value;
         const postTypeSelect = document.getElementById('postType');
         
-        if (storageType === 'fbt' && fbtPolicy === 'optOut') {
-            postTypeSelect.disabled = true;
+        // 重置后重新触发锁定逻辑
+        if (storageType === 'fbt') {
+            document.getElementById('logisticsModeItem').classList.add('hide');
+            if (fbtPolicy === 'standard') {
+                postTypeSelect.value = 'merchantFree';
+                postTypeSelect.disabled = true;
+            } else if (fbtPolicy === 'optOut') {
+                postTypeSelect.value = 'bothShare';
+                postTypeSelect.disabled = true;
+            }
         } else {
             postTypeSelect.disabled = false;
+            document.getElementById('logisticsModeItem').classList.remove('hide');
         }
 
         calculate();
