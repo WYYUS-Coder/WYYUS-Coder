@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -447,24 +448,20 @@
                         <label>✅ 总打包费: <span id="packTotal" style="color:var(--primary)">105.00</span> <span style="color:var(--primary)">RMB</span></label>
                         <span class="sub-text" id="packTotalUsd">≈ 15.00 USD</span>
                     </div>
-
                 </div>
             </div>
 
             <!-- 3. 成本汇总 -->
             <div class="card" id="card-summary" style="border-color: var(--primary);">
-                <!-- 标题修改 -->
                 <div class="card-header" style="background:#f0f8ff; color:var(--primary);">📊 国内成本统计 (采购+头程+杂费）</div>
                 <div class="card-body">
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
                         <div>
-                            <!-- 标签修改 -->
                             <div style="font-size:12px; color:#666;">总费用（RMB）</div>
                             <div id="allTotal" class="highlight-green">9339.00</div>
                             <div class="sub-text" id="allTotalUsd" style="text-align:center;">≈ 1334.14 USD</div>
                         </div>
                         <div style="border-left:1px solid #eee;">
-                            <!-- 标签修改 -->
                             <div style="font-size:12px; color:#666;">单个产品成本（RMB）</div>
                             <div id="perProductCost" class="highlight-green">31.13</div>
                             <div class="sub-text" id="perProductCostUsd" style="text-align:center;">≈ 4.45 USD</div>
@@ -1154,12 +1151,39 @@
     renderRateTables(); // 渲染表格
     saveToDefaults(); // 页面加载时先保存一次HTML中的默认值
     
-    // 保存初始数据按钮逻辑
+    // “保存为初始数据”按钮核心逻辑修改
     document.getElementById('saveInitBtn').addEventListener('click', () => {
-        if(confirm('确定将当前页面的所有输入值保存为“初始数据”吗？\n点击“重置数据”按钮将恢复到此状态。')) {
-            saveToDefaults();
-            alert('✅ 保存成功！点击“重置数据”将恢复到此状态。');
+        if(!confirm('⚠️ 浏览器安全限制提醒：\n\n网页无法直接修改您电脑上的文件。点击确定后，将自动下载一个已经保存了当前数据的新 HTML 文件。\n\n请使用下载的新文件覆盖原文件，即可实现永久保存。')) {
+            return;
         }
+
+        // 1. 更新内存变量（让当前页面的重置按钮立即生效）
+        saveToDefaults();
+
+        // 2. 将当前值写入到 HTML 属性中（让下载后的文件带有新默认值）
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => input.setAttribute('value', input.value));
+        const selects = document.querySelectorAll('select');
+        selects.forEach(select => {
+            const val = select.value;
+            const options = select.querySelectorAll('option');
+            options.forEach(opt => {
+                if(opt.value === val) opt.setAttribute('selected', 'selected');
+                else opt.removeAttribute('selected');
+            });
+        });
+
+        // 3. 生成并下载新文件
+        const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+        const blob = new Blob([htmlContent], {type: 'text/html'});
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+        
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = "TikTok利润表_已更新默认值_" + timestamp + ".html";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     });
 
     // 重置按钮逻辑
@@ -1184,6 +1208,7 @@
         calculate();
     });
     
+    // 保存 HTML 按钮 (功能保持不变，只是名字不同)
     document.getElementById('saveBtn').addEventListener('click', () => {
         const inputs = document.querySelectorAll('input');
         inputs.forEach(input => input.setAttribute('value', input.value));
