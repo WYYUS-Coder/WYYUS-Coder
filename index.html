@@ -152,6 +152,7 @@
             font-size: 13px;
             flex: 1;
             padding-right: 10px;
+            white-space: nowrap; /* 防止标签换行 */
         }
         .input-group {
             display: flex;
@@ -491,13 +492,14 @@
                     </div>
                     <div class="input-row">
                         <label>储存方式</label>
+                        <!-- 修改宽度为 130px 以适应横向排版 -->
                         <select id="storageType" style="width:130px;">
                             <option value="local">第三方本土仓</option>
                             <option value="fbt">FBT仓</option>
                         </select>
                     </div>
 
-                    <!-- 尾程运输方式 (新增) -->
+                    <!-- 尾程运输方式 -->
                     <div class="input-row" id="logisticsModeItem">
                         <label>尾程运输方式</label>
                         <select id="logisticsMode" style="width:130px;">
@@ -538,7 +540,7 @@
                                 <option value="0">Zone 1</option><option value="1">Zone 2</option><option value="2">Zone 3</option><option value="3">Zone 4</option><option value="4">Zone 5</option><option value="5">Zone 6</option><option value="6">Zone 7</option><option value="7">Zone 8</option>
                             </select>
                         </div>
-                        <!-- CBT 分区选择 (新增) -->
+                        <!-- CBT 分区选择 -->
                         <div class="input-row hide" id="cbtZoneItem">
                             <label>CBT 分区</label>
                             <select id="cbtZone" style="width:130px;">
@@ -1297,7 +1299,8 @@
         setTxt('finalAllCostUsd', `${formatNum(finalCost)} USD`); setTxt('finalAllCostRmb', `≈ ${formatNum(finalCost*rate)} RMB`);
         setTxt('actualIncomeUsd', `${formatNum(revenue)} USD`); setTxt('actualIncomeRmb', `≈ ${formatNum(revenue*rate)} RMB`);
         
-        let platNet = isFbt ? (revenue - whFeeUSD - plat) : (revenue - lastMileUSD - plat);
+        // 逻辑修正：扣除 Affiliate Commission
+        let platNet = isFbt ? (revenue - whFeeUSD - plat - comm) : (revenue - lastMileUSD - plat - comm);
         setTxt('platformNetIncomeUsd', `${formatNum(platNet)} USD`); setTxt('platformNetIncomeRmb', `≈ ${formatNum(platNet*rate)} RMB`);
 
         setTxt('finalProfitUsd', `${formatNum(profit)} USD`); setTxt('finalProfitRmb', `≈ ${formatNum(profit*rate)} RMB`);
@@ -1313,20 +1316,12 @@
             pBox.classList.add('bg-red', 'card-danger-thick'); 
         }
 
-        // --- 寄样测算逻辑 (新增) ---
+        // --- 寄样测算逻辑 ---
         const sampleNum = getVal('sampleNum');
-        // 单个寄样履约成本计算：
-        // 逻辑：本土仓 = 库内(whFeeUSD) + TTS(ttsUSD)
-        // 逻辑：FBT仓 = FBT一口价(whFeeUSD)
         let sampleFulfillmentCost = 0;
         if(isFbt) {
             sampleFulfillmentCost = whFeeUSD; // FBT仓的 whFeeUSD 已经是包含配送的一口价
         } else {
-            // 本土仓：出库费(whFeeUSD) + TTS/CBT
-            // whFeeUSD is calculated above as Local Out + Add Out
-            // lastMileUSD is calculated above based on selected Zone
-            // NOTE: For sample calculation, typically we might want to use AVERAGE if not specified, 
-            // but here we use the currently selected Zone logic for consistency with the main calc.
             sampleFulfillmentCost = whFeeUSD + lastMileUSD;
         }
         
