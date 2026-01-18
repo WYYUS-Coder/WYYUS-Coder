@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Shop美国站利润计算表26.1.15版</title>
+    <style>
+        :root {
+            --primary: #0078d7;
+            --primary-light: #eef7ff;
+            --success: #28a745;
+            --success-light: #e6f9e9;
+            --danger: #d93025;
+            --danger-light: #fff5f5;
+            --text-dark: #2c3e50;
+            --border-color: #e0e6ed;
+            --card-radius: 8px;
+        }
+
+        * {margin: 0;padding: 0;box-sizing: border-box;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;}
+        
+        body {
+            background-color: #f4f6f8;
+            color: var(--text-dark);
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1600px; 
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        .header h1 {
+            display: inline-block;
+            background: #fff;
+            color: var(--primary);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary);
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* 头部变红样式 */
+        .header-danger h1 {
+            color: var(--danger) !important;
+            border-top-color: var(--danger) !important;
+            background: var(--danger-light) !important;
+            box-shadow: 0 4px 15px rgba(217, 48, 37, 0.15) !important;
+        }
+
+        /* --- 三栏布局 --- */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        @media (max-width: 1200px) { .layout-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) { .layout-grid { grid-template-columns: 1fr; } }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+        }
+
+        /* --- 卡片通用 --- */
+        .card {
+            background: #fff;
+            border-radius: var(--card-radius);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-color); /* 默认细边框 */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s ease;
+        }
+
+        /* 亏损时的红色样式 (普通细边框) */
+        .card-danger {
+            border-color: var(--danger) !important;
+            border-width: 1px !important;
+        }
+        
+        /* 亏损时的红色样式 (加粗边框 - 用于利润面板 - 3px) */
+        .card-danger-thick {
+            border-color: var(--danger) !important;
+            border-width: 3px !important;
+            box-shadow: 0 0 15px rgba(217, 48, 37, 0.15);
+        }
+        
+        .card-danger .card-header, .card-danger-thick .card-header {
+            border-left-color: var(--danger) !important;
+            color: var(--danger);
+            background-color: var(--danger-light);
+        }
+
+        /* 针对折叠面板的红色样式 */
+        .details-danger {
+            border-color: var(--danger) !important;
+        }
+        .details-danger .details-summary {
+            color: var(--danger) !important;
+            background-color: var(--danger-light) !important;
+        }
+
+        .column .card:last-child {
+            flex: 1;
+        }
+
+        .card-header {
+            background: #f8f9fb;
+            padding: 12px 15px;
+            font-weight: 700;
+            font-size: 15px;
+            color: #333;
+            border-bottom: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .card-body {
+            padding: 15px;
+            flex: 1;
+        }
+
+        /* 表单行 */
+        .input-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            min-height: 32px;
+        }
+        .input-row label {
+            color: #555;
+            font-size: 13px;
+            flex: 1;
+            padding-right: 10px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: flex-end;
+        }
+
+        input[type="number"], select {
+            width: 100px;
+            height: 32px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 0 8px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.2s;
+            font-size: 13px;
+        }
+        select { width: 110px; }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0,120,215,0.1);
+        }
+        input:disabled, select:disabled {
+            background-color: #f0f0f0;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .sub-text { font-size: 12px; color: var(--primary); opacity: 0.8; font-weight: bold; margin-left: 5px; min-width: 70px; text-align: right;}
+        .divider { height: 1px; background: #eee; margin: 12px 0; border: none; }
+        
+        .result-bar {
+            background: var(--primary-light);
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+        .result-bar label { font-size: 12px; color: #444; margin: 0; font-weight: 600; }
+        .val-blue { color: var(--primary); font-weight: bold; font-size: 14px; }
+        .highlight-green { color: var(--success) !important; font-size: 18px !important; font-weight: 800 !important; }
+
+        .vol-wrapper {
+            background: #fffbe6;
+            border: 1px dashed #ffd591;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-size: 12px;
+        }
+        .vol-wrapper input { width: 45px; height: 26px; padding: 0 2px; text-align: center; font-size: 12px; }
+        #volDivisor { width: 60px !important; }
+
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 10px;
+            border: 1px solid #eee;
+        }
+        .preview-table th { background: #f8f9fa; color: #666; font-weight: normal; padding: 6px; text-align: center; border-bottom: 1px solid #ddd; }
+        .preview-table td { padding: 5px; text-align: center; border-bottom: 1px solid #f0f0f0; color: var(--primary); }
+        .preview-table tr:last-child td { border-bottom: none; }
+        .preview-table .hl-val { color: var(--success); font-weight: 800; }
+        .prof-pos { color: var(--success) !important; font-weight: bold; }
+        .prof-neg { color: var(--danger) !important; font-weight: bold; }
+
+        .profit-dashboard {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            border: 1px solid transparent; 
+        }
+        .p-item {
+            background: rgba(255,255,255,0.7);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .p-row1 { grid-column: span 3; }
+        .p-row2 { grid-column: span 2; }
+        .p-row3 { grid-column: span 6; border: 2px solid rgba(0,0,0,0.05); background: #fff; }
+
+        .p-label { font-size: 12px; color: #666; display: block; margin-bottom: 4px; font-weight: bold; }
+        .p-val { font-size: 20px; font-weight: 800; line-height: 1.2; }
+        .p-sub { font-size: 12px; font-weight: bold; opacity: 0.9; }
+
+        .bg-green { background: var(--success-light); border-color: var(--success); }
+        .bg-green .card-header { background: #d4edda; color: var(--success); border-left-color: var(--success); }
+        .bg-green .p-val, .bg-green .p-sub { color: var(--success) !important; }
+
+        .bg-red { background: var(--danger-light); /* 边框色由 card-danger-thick 控制 */ }
+        .bg-red .card-header { background: #f8d7da; color: var(--danger); border-left-color: var(--danger); }
+        .bg-red .p-val, .bg-red .p-sub { color: var(--danger) !important; }
+
+        /* 折叠说明样式 */
+        .details-box {
+            grid-column: 1 / -1;
+            border: 1px solid var(--primary);
+            background: #fff;
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        .details-summary {
+            background: #f0fafe;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        .details-summary::-webkit-details-marker { display: none; }
+        .details-summary::after { content: '+'; font-size: 20px; }
+        details[open] .details-summary::after { content: '-'; }
+        
+        .details-content {
+            padding: 20px;
+            background: #fff;
+            line-height: 1.8;
+            font-size: 13px;
+            color: #444;
+            border-top: 1px solid #eee;
+            overflow-x: auto;
+        }
+        .details-content p { margin: 8px 0; }
+
+        /* 价卡表格样式 */
+        .rate-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 10px;
+            min-width: 800px;
+        }
+        .rate-table th, .rate-table td {
+            border: 1px solid #e0e6ed;
+            padding: 6px 4px;
+            text-align: center;
+        }
+        .rate-table th {
+            background-color: #f4f6f8;
+            color: #333;
+            font-weight: 600;
+        }
+        .rate-table tr:nth-child(even) { background-color: #fafbfc; }
+        .rate-table tr:hover { background-color: #f1f8ff; }
+        .rate-hl { color: var(--primary); font-weight: bold; }
+
+        .hide { display: none !important; }
+        
+        .btn-box { margin-top: 30px; text-align: center; padding-bottom: 20px;}
+        .btn { padding: 10px 25px; border-radius: 30px; border: none; cursor: pointer; font-weight: bold; margin: 0 8px; transition: transform 0.2s; font-size: 14px;}
+        .btn-reset { background: #fff; border: 1px solid var(--danger); color: var(--danger); }
+        .btn-set-init { background: #fff; border: 1px solid var(--success); color: var(--success); }
+        .btn-save { background: var(--primary); color: #fff; }
+        .btn:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header" id="mainHeader">
+        <h1>TikTok Shop美国站利润计算表26.1.15版</h1>
+    </div>
+
+    <div class="layout-grid">
+        
+        <!-- === 第一列：供应链与物流 === -->
+        <div class="column">
+            <!-- 1. 基础 & 采购 -->
+            <div class="card" id="card-base">
+                <div class="card-header">🛠️ 基础配置 & 采购成本</div>
+                <div class="card-body">
+                    <div class="input-row">
+                        <label>汇率 (1 USD = ? RMB)</label>
+                        <input type="number" id="rate" value="7.0" step="0.01">
+                    </div>
+                    <hr class="divider">
+                    <div class="input-row">
+                        <label>产品重量 (g)</label>
+                        <input type="number" id="productWeight" value="300" step="0.1">
+                    </div>
+                    <div class="input-row">
+                        <label>拿货个数</label>
+                        <input type="number" id="buyNum" value="300" step="1">
+                    </div>
+                    <div class="input-row">
+                        <label>拿货单价 (RMB)</label>
+                        <div class="input-group">
+                            <input type="number" id="buyPrice" value="13.5" step="0.01">
+                            <span class="sub-text" id="buyPriceUsd">≈ 1.93 USD</span>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <label>其他杂费 (RMB)</label>
+                        <div class="input-group">
+                            <input type="number" id="buyOther" value="0" step="0.01">
+                            <span class="sub-text" id="buyOtherUsd">≈ 0.00 USD</span>
+                        </div>
+                    </div>
+                    <div class="result-bar">
+                        <label>✅ 拿货总价 (RMB)</label>
+                        <div class="input-group">
+                            <span id="buyTotal" class="highlight-green">4050.00</span>
+                            <span class="sub-text" id="buyTotalUsd">≈ 578.57 USD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 头程物流 -->
+            <div class="card" id="card-ship">
+                <div class="card-header">✈️ 头程运输费用</div>
+                <div class="card-body">
+                    <!-- 箱规试算 -->
+                    <div class="vol-wrapper">
+                        <div style="margin-bottom:4px; font-weight:bold; color:#d93025;">📦 箱规试算 (>20.5kg 标红)</div>
+                        <div style="display:flex; align-items:center; justify-content:space-between;">
+                            <input type="number" id="boxL" value="55" placeholder="长"> <span style="color:#ccc">×</span>
+                            <input type="number" id="boxW" value="50" placeholder="宽"> <span style="color:#ccc">×</span>
+                            <input type="number" id="boxH" value="45" placeholder="高"> <span style="color:#ccc">÷</span>
+                            <input type="number" id="volDivisor" value="6000" placeholder="材积">
+                            <span style="color:#ccc">=</span>
+                            <span id="volWeightResult" style="font-weight:bold; color:var(--primary); font-size:18px;">20.63 KG</span>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <label>运输方式</label>
+                        <select id="shipType">
+                            <option value="air" selected>空运</option>
+                            <option value="sea">海运</option>
+                        </select>
+                    </div>
+                    <div class="input-row" id="airPriceItem">
+                        <label>空运价格 (RMB/KG)</label>
+                        <input type="number" id="airPrice" value="54" step="0.01">
+                    </div>
+                    <div class="input-row hide" id="seaPriceItem">
+                        <label>海运价格 (RMB/KG)</label>
+                        <input type="number" id="seaPrice" value="12" step="0.01">
+                    </div>
+                    <div class="input-row">
+                        <label>单箱重量(KG) / 装量(个)</label>
+                        <div class="input-group">
+                            <input type="number" id="boxWeight" value="16" style="width:50px;">
+                            <span style="color:#ccc">/</span>
+                            <input type="number" id="boxNum" value="50" style="width:50px;">
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <label>总箱数 (总重:<span id="totalWeight" style="color:var(--primary)">96</span>KG)</label>
+                        <input type="number" id="totalBox" value="6">
+                    </div>
+
+                    <div class="result-bar">
+                        <label>✅ 头程总价 (RMB)</label>
+                        <div class="input-group">
+                            <span id="shipTotal" class="highlight-green">5184.00</span>
+                            <span class="sub-text" id="shipTotalUsd">≈ 740.57 USD</span>
+                        </div>
+                    </div>
+                    <div class="result-bar">
+                        <label>✅ 单个头程 (RMB)</label>
+                        <div class="input-group">
+                            <span id="shipPerProduct" class="highlight-green">17.28</span>
+                            <span class="sub-text" id="shipPerProductUsd">≈ 2.47 USD</span>
+                        </div>
+                    </div>
+
+                    <!-- 打包费移动到此处 -->
+                    <hr class="divider">
+                    <div class="input-row">
+                        <label>单个打包费 (RMB)</label>
+                        <div class="input-group">
+                            <input type="number" id="packPer" value="0.35" step="0.01">
+                            <span class="sub-text" id="packPerUsd">≈ 0.05 USD</span>
+                        </div>
+                    </div>
+                    <div class="result-bar" style="background:#fff; border:1px dashed #eee;">
+                        <label>✅ 总打包费: <span id="packTotal" style="color:var(--primary)">105.00</span> <span style="color:var(--primary)">RMB</span></label>
+                        <span class="sub-text" id="packTotalUsd">≈ 15.00 USD</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 3. 成本汇总 -->
+            <div class="card" id="card-summary" style="border-color: var(--primary);">
+                <!-- 标题修改 -->
+                <div class="card-header" style="background:#f0f8ff; color:var(--primary);">📊 国内成本统计 (采购+头程+杂费）</div>
+                <div class="card-body">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
+                        <div>
+                            <!-- 标签修改 -->
+                            <div style="font-size:12px; color:#666;">总费用（RMB）</div>
+                            <div id="allTotal" class="highlight-green">9339.00</div>
+                            <div class="sub-text" id="allTotalUsd" style="text-align:center;">≈ 1334.14 USD</div>
+                        </div>
+                        <div style="border-left:1px solid #eee;">
+                            <!-- 标签修改 -->
+                            <div style="font-size:12px; color:#666;">单个产品成本（RMB）</div>
+                            <div id="perProductCost" class="highlight-green">31.13</div>
+                            <div class="sub-text" id="perProductCostUsd" style="text-align:center;">≈ 4.45 USD</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === 第二列：运营与仓储 === -->
+        <div class="column">
+            <!-- 4. 仓库 & FBT -->
+            <div class="card" id="card-warehouse">
+                <div class="card-header">🏭 仓库 & 尾程物流</div>
+                <div class="card-body">
+                    <div class="input-row">
+                        <label>发货产品个数</label>
+                        <div class="input-group">
+                            <select id="storageProductNum" style="width:60px;">
+                                <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+                            </select>
+                            <span style="font-size:12px; color:#999;">(总重:<span id="sendTotalWeight">300</span>g)</span>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <label>储存方式</label>
+                        <select id="storageType" style="width:100%;">
+                            <option value="local">第三方本土仓</option>
+                            <option value="fbt">FBT仓</option>
+                        </select>
+                    </div>
+
+                    <!-- FBT 区域 -->
+                    <div id="fbtPolicyItem" class="hide" style="background:#e6f7ff; padding:10px; border-radius:4px; margin-bottom:10px;">
+                        <div style="margin-bottom:8px;">
+                            <label style="color:#005a9e; font-weight:bold; font-size:12px; display:block; margin-bottom:4px;">FBT政策</label>
+                            <select id="fbtPolicy" style="width:100%; border-color:#0078d7; color:#005a9e;">
+                                <option value="standard" selected>默认：无门槛免运费</option>
+                                <option value="optOut">退出：$30门槛 (低于$30客付$5.99)</option>
+                            </select>
+                        </div>
+                        <div class="input-row" id="fbtOnePriceItem">
+                            <label>FBT一口价 (USD)</label>
+                            <div class="input-group">
+                                <span id="fbtOnePrice" class="val-blue" style="font-size:14px; margin-right:5px;">4.60</span>
+                                <span class="val-blue" style="font-size:14px;">USD</span>
+                                <span class="sub-text" id="fbtOnePriceRmb">≈ 32.20 RMB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="fbtReimburseItem" class="result-bar hide" style="background:#e6f9e9; border:1px solid #28a745;">
+                        <label style="color:#155724;">✅ FBT官方补贴</label>
+                        <span id="fbtReimburse" class="highlight-green" style="font-size:15px !important;">0.00 USD</span>
+                    </div>
+
+                    <!-- 本土仓 区域 -->
+                    <div id="localArea">
+                        <div class="input-row" id="ttsZoneItem">
+                            <label>TTS 分区</label>
+                            <select id="ttsZone" style="width:130px;">
+                                <option value="avg" selected>🌍全区平均</option>
+                                <option value="0">Zone 1</option><option value="1">Zone 2</option><option value="2">Zone 3</option><option value="3">Zone 4</option><option value="4">Zone 5</option><option value="5">Zone 6</option><option value="6">Zone 7</option><option value="7">Zone 8</option>
+                            </select>
+                        </div>
+                        <div class="input-row" id="localOutFeeItem">
+                            <label>出库费 (USD)</label>
+                            <div class="input-group">
+                                <input type="number" id="localOutFee" value="0.8" step="0.01">
+                                <span class="sub-text" id="localOutFeeRmb">≈ 5.60 RMB</span>
+                            </div>
+                        </div>
+                        <div class="input-row" id="localAddOutFeeItem">
+                            <label>续件费 (USD)</label>
+                            <div class="input-group">
+                                <input type="number" id="localAddOutFee" value="0.3" step="0.01">
+                                <span class="sub-text" id="localAddOutFeeRmb">≈ 2.10 RMB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-bar">
+                        <label id="storageFeeLabel">✅ 仓库费用 (USD)</label>
+                        <div class="input-group">
+                            <span id="storagePerProduct" class="val-blue">0.80 USD</span>
+                            <span class="sub-text" id="storagePerProductRmb">≈ 5.60 RMB</span>
+                        </div>
+                    </div>
+                    <div class="result-bar" id="ttsFeeItem">
+                        <label>✅ TTS/尾程 (USD)</label>
+                        <div class="input-group">
+                            <span id="ttsFeeUsd" class="val-blue">4.80 USD</span>
+                            <span class="sub-text" id="ttsFeeRmb">≈ 33.60 RMB</span>
+                        </div>
+                    </div>
+                    <div class="result-bar" id="storageTtsTotalItem" style="background:#fff8e8; border:1px solid #ffb300;">
+                        <label>✅ 仓库+TTS合计</label>
+                        <div class="input-group">
+                            <span id="storageTtsTotalUsd" class="highlight-green" style="color:#0078d7 !important; font-size:16px !important;">5.60 USD</span>
+                            <span class="sub-text" id="storageTtsTotalRmb" style="color:#0078d7; font-weight:bold; font-size:16px;">≈ 39.20 RMB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 运费规则 & 佣金 -->
+            <div class="card" id="card-fees">
+                <div class="card-header">💰 运费分担 & 平台佣金</div>
+                <div class="card-body">
+                    <div class="input-row">
+                        <label>运费承担方式</label>
+                        <select id="postType" style="width:130px;">
+                            <option value="merchantFree" selected>商家包邮</option>
+                            <option value="bothShare">共同承担</option>
+                            <option value="customerAll">客户全担</option>
+                        </select>
+                    </div>
+
+                    <!-- 客户运费阶梯设置 -->
+                    <div id="customerPostStepBox" class="hide" style="background:#fff8e8; padding:8px; border-radius:4px; margin-bottom:10px; border:1px solid #ffb300;">
+                        <div style="font-size:12px; color:#d93025; font-weight:bold; margin-bottom:5px;">客户运费阶梯 (USD)</div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">0-1个:</label><input type="number" id="postStep1" value="1.99" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">1-2个:</label><input type="number" id="postStep2" value="2.99" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">2-3个:</label><input type="number" id="postStep3" value="3.99" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">3-4个:</label><input type="number" id="postStep4" value="4.99" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">4-5个:</label><input type="number" id="postStep5" value="5.99" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">5-6个:</label><input type="number" id="postStep6" value="6.99" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0; grid-column:1/-1;"><label style="font-size:12px;">6个+:</label><input type="number" id="postStep7" value="7.99" style="width:70px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="result-bar" id="postTotalItem">
+                        <label>✅ 尾程运费总额</label>
+                        <div class="input-group">
+                            <span id="postTotalUsd" class="val-blue">4.80 USD</span>
+                            <span class="sub-text" id="postTotalRmb">≈ 33.60 RMB</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-row" id="merchantPostItem">
+                        <label>商家承担 (USD)</label>
+                        <div class="input-group">
+                            <span id="merchantPostUsd" class="val-blue" style="font-size:14px; margin-right:5px;">4.80</span>
+                            <span class="val-blue" style="font-size:14px;">USD</span>
+                            <span class="sub-text" id="merchantPostRmb">≈ 33.60 RMB</span>
+                        </div>
+                    </div>
+                    <div class="input-row hide" id="customerPostItem">
+                        <label>客户承担 (USD)</label>
+                        <div class="input-group">
+                            <div id="customerPostUsd" style="font-weight:bold; color:var(--danger);">1.99</div>
+                            <span class="sub-text" id="customerPostRmb">≈ 13.93 RMB</span>
+                        </div>
+                    </div>
+
+                    <hr class="divider">
+
+                    <div class="input-row"><label>达人佣金 (%)</label><input type="number" id="commissionRate" value="0" step="0.01"></div>
+                    <div class="input-row"><label>平台佣金 (%)</label><input type="number" id="platformRate" value="6" step="0.01"></div>
+                    <div class="input-row"><label>货损+退货 (%)</label><input type="number" id="damageRate" value="0" step="0.01"></div>
+
+                    <div class="result-bar" style="background:#fff8e8; border:1px solid #ffb300;">
+                        <label>✅ 佣金&货损合计</label>
+                        <div class="input-group">
+                            <span id="totalCostUsd" class="val-blue">0.00 USD</span>
+                            <span class="sub-text">≈ <span id="totalCostRmb" class="val-blue">0.00 RMB</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === 第三列：销售与利润 === -->
+        <div class="column">
+            <!-- 6. 定价 & 优惠券 -->
+            <div class="card" id="card-pricing">
+                <div class="card-header">🏷️ 产品定价 & 优惠券</div>
+                <div class="card-body">
+                    <div class="input-row">
+                        <label>产品定价 (USD)</label>
+                        <div class="input-group">
+                            <input type="number" id="salePrice" value="11.99" step="0.01">
+                            <span class="sub-text" id="salePriceRmb">≈ 69.93 RMB</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background:#f8f9fa; padding:8px; border-radius:4px; margin:10px 0;">
+                        <div style="font-size:12px; color:var(--primary); margin-bottom:5px; font-weight:bold;">优惠券策略 (USD)</div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">买1个:</label><input type="number" id="coupon1" value="0" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">买2个:</label><input type="number" id="coupon2" value="0" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">买3个:</label><input type="number" id="coupon3" value="0" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">买4个:</label><input type="number" id="coupon4" value="0" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">买5个:</label><input type="number" id="coupon5" value="0" style="width:70px;"></div>
+                            <div class="input-row" style="margin:0;"><label style="font-size:12px;">买6个:</label><input type="number" id="coupon6" value="0" style="width:70px;"></div>
+                        </div>
+                    </div>
+
+                    <div style="font-size:12px; font-weight:bold; color:#555; margin-top:10px;">📊 实时计算预览 (含运费分担)</div>
+                    <table class="preview-table">
+                        <thead><tr><th>数量</th><th>定价</th><th>券</th><th>客付运</th><th>支付</th><th>均价</th><th>利润</th></tr></thead>
+                        <tbody id="previewBody">
+                            <tr id="showItem1"><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem2"><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem3"><td>3</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem4"><td>4</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem5"><td>5</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem6"><td>6</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="result-bar" style="margin-top:10px;">
+                        <label>✅ 当前匹配优惠券</label>
+                        <div class="input-group">
+                            <span id="autoCouponText" class="val-blue">0.00 USD</span>
+                            <span class="sub-text" id="autoCouponRmb">≈ 0.00 RMB</span>
+                        </div>
+                    </div>
+                    <div class="result-bar">
+                        <label>✅ 客户最终支付 (USD)</label>
+                        <div class="input-group">
+                            <span id="finalPriceText" class="highlight-green">9.99 USD</span>
+                            <span class="sub-text" id="finalPriceRmb">≈ 69.93 RMB</span>
+                        </div>
+                    </div>
+                    <div class="result-bar" style="background:#fff8e8; border:1px solid #ffb300;">
+                        <label style="color:#d93025;">✅ 单品实付均价 (USD)</label>
+                        <div class="input-group">
+                            <span id="avgPrice" class="val-blue" style="color:#d93025;">9.99 USD</span>
+                            <span class="sub-text" style="color:#d93025;">≈ <span id="avgPriceRmb">69.93 RMB</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. 利润大屏 -->
+            <div class="card profit-dashboard bg-green" id="profitBox">
+                <div class="card-header" style="grid-column: 1/-1;">✨ 最终利润 & ROI</div>
+                
+                <div class="p-item p-row1">
+                    <span class="p-label">最终总成本</span>
+                    <div class="p-val" id="finalAllCostUsd">9.25 USD</div>
+                    <div class="p-sub" id="finalAllCostRmb">≈ 64.75 RMB</div>
+                </div>
+                <div class="p-item p-row1">
+                    <span class="p-label">实际收入</span>
+                    <div class="p-val" id="actualIncomeUsd">9.99 USD</div>
+                    <div class="p-sub" id="actualIncomeRmb">≈ 69.93 RMB</div>
+                </div>
+
+                <div class="p-item p-row2">
+                    <span class="p-label">平台扣邮后回款</span>
+                    <div class="p-val" id="platformNetIncomeUsd" style="font-size:18px;">0.00 USD</div>
+                    <div class="p-sub" id="platformNetIncomeRmb">≈ 0.00 RMB</div>
+                </div>
+                <div class="p-item p-row2">
+                    <span class="p-label">利润率</span>
+                    <div class="p-val" id="profitRate" style="font-size:18px;">7.41 %</div>
+                </div>
+                <div class="p-item p-row2">
+                    <span class="p-label">ROI</span>
+                    <div class="p-val" id="breakEvenRoi" style="font-size:18px;">13.50</div>
+                </div>
+
+                <div class="p-item p-row3">
+                    <span class="p-label">✅ 最终利润</span>
+                    <div class="p-val" id="finalProfitUsd" style="font-size:36px;">0.74 USD</div>
+                    <div class="p-sub" id="finalProfitRmb">≈ 5.18 RMB</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TTS 价卡 -->
+    <details class="details-box" id="details-tts">
+        <summary class="details-summary">🚚 TTS价卡26.1.15版</summary>
+        <div class="details-content">
+            <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。以下展示Zone 1-8及全区平均价。重量向上取整匹配。</div>
+            <div id="ttsTableContainer"></div>
+        </div>
+    </details>
+
+    <!-- FBT 价卡 -->
+    <details class="details-box" id="details-fbt">
+        <summary class="details-summary">🏬 FBT价卡26.1.15版</summary>
+        <div class="details-content">
+            <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。<b>显示金额为对应数量的总配送费（单价×数量）</b>，直观展示多件成本。</div>
+            <div id="fbtTableContainer"></div>
+        </div>
+    </details>
+
+    <!-- 可折叠说明 -->
+    <details class="details-box" id="details-logic">
+        <summary class="details-summary">📋 完整计算逻辑说明（最终精准版）</summary>
+        <div class="details-content">
+            <p>▶ <strong>TTS/尾程运费：</strong>已内置2026最新价卡 (Zone 1-8)。可选择特定分区或系统自动计算8个区的平均价。</p>
+            <p>▶ <strong>优惠券逻辑更新：</strong>购买数量超过6个时，系统自动沿用“买6个”的优惠券金额，不再归零。</p>
+            <p>▶ <strong>FBT退出政策：</strong>已内置2026最新价卡，选择"退出"模式且订单金额(扣除优惠券后)＜$30，强制客户支付$5.99运费，卖家获$0.75/件补贴。</p>
+            <p>▶ <strong>基础换算规则：</strong>所有 USD 金额 × 汇率 = 对应 RMB 金额 | 所有 RMB 金额 ÷ 汇率 = 对应 USD 金额</p>
+            <p>▶ <strong>货值计算：</strong>拿货总价 = 拿货价 × 拿货个数 + 其他费用</p>
+            <p>▶ <strong>头程运费计算：</strong>箱子总重量 = 单箱重量 × 总箱数 | 产品总数 = 单箱装数 × 总箱数 | 头程总价 = 总重量 × 运输单价 | 单个平摊头程费 = 头程总价 ÷ 产品总数</p>
+            <p>▶ <strong>打包费计算：</strong>总打包费 = 单个打包费 × 产品总数</p>
+            <p>▶ <strong>核心产品成本：</strong>总费用 = 拿货总价+头程总价+总打包费 | 单个产品成本 = 总费用 ÷ 拿货个数</p>
+            <p>▶ <strong>定价计算：</strong>客户最终支付总价 = (产品定价×发货个数) - 对应档位优惠券总额 (最低为0，无负数)，【双方分担/客户全担模式叠加客户承担运费】</p>
+            <p>▶ <strong>平摊单价：</strong>平摊单个实际支付价 = 客户最终支付总价 ÷ 发货产品个数</p>
+            <p>▶ <strong>仓库费计算：</strong>第三方本土仓 = 出库操作费 + 续件出库操作费 × (发货产品个数-1) | FBT仓=FBT一口价费用 (系统自动根据官方费率表匹配)</p>
+            <p>▶ <strong>运费承担核心规则：</strong>第三方本土仓-商家包邮=商家承担全额TTS | 第三方本土仓-客户全担=客户承担TTS | FBT仓-商家包邮=商家承担全额FBT | FBT仓-客户全担=客户承担FBT</p>
+            <p>▶ <strong>客户运费阶梯规则：</strong>双方分担模式下 → 0~1个=1.99USD |1~2个=2.99USD|2~3个=3.99USD|3~4个=4.99USD|4~5个=5.99USD|5~6个=6.99USD|6+个=7.99USD 全部可修改</p>
+            <p>▶ <strong>佣金货损计算：</strong>达人佣金/平台佣金/货损费用 = 客户最终支付总价 × 对应比例(%)</p>
+            <p>▶ <strong>最终总成本精准规则【1】：</strong>第三方本土仓+商家包邮 = 单品成本×发货数+本次发货仓库费用+TTS+佣金货损综合费用</p>
+            <p>▶ <strong>最终总成本精准规则【2】：</strong>第三方本土仓+双方分担 = 单品成本×发货数+本次发货仓库费用+TTS+佣金货损综合费用</p>
+            <p>▶ <strong>最终总成本精准规则【3】：</strong>第三方本土仓+客户全担 = 单品成本×发货数+本次发货仓库费用+佣金货损综合费用</p>
+            <p>▶ <strong>最终总成本精准规则【4】：</strong>FBT仓+商家包邮 = 单品成本×发货数+FBT费用+佣金货损综合费用</p>
+            <p>▶ <strong>最终总成本精准规则【5】：</strong>FBT仓+双方分担 = 单品成本×发货数+FBT费用+佣金货损综合费用</p>
+            <p>▶ <strong>最终总成本精准规则【6】：</strong>FBT仓+客户全担 = 单品成本×发货数+佣金货损综合费用</p>
+            <p>▶ <strong>实际收入计算：</strong>商家包邮=客户最终支付总价 | 双方分担=客户最终支付总价 | 客户全担=客户最终支付总价</p>
+            <p>▶ <strong>利润相关：</strong>最终利润 = 实际收入 - 最终总成本 | 销售利润率 = (最终利润 ÷ 最终支付总价) × 100%</p>
+            <p>▶ <strong>保本ROI：</strong>最终利润＞0 = 最终支付总价 ÷ 最终利润 | 最终利润≤0 显示【无法保本】</p>
+        </div>
+    </details>
+
+    <div class="btn-box">
+        <button class="btn btn-set-init" id="saveInitBtn">⚙️ 保存为初始数据</button>
+        <button class="btn btn-reset" id="resetBtn">🔄 重置数据</button>
+        <button class="btn btn-save" id="saveBtn">💾 保存 HTML</button>
+    </div>
+</div>
+
+<script>
+    // 定义价卡数据供计算和展示使用
+    const TTS_DATA = [
+        { maxLb: 0.25, prices: [3.73, 3.77, 3.79, 3.88, 3.99, 4.07, 4.14, 4.28] }, 
+        { maxLb: 0.50, prices: [4.11, 4.17, 4.20, 4.25, 4.35, 4.40, 4.46, 4.58] }, 
+        { maxLb: 0.75, prices: [4.51, 4.57, 4.62, 4.68, 4.79, 4.94, 5.05, 5.20] }, 
+        { maxLb: 1.00, prices: [5.97, 5.97, 5.97, 5.97, 6.05, 6.23, 6.53, 6.88] }, 
+        { maxLb: 2.00, prices: [5.97, 5.97, 5.98, 6.16, 6.46, 7.03, 7.42, 7.97] }, 
+        { maxLb: 3.00, prices: [6.03, 6.18, 6.31, 6.59, 7.07, 8.02, 8.24, 8.70] }, 
+        { maxLb: 4.00, prices: [6.40, 6.57, 6.76, 7.15, 8.00, 8.51, 8.92, 9.45] }, 
+        { maxLb: 5.00, prices: [6.55, 6.73, 6.95, 7.37, 8.14, 8.78, 9.20, 9.80] }, 
+        { maxLb: 10.0, prices: [7.11, 7.22, 7.69, 8.33, 9.34, 9.84, 10.82, 11.99] }, 
+        { maxLb: 15.0, prices: [8.64, 8.75, 9.26, 9.71, 11.12, 12.50, 14.50, 16.27] }, 
+        { maxLb: 20.0, prices: [9.51, 9.77, 10.47, 10.92, 13.08, 14.87, 17.46, 19.83] }
+    ];
+
+    const FBT_DATA = [
+        { max: 0.25, prices: [4.28, 2.52, 1.91, 1.56] }, { max: 0.50, prices: [4.52, 2.91, 2.36, 1.93] }, 
+        { max: 0.75, prices: [4.70, 3.05, 2.61, 2.23] }, { max: 1.00, prices: [5.10, 3.16, 2.78, 2.36] }, 
+        { max: 2.00, prices: [5.71, 3.92, 3.14, 2.60] }, { max: 3.00, prices: [6.27, 4.30, 3.25, 3.01] }, 
+        { max: 4.00, prices: [6.92, 4.70, 3.91, 3.37] }, { max: 5.00, prices: [7.66, 5.09, 4.54, 4.54] }, 
+        { max: 6.00, prices: [8.58, 5.55, 5.35, 5.25] }, { max: 7.00, prices: [8.88, 5.90, 5.70, 5.60] }, 
+        { max: 8.00, prices: [9.22, 6.39, 6.09, 6.19] }, { max: 9.00, prices: [9.42, 6.57, 6.37, 6.27] }, 
+        { max: 10.00, prices: [9.63, 6.76, 6.56, 6.46] }, { max: 11.00, prices: [10.64, 7.58, 7.38, 7.28] }, 
+        { max: 12.00, prices: [10.75, 7.97, 7.77, 7.67] }, { max: 13.00, prices: [10.98, 8.07, 7.87, 7.77] }, 
+        { max: 14.00, prices: [11.44, 8.41, 8.21, 8.11] }, { max: 15.00, prices: [11.85, 8.78, 8.58, 8.48] }, 
+        { max: 16.00, prices: [12.67, 9.53, 9.33, 9.23] }, { max: 17.00, prices: [12.97, 10.70, 10.50, 10.40] }, 
+        { max: 18.00, prices: [13.34, 11.12, 10.92, 10.82] }, { max: 19.00, prices: [13.84, 11.69, 11.49, 11.39] }, 
+        { max: 20.00, prices: [14.11, 12.00, 11.80, 11.70] }
+    ];
+
+    // 初始化默认数据存储
+    let appDefaults = {};
+
+    const getVal = (id) => {
+        const el = document.getElementById(id);
+        if (!el) return 0;
+        return parseFloat(el.value || el.innerText) || 0;
+    };
+    const setTxt = (id, txt) => { const el = document.getElementById(id); if(el) el.innerText = txt; };
+    const formatNum = (num) => num.toFixed(2);
+    
+    // 初始化渲染价卡表格
+    function renderRateTables() {
+        // TTS 表格
+        let ttsHtml = `<table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>Zone 1</th><th>Zone 2</th><th>Zone 3</th><th>Zone 4</th><th>Zone 5</th><th>Zone 6</th><th>Zone 7</th><th>Zone 8</th><th>平均</th></tr></thead><tbody>`;
+        TTS_DATA.forEach(row => {
+            const avg = (row.prices.reduce((a,b)=>a+b, 0) / row.prices.length).toFixed(2);
+            const g = Math.round(row.maxLb * 453.59237);
+            ttsHtml += `<tr><td>≤ ${row.maxLb}</td><td>≤ ${g}</td>`;
+            row.prices.forEach(p => ttsHtml += `<td>${p.toFixed(2)}</td>`);
+            ttsHtml += `<td class="rate-hl">${avg}</td></tr>`;
+        });
+        ttsHtml += `</tbody></table>`;
+        document.getElementById('ttsTableContainer').innerHTML = ttsHtml;
+
+        // FBT 表格 - 修改为显示总费用 (单价 * 数量)
+        // 修正：最后一列标题改为 "≥ 4件总费"
+        let fbtHtml = `<table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>1件总费</th><th>2件总费</th><th>3件总费</th><th>≥ 4件总费</th></tr></thead><tbody>`;
+        FBT_DATA.forEach(row => {
+            const g = Math.round(row.max * 453.59237);
+            fbtHtml += `<tr><td>≤ ${row.max}</td><td>≤ ${g}</td>`;
+            // 0:Qty1, 1:Qty2, 2:Qty3, 3:Qty4+
+            // 计算总价：单价 * 数量
+            fbtHtml += `<td class="rate-hl">${row.prices[0].toFixed(2)}</td>`; // 1件
+            fbtHtml += `<td class="rate-hl">${(row.prices[1] * 2).toFixed(2)}</td>`; // 2件
+            fbtHtml += `<td class="rate-hl">${(row.prices[2] * 3).toFixed(2)}</td>`; // 3件
+            fbtHtml += `<td class="rate-hl">${(row.prices[3] * 4).toFixed(2)}</td>`; // 4件
+            fbtHtml += `</tr>`;
+        });
+        fbtHtml += `</tbody></table>`;
+        document.getElementById('fbtTableContainer').innerHTML = fbtHtml;
+    }
+
+    function calcVolWeight() {
+        const l = getVal('boxL'), w = getVal('boxW'), h = getVal('boxH'), div = getVal('volDivisor') || 6000;
+        const res = (l * w * h) / div;
+        const el = document.getElementById('volWeightResult');
+        el.innerText = res.toFixed(2) + ' KG';
+        el.style.color = res > 20.5 ? '#d93025' : '#0078d7';
+    }
+
+    function getTtsFee(weightG, zoneIdx) {
+        const lb = weightG / 453.59237; 
+        let selectedRow = TTS_DATA.find(r => lb <= r.maxLb) || TTS_DATA[TTS_DATA.length - 1];
+        if (zoneIdx === 'avg') return selectedRow.prices.reduce((a, b) => a + b, 0) / selectedRow.prices.length;
+        return selectedRow.prices[parseInt(zoneIdx)];
+    }
+
+    function getFbtUnitRate(weightG, qty) {
+        const lb = weightG / 453.59237;
+        let colIdx = qty >= 4 ? 3 : qty - 1;
+        let row = FBT_DATA.find(r => lb <= r.max);
+        if (row) return row.prices[colIdx];
+        // 超重补丁逻辑
+        if (lb <= 50) return 18.00 + (Math.max(0, Math.ceil(lb - 21)) * 0.40);
+        return 41.32 + (Math.max(0, Math.ceil(lb - 50)) * 0.75);
+    }
+
+    function getCouponValue(count) { return getVal(count > 6 ? 'coupon6' : 'coupon' + count); }
+    function getCustomerPostStep(count) {
+        if (count < 1) return getVal('postStep1');
+        if (count >= 7) return getVal('postStep7');
+        return getVal('postStep' + Math.ceil(count)); 
+    }
+
+    document.getElementById('storageType').addEventListener('change', function() {
+        const type = this.value;
+        const postTypeSelect = document.getElementById('postType');
+        if (type === 'local') {
+            postTypeSelect.value = 'merchantFree';
+            postTypeSelect.disabled = false;
+        } else {
+            const fbtPolicy = document.getElementById('fbtPolicy');
+            fbtPolicy.value = 'standard'; 
+            postTypeSelect.value = 'merchantFree';
+            postTypeSelect.disabled = false;
+        }
+        calculate(); 
+    });
+
+    document.getElementById('fbtPolicy').addEventListener('change', function() {
+        const policy = this.value;
+        const postTypeSelect = document.getElementById('postType');
+        if (policy === 'standard') {
+            postTypeSelect.value = 'merchantFree';
+            postTypeSelect.disabled = false;
+        } else {
+            postTypeSelect.value = 'bothShare';
+            postTypeSelect.disabled = true;
+        }
+        calculate();
+    });
+
+    function calculate() {
+        const storageType = document.getElementById('storageType').value;
+        const fbtPolicy = document.getElementById('fbtPolicy').value;
+        const postTypeSelect = document.getElementById('postType');
+        
+        if (storageType === 'fbt' && fbtPolicy === 'optOut') {
+            postTypeSelect.value = 'bothShare'; 
+            postTypeSelect.disabled = true;    
+        }
+
+        calcVolWeight();
+
+        const rate = getVal('rate');
+        const buyTotalRMB = (getVal('buyPrice') * getVal('buyNum')) + getVal('buyOther');
+        const buyTotalUSD = buyTotalRMB / rate;
+        setTxt('buyPriceUsd', `≈ ${formatNum(getVal('buyPrice')/rate)} USD`);
+        setTxt('buyOtherUsd', `≈ ${formatNum(getVal('buyOther')/rate)} USD`);
+        setTxt('buyTotal', formatNum(buyTotalRMB));
+        setTxt('buyTotalUsd', `≈ ${formatNum(buyTotalUSD)} USD`);
+
+        const shipType = document.getElementById('shipType').value;
+        document.getElementById('airPriceItem').classList.toggle('hide', shipType !== 'air');
+        document.getElementById('seaPriceItem').classList.toggle('hide', shipType !== 'sea');
+        const shipPrice = shipType === 'air' ? getVal('airPrice') : getVal('seaPrice');
+        const totalW = getVal('boxWeight') * getVal('totalBox');
+        const totalP = getVal('boxNum') * getVal('totalBox');
+        const shipTotal = totalW * shipPrice;
+        setTxt('totalWeight', totalW); 
+        setTxt('shipTotal', formatNum(shipTotal)); setTxt('shipTotalUsd', `≈ ${formatNum(shipTotal/rate)} USD`);
+        setTxt('shipPerProduct', formatNum(shipTotal/totalP)); setTxt('shipPerProductUsd', `≈ ${formatNum((shipTotal/totalP)/rate)} USD`);
+
+        const packPer = getVal('packPer');
+        const packTotal = packPer * getVal('buyNum');
+        setTxt('packPerUsd', `≈ ${formatNum(packPer/rate)} USD`);
+        setTxt('packTotal', formatNum(packTotal)); setTxt('packTotalUsd', `≈ ${formatNum(packTotal/rate)} USD`);
+        const allTotal = buyTotalRMB + shipTotal + packTotal;
+        const unitCost = allTotal / getVal('buyNum');
+        const unitCostUSD = unitCost / rate;
+        setTxt('allTotal', formatNum(allTotal)); setTxt('allTotalUsd', `≈ ${formatNum(allTotal/rate)} USD`);
+        setTxt('perProductCost', formatNum(unitCost)); setTxt('perProductCostUsd', `≈ ${formatNum(unitCostUSD)} USD`);
+
+        const saleQty = parseInt(document.getElementById('storageProductNum').value);
+        const sendWeight = getVal('productWeight') * saleQty;
+        setTxt('sendTotalWeight', sendWeight);
+        
+        const isFbt = storageType === 'fbt';
+        document.getElementById('fbtPolicyItem').classList.toggle('hide', !isFbt);
+        document.getElementById('localArea').classList.toggle('hide', isFbt);
+        
+        let whFeeUSD = 0, ttsUSD = 0;
+        if (isFbt) {
+            const fbtRate = getFbtUnitRate(getVal('productWeight'), saleQty);
+            const fbtTotal = fbtRate * saleQty;
+            document.getElementById('fbtOnePrice').innerText = fbtTotal.toFixed(2);
+            setTxt('fbtOnePriceRmb', `≈ ${formatNum(fbtTotal*rate)} RMB`);
+            whFeeUSD = fbtTotal;
+        } else {
+            whFeeUSD = getVal('localOutFee') + (Math.max(0, saleQty-1) * getVal('localAddOutFee'));
+            ttsUSD = getTtsFee(sendWeight, document.getElementById('ttsZone').value);
+        }
+        setTxt('localOutFeeRmb', `≈ ${formatNum(getVal('localOutFee')*rate)} RMB`);
+        setTxt('localAddOutFeeRmb', `≈ ${formatNum(getVal('localAddOutFee')*rate)} RMB`);
+        setTxt('storagePerProduct', `${formatNum(whFeeUSD)} USD`); setTxt('storagePerProductRmb', `≈ ${formatNum(whFeeUSD*rate)} RMB`);
+        
+        document.getElementById('ttsFeeItem').classList.toggle('hide', isFbt); 
+        setTxt('ttsFeeUsd', `${formatNum(ttsUSD)} USD`); setTxt('ttsFeeRmb', `≈ ${formatNum(ttsUSD*rate)} RMB`); 
+        
+        const stTtsTotal = whFeeUSD + ttsUSD;
+        setTxt('storageTtsTotalUsd', `${formatNum(stTtsTotal)} USD`); 
+        setTxt('storageTtsTotalRmb', `≈ ${formatNum(stTtsTotal*rate)} RMB`); 
+        document.getElementById('storageTtsTotalItem').classList.toggle('hide', isFbt); 
+
+        const elFbt = document.getElementById('storagePerProduct').parentNode;
+        if(isFbt) {
+            document.getElementById('storagePerProduct').className = 'highlight-green';
+        } else {
+            document.getElementById('storagePerProduct').className = 'val-blue';
+        }
+
+        const postType = document.getElementById('postType').value;
+        const logisticsCost = isFbt ? whFeeUSD : ttsUSD; 
+        
+        let merchPost = 0, custPost = 0, fbtReimburse = 0;
+        let forcedPost = false;
+        
+        const salePrice = getVal('salePrice'); setTxt('salePriceRmb', `≈ ${formatNum(salePrice*rate)} RMB`);
+        const couponVal = getCouponValue(saleQty);
+        const orderVal = (salePrice * saleQty) - couponVal;
+
+        if (isFbt && fbtPolicy === 'optOut' && orderVal < 30) {
+            custPost = 5.99; merchPost = 0; fbtReimburse = 0.75 * saleQty; forcedPost = true;
+        }
+
+        if (!forcedPost) {
+            if (postType === 'merchantFree') { merchPost = logisticsCost; custPost = 0; }
+            else if (postType === 'customerAll') { merchPost = 0; custPost = logisticsCost; }
+            else { custPost = getCustomerPostStep(saleQty); merchPost = logisticsCost - custPost; }
+        }
+
+        document.getElementById('postTotalItem').classList.toggle('hide', forcedPost);
+        setTxt('postTotalUsd', `${formatNum(logisticsCost)} USD`); setTxt('postTotalRmb', `≈ ${formatNum(logisticsCost*rate)} RMB`);
+        
+        document.getElementById('merchantPostItem').classList.toggle('hide', forcedPost);
+        setTxt('merchantPostUsd', formatNum(merchPost)); 
+        setTxt('merchantPostRmb', `≈ ${formatNum(merchPost*rate)} RMB`);
+
+        document.getElementById('customerPostItem').classList.toggle('hide', postType === 'merchantFree' && !forcedPost);
+        const displayCust = forcedPost ? 5.99 : custPost;
+        setTxt('customerPostUsd', formatNum(displayCust)); setTxt('customerPostRmb', `≈ ${formatNum(displayCust*rate)} RMB`);
+        
+        document.getElementById('customerPostStepBox').classList.toggle('hide', postType !== 'bothShare' || forcedPost);
+        document.getElementById('fbtReimburseItem').classList.toggle('hide', !forcedPost);
+        setTxt('fbtReimburse', `${formatNum(fbtReimburse)} USD`);
+
+        for(let i=1; i<=6; i++){
+            const cp = getVal('coupon'+i);
+            const totP = salePrice * i;
+            const valBefore = totP - cp;
+            let cPost = 0;
+            if (isFbt && fbtPolicy === 'optOut' && valBefore < 30) cPost = 5.99;
+            else {
+                if(postType === 'bothShare') {
+                    cPost = getCustomerPostStep(i);
+                } else if(postType === 'customerAll') {
+                    if(isFbt) cPost = getFbtUnitRate(getVal('productWeight'), i) * i;
+                    else cPost = getTtsFee(getVal('productWeight') * i, document.getElementById('ttsZone').value);
+                }
+            }
+            const finalP = Math.max(0, totP - cp + cPost); 
+            const avg = finalP / i;
+
+            let costProd_i = unitCostUSD * i;
+            let costFull_i = 0;
+            if(isFbt) {
+                let fr = getFbtUnitRate(getVal('productWeight'), i);
+                let ft = fr * i;
+                let sub = (isFbt && fbtPolicy === 'optOut' && valBefore < 30) ? (0.75 * i) : 0;
+                costFull_i = ft - sub;
+            } else {
+                let wh = getVal('localOutFee') + (Math.max(0, i-1) * getVal('localAddOutFee'));
+                let tts = getTtsFee(getVal('productWeight') * i, document.getElementById('ttsZone').value);
+                costFull_i = wh + tts;
+            }
+            let fees_i = finalP * ((getVal('commissionRate') + getVal('platformRate') + getVal('damageRate')) / 100);
+            let profit_i = finalP - costProd_i - costFull_i - fees_i;
+            let profitClass = profit_i > 0 ? 'prof-pos' : 'prof-neg';
+
+            document.getElementById('showItem'+i).innerHTML = 
+                `<td>${i}</td><td>${formatNum(totP)}</td><td>${formatNum(cp)}</td><td>${formatNum(cPost)}</td><td>${formatNum(finalP)}</td><td class="hl-val">${formatNum(avg)}</td><td class="${profitClass}">${formatNum(profit_i)}</td>`;
+        }
+
+        setTxt('autoCouponText', `${formatNum(couponVal)} USD (买${saleQty})`);
+        setTxt('autoCouponRmb', `≈ ${formatNum(couponVal*rate)} RMB`);
+        
+        const revenue = orderVal + displayCust;
+        setTxt('finalPriceText', `${formatNum(revenue)} USD`); setTxt('finalPriceRmb', `≈ ${formatNum(revenue*rate)} RMB`);
+        setTxt('avgPrice', `${formatNum(revenue/saleQty)} USD`); setTxt('avgPriceRmb', formatNum((revenue/saleQty)*rate));
+
+        const comm = revenue * (getVal('commissionRate')/100);
+        const plat = revenue * (getVal('platformRate')/100);
+        const dmg = revenue * (getVal('damageRate')/100);
+        const totalFee = comm + plat + dmg;
+        setTxt('totalCostUsd', `${formatNum(totalFee)} USD`); setTxt('totalCostRmb', `${formatNum(totalFee*rate)} RMB`);
+
+        const costProd = unitCostUSD * saleQty;
+        let costFull = 0;
+        if(isFbt) costFull = whFeeUSD - fbtReimburse; 
+        else costFull = whFeeUSD + ttsUSD;
+        
+        const finalCost = costProd + costFull + totalFee;
+        const profit = revenue - finalCost;
+        const roi = profit > 0 ? (revenue/profit) : 0; 
+        
+        setTxt('finalAllCostUsd', `${formatNum(finalCost)} USD`); setTxt('finalAllCostRmb', `≈ ${formatNum(finalCost*rate)} RMB`);
+        setTxt('actualIncomeUsd', `${formatNum(revenue)} USD`); setTxt('actualIncomeRmb', `≈ ${formatNum(revenue*rate)} RMB`);
+        
+        let platNet = isFbt ? (revenue - whFeeUSD - plat) : (revenue - ttsUSD - plat);
+        setTxt('platformNetIncomeUsd', `${formatNum(platNet)} USD`); setTxt('platformNetIncomeRmb', `≈ ${formatNum(platNet*rate)} RMB`);
+
+        setTxt('finalProfitUsd', `${formatNum(profit)} USD`); setTxt('finalProfitRmb', `≈ ${formatNum(profit*rate)} RMB`);
+        setTxt('profitRate', `${formatNum(revenue>0 ? (profit/revenue)*100 : 0)} %`);
+        setTxt('breakEvenRoi', profit>0 ? formatNum(roi) : '无法保本');
+
+        const pBox = document.getElementById('profitBox');
+        if(profit > 0) { 
+            pBox.classList.remove('bg-red', 'card-danger-thick');
+            pBox.classList.add('bg-green'); 
+        } else { 
+            pBox.classList.remove('bg-green');
+            pBox.classList.add('bg-red', 'card-danger-thick'); 
+        }
+
+        // --- 全局红色警示逻辑 ---
+        const normalCards = ['card-base', 'card-ship', 'card-summary', 'card-warehouse', 'card-fees', 'card-pricing'];
+        const redDetails = ['details-tts', 'details-fbt', 'details-logic'];
+        
+        // 普通卡片变红 (细边框)
+        normalCards.forEach(id => {
+            const el = document.getElementById(id);
+            if(profit <= 0) el.classList.add('card-danger');
+            else el.classList.remove('card-danger');
+        });
+
+        // 折叠面板变红
+        redDetails.forEach(id => {
+            const el = document.getElementById(id);
+            if(profit <= 0) el.classList.add('details-danger');
+            else el.classList.remove('details-danger');
+        });
+
+        // 头部标题变红
+        const headerEl = document.getElementById('mainHeader');
+        if(profit <= 0) headerEl.classList.add('header-danger');
+        else headerEl.classList.remove('header-danger');
+    }
+
+    // 记录初始数据
+    function saveToDefaults() {
+        document.querySelectorAll('input, select').forEach(el => {
+            appDefaults[el.id] = el.value;
+        });
+    }
+
+    // 初始化运行
+    renderRateTables(); // 渲染表格
+    saveToDefaults(); // 页面加载时先保存一次HTML中的默认值
+    
+    // 保存初始数据按钮逻辑
+    document.getElementById('saveInitBtn').addEventListener('click', () => {
+        if(confirm('确定将当前页面的所有输入值保存为“初始数据”吗？\n点击“重置数据”按钮将恢复到此状态。')) {
+            saveToDefaults();
+            alert('✅ 保存成功！点击“重置数据”将恢复到此状态。');
+        }
+    });
+
+    // 重置按钮逻辑
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        // 从 appDefaults 恢复
+        for (const [id, val] of Object.entries(appDefaults)) {
+            const el = document.getElementById(id);
+            if(el) el.value = val;
+        }
+
+        // 特殊联动逻辑处理
+        const storageType = document.getElementById('storageType').value;
+        const fbtPolicy = document.getElementById('fbtPolicy').value;
+        const postTypeSelect = document.getElementById('postType');
+        
+        if (storageType === 'fbt' && fbtPolicy === 'optOut') {
+            postTypeSelect.disabled = true;
+        } else {
+            postTypeSelect.disabled = false;
+        }
+
+        calculate();
+    });
+    
+    document.getElementById('saveBtn').addEventListener('click', () => {
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => input.setAttribute('value', input.value));
+        const selects = document.querySelectorAll('select');
+        selects.forEach(select => {
+            const val = select.value;
+            const options = select.querySelectorAll('option');
+            options.forEach(opt => {
+                if(opt.value === val) opt.setAttribute('selected', 'selected');
+                else opt.removeAttribute('selected');
+            });
+        });
+
+        const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+        const blob = new Blob([htmlContent], {type: 'text/html'});
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+        const filename = prompt("请输入文件名:", "TikTok_Profit_" + timestamp);
+        
+        if (filename) {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename.endsWith('.html') ? filename : filename + '.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    });
+
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(el => { el.addEventListener('input', calculate); el.addEventListener('change', calculate); });
+
+    calculate();
+</script>
+</body>
+</html>
