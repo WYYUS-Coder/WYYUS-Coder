@@ -492,14 +492,13 @@
                     </div>
                     <div class="input-row">
                         <label>储存方式</label>
-                        <!-- 修改宽度为 130px 以适应横向排版 -->
                         <select id="storageType" style="width:130px;">
                             <option value="local">第三方本土仓</option>
                             <option value="fbt">FBT仓</option>
                         </select>
                     </div>
 
-                    <!-- 尾程运输方式 -->
+                    <!-- 尾程运输方式 (新增) -->
                     <div class="input-row" id="logisticsModeItem">
                         <label>尾程运输方式</label>
                         <select id="logisticsMode" style="width:130px;">
@@ -540,7 +539,7 @@
                                 <option value="0">Zone 1</option><option value="1">Zone 2</option><option value="2">Zone 3</option><option value="3">Zone 4</option><option value="4">Zone 5</option><option value="5">Zone 6</option><option value="6">Zone 7</option><option value="7">Zone 8</option>
                             </select>
                         </div>
-                        <!-- CBT 分区选择 -->
+                        <!-- CBT 分区选择 (新增) -->
                         <div class="input-row hide" id="cbtZoneItem">
                             <label>CBT 分区</label>
                             <select id="cbtZone" style="width:130px;">
@@ -746,7 +745,7 @@
                 <div class="card-header" style="grid-column: 1/-1;">✨ 最终利润 & ROI</div>
                 
                 <div class="p-item p-row1">
-                    <span class="p-label">最终总成本</span>
+                    <span class="p-label">最终总成本(货+头+仓+邮+佣+达)</span>
                     <div class="p-val" id="finalAllCostUsd">9.25 USD</div>
                     <div class="p-sub" id="finalAllCostRmb">≈ 64.75 RMB</div>
                 </div>
@@ -757,7 +756,7 @@
                 </div>
 
                 <div class="p-item p-row2">
-                    <span class="p-label">平台扣邮后回款</span>
+                    <span class="p-label">平台扣(邮+佣+达)回款</span>
                     <div class="p-val" id="platformNetIncomeUsd" style="font-size:18px;">0.00 USD</div>
                     <div class="p-sub" id="platformNetIncomeRmb">≈ 0.00 RMB</div>
                 </div>
