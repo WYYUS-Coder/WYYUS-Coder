@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -173,6 +174,24 @@
             transition: all 0.2s;
             font-size: 13px;
         }
+        
+        /* 新增：针对文本输入框的样式 */
+        input[type="text"] {
+            height: 32px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 0 8px;
+            text-align: left;
+            color: var(--text-dark);
+            transition: all 0.2s;
+            font-size: 13px;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0,120,215,0.1);
+        }
+
         select { width: 110px; }
         input:focus, select:focus {
             outline: none;
@@ -329,6 +348,33 @@
     <div class="header" id="mainHeader">
         <h1>TikTok Shop美国站利润计算表26.1.15版</h1>
     </div>
+
+    <!-- 竞对链接参考 (新增板块) -->
+    <details class="details-box" id="details-competitor" style="margin-bottom: 20px;">
+        <summary class="details-summary">🔗 竞对链接参考</summary>
+        <div class="details-content" style="padding: 15px;">
+            <div class="input-row">
+                <label style="flex: 0 0 90px;">竞对链接 1</label>
+                <input type="text" id="compLink1" placeholder="在此粘贴链接..." style="flex: 1;">
+            </div>
+            <div class="input-row">
+                <label style="flex: 0 0 90px;">竞对链接 2</label>
+                <input type="text" id="compLink2" placeholder="在此粘贴链接..." style="flex: 1;">
+            </div>
+            <div class="input-row">
+                <label style="flex: 0 0 90px;">竞对链接 3</label>
+                <input type="text" id="compLink3" placeholder="在此粘贴链接..." style="flex: 1;">
+            </div>
+            <div class="input-row">
+                <label style="flex: 0 0 90px;">竞对链接 4</label>
+                <input type="text" id="compLink4" placeholder="在此粘贴链接..." style="flex: 1;">
+            </div>
+            <div class="input-row">
+                <label style="flex: 0 0 90px;">竞对链接 5</label>
+                <input type="text" id="compLink5" placeholder="在此粘贴链接..." style="flex: 1;">
+            </div>
+        </div>
+    </details>
 
     <div class="layout-grid">
         
@@ -1342,7 +1388,7 @@
 
         // --- 全局红色警示逻辑 ---
         const normalCards = ['card-base', 'card-ship', 'card-summary', 'card-warehouse', 'card-fees', 'card-pricing'];
-        const redDetails = ['details-sample', 'details-tts', 'details-cbt', 'details-fbt', 'details-logic'];
+        const redDetails = ['details-competitor', 'details-sample', 'details-tts', 'details-cbt', 'details-fbt', 'details-logic'];
         
         // 普通卡片变红 (细边框)
         normalCards.forEach(id => {
