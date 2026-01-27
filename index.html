@@ -1,7 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+<html lang="zh-CN"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TikTok Shop美国站利润计算表26.1.15版</title>
@@ -355,23 +354,23 @@
         <div class="details-content" style="padding: 15px;">
             <div class="input-row">
                 <label style="flex: 0 0 90px;">竞对链接 1</label>
-                <input type="text" id="compLink1" placeholder="在此粘贴链接..." style="flex: 1;">
+                <input type="text" id="compLink1" placeholder="在此粘贴链接..." style="flex: 1;" value="">
             </div>
             <div class="input-row">
                 <label style="flex: 0 0 90px;">竞对链接 2</label>
-                <input type="text" id="compLink2" placeholder="在此粘贴链接..." style="flex: 1;">
+                <input type="text" id="compLink2" placeholder="在此粘贴链接..." style="flex: 1;" value="">
             </div>
             <div class="input-row">
                 <label style="flex: 0 0 90px;">竞对链接 3</label>
-                <input type="text" id="compLink3" placeholder="在此粘贴链接..." style="flex: 1;">
+                <input type="text" id="compLink3" placeholder="在此粘贴链接..." style="flex: 1;" value="">
             </div>
             <div class="input-row">
                 <label style="flex: 0 0 90px;">竞对链接 4</label>
-                <input type="text" id="compLink4" placeholder="在此粘贴链接..." style="flex: 1;">
+                <input type="text" id="compLink4" placeholder="在此粘贴链接..." style="flex: 1;" value="">
             </div>
             <div class="input-row">
                 <label style="flex: 0 0 90px;">竞对链接 5</label>
-                <input type="text" id="compLink5" placeholder="在此粘贴链接..." style="flex: 1;">
+                <input type="text" id="compLink5" placeholder="在此粘贴链接..." style="flex: 1;" value="">
             </div>
         </div>
     </details>
@@ -382,7 +381,7 @@
         <div class="column">
             <!-- 1. 基础 & 采购 -->
             <div class="card" id="card-base">
-                <div class="card-header">🛠️ 基础配置 & 采购成本</div>
+                <div class="card-header">🛠️ 基础配置 &amp; 采购成本</div>
                 <div class="card-body">
                     <div class="input-row">
                         <label>汇率 (1 USD = ? RMB)</label>
@@ -427,21 +426,21 @@
                 <div class="card-body">
                     <!-- 箱规试算 -->
                     <div class="vol-wrapper">
-                        <div style="margin-bottom:4px; font-weight:bold; color:#d93025;">📦 箱规试算 (>20.5kg 标红)</div>
+                        <div style="margin-bottom:4px; font-weight:bold; color:#d93025;">📦 箱规试算 (&gt;20.5kg 标红)</div>
                         <div style="display:flex; align-items:center; justify-content:space-between;">
                             <input type="number" id="boxL" value="55" placeholder="长"> <span style="color:#ccc">×</span>
                             <input type="number" id="boxW" value="50" placeholder="宽"> <span style="color:#ccc">×</span>
                             <input type="number" id="boxH" value="45" placeholder="高"> <span style="color:#ccc">÷</span>
                             <input type="number" id="volDivisor" value="6000" placeholder="材积">
                             <span style="color:#ccc">=</span>
-                            <span id="volWeightResult" style="font-weight:bold; color:var(--primary); font-size:18px;">20.63 KG</span>
+                            <span id="volWeightResult" style="font-weight: bold; color: rgb(217, 48, 37); font-size: 18px;">20.63 KG</span>
                         </div>
                     </div>
 
                     <div class="input-row">
                         <label>运输方式</label>
                         <select id="shipType">
-                            <option value="air" selected>空运</option>
+                            <option value="air" selected="selected">空运</option>
                             <option value="sea">海运</option>
                         </select>
                     </div>
@@ -525,13 +524,13 @@
         <div class="column">
             <!-- 4. 仓库 & FBT -->
             <div class="card" id="card-warehouse">
-                <div class="card-header">🏭 仓库 & 尾程物流</div>
+                <div class="card-header">🏭 仓库 &amp; 尾程物流</div>
                 <div class="card-body">
                     <div class="input-row">
                         <label>发货产品个数</label>
                         <div class="input-group">
                             <select id="storageProductNum" style="width:60px;">
-                                <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+                                <option value="1" selected="selected">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
                             </select>
                             <span style="font-size:12px; color:#999;">(总重:<span id="sendTotalWeight">300</span>g)</span>
                         </div>
@@ -539,7 +538,7 @@
                     <div class="input-row">
                         <label>储存方式</label>
                         <select id="storageType" style="width:130px;">
-                            <option value="local">第三方本土仓</option>
+                            <option value="local" selected="selected">第三方本土仓</option>
                             <option value="fbt">FBT仓</option>
                         </select>
                     </div>
@@ -548,7 +547,7 @@
                     <div class="input-row" id="logisticsModeItem">
                         <label>尾程运输方式</label>
                         <select id="logisticsMode" style="width:130px;">
-                            <option value="tts" selected>TTS</option>
+                            <option value="tts" selected="selected">TTS</option>
                             <option value="cbt">CBT</option>
                         </select>
                     </div>
@@ -558,7 +557,7 @@
                         <div style="margin-bottom:8px;">
                             <label style="color:#005a9e; font-weight:bold; font-size:12px; display:block; margin-bottom:4px;">FBT政策</label>
                             <select id="fbtPolicy" style="width:100%; border-color:#0078d7; color:#005a9e;">
-                                <option value="standard" selected>默认：无门槛免运费</option>
+                                <option value="standard" selected="selected">默认：无门槛免运费</option>
                                 <option value="optOut">退出：$30门槛 (低于$30客付$5.99)</option>
                             </select>
                         </div>
@@ -581,7 +580,7 @@
                         <div class="input-row" id="ttsZoneItem">
                             <label>TTS 分区</label>
                             <select id="ttsZone" style="width:130px;">
-                                <option value="avg" selected>🌍全区平均</option>
+                                <option value="avg" selected="selected">🌍全区平均</option>
                                 <option value="0">Zone 1</option><option value="1">Zone 2</option><option value="2">Zone 3</option><option value="3">Zone 4</option><option value="4">Zone 5</option><option value="5">Zone 6</option><option value="6">Zone 7</option><option value="7">Zone 8</option>
                             </select>
                         </div>
@@ -589,7 +588,7 @@
                         <div class="input-row hide" id="cbtZoneItem">
                             <label>CBT 分区</label>
                             <select id="cbtZone" style="width:130px;">
-                                <option value="avg" selected>🌍全区平均</option>
+                                <option value="avg" selected="selected">🌍全区平均</option>
                                 <option value="0">Zone 1</option><option value="1">Zone 2</option><option value="2">Zone 3</option><option value="3">Zone 4</option><option value="4">Zone 5</option><option value="5">Zone 6</option><option value="6">Zone 7</option><option value="7">Zone 8</option>
                             </select>
                         </div>
@@ -597,8 +596,8 @@
                         <div class="input-row" id="localOutFeeItem">
                             <label>出库费 (USD)</label>
                             <div class="input-group">
-                                <input type="number" id="localOutFee" value="0.8" step="0.01">
-                                <span class="sub-text" id="localOutFeeRmb">≈ 5.60 RMB</span>
+                                <input type="number" id="localOutFee" value="0.7" step="0.01">
+                                <span class="sub-text" id="localOutFeeRmb">≈ 4.90 RMB</span>
                             </div>
                         </div>
                         <div class="input-row" id="localAddOutFeeItem">
@@ -613,24 +612,24 @@
                     <div class="result-bar">
                         <label id="storageFeeLabel">✅ 仓库费用 (USD)</label>
                         <div class="input-group">
-                            <span id="storagePerProduct" class="val-blue">0.80 USD</span>
-                            <span class="sub-text" id="storagePerProductRmb">≈ 5.60 RMB</span>
+                            <span id="storagePerProduct" class="val-blue">0.70 USD</span>
+                            <span class="sub-text" id="storagePerProductRmb">≈ 4.90 RMB</span>
                         </div>
                     </div>
                     <div class="result-bar" id="ttsFeeItem">
                         <!-- ID用于JS动态修改标签 -->
                         <label><span id="lastMileLabel">TTS/尾程</span> (USD)</label>
                         <div class="input-group">
-                            <span id="ttsFeeUsd" class="val-blue">4.80 USD</span>
-                            <span class="sub-text" id="ttsFeeRmb">≈ 33.60 RMB</span>
+                            <span id="ttsFeeUsd" class="val-blue">4.79 USD</span>
+                            <span class="sub-text" id="ttsFeeRmb">≈ 33.56 RMB</span>
                         </div>
                     </div>
                     <div class="result-bar" id="storageTtsTotalItem" style="background:#fff8e8; border:1px solid #ffb300;">
                         <!-- ID用于JS动态修改标签 -->
                         <label><span id="storageTotalLabel">仓库+TTS合计</span></label>
                         <div class="input-group">
-                            <span id="storageTtsTotalUsd" class="highlight-green" style="color:#0078d7 !important; font-size:16px !important;">5.60 USD</span>
-                            <span class="sub-text" id="storageTtsTotalRmb" style="color:#0078d7; font-weight:bold; font-size:16px;">≈ 39.20 RMB</span>
+                            <span id="storageTtsTotalUsd" class="highlight-green" style="color:#0078d7 !important; font-size:16px !important;">5.50 USD</span>
+                            <span class="sub-text" id="storageTtsTotalRmb" style="color:#0078d7; font-weight:bold; font-size:16px;">≈ 38.47 RMB</span>
                         </div>
                     </div>
                 </div>
@@ -638,12 +637,12 @@
 
             <!-- 5. 运费规则 & 佣金 -->
             <div class="card" id="card-fees">
-                <div class="card-header">💰 运费分担 & 平台佣金</div>
+                <div class="card-header">💰 运费分担 &amp; 平台佣金</div>
                 <div class="card-body">
                     <div class="input-row">
                         <label>运费承担方式</label>
                         <select id="postType" style="width:130px;">
-                            <option value="merchantFree" selected>商家包邮</option>
+                            <option value="merchantFree" selected="selected">商家包邮</option>
                             <option value="bothShare">共同承担</option>
                             <option value="customerAll">客户全担</option>
                         </select>
@@ -666,24 +665,24 @@
                     <div class="result-bar" id="postTotalItem">
                         <label>✅ 尾程运费总额</label>
                         <div class="input-group">
-                            <span id="postTotalUsd" class="val-blue">4.80 USD</span>
-                            <span class="sub-text" id="postTotalRmb">≈ 33.60 RMB</span>
+                            <span id="postTotalUsd" class="val-blue">4.79 USD</span>
+                            <span class="sub-text" id="postTotalRmb">≈ 33.56 RMB</span>
                         </div>
                     </div>
                     
                     <div class="input-row" id="merchantPostItem">
                         <label>商家承担 (USD)</label>
                         <div class="input-group">
-                            <span id="merchantPostUsd" class="val-blue" style="font-size:14px; margin-right:5px;">4.80</span>
+                            <span id="merchantPostUsd" class="val-blue" style="font-size:14px; margin-right:5px;">4.79</span>
                             <span class="val-blue" style="font-size:14px;">USD</span>
-                            <span class="sub-text" id="merchantPostRmb">≈ 33.60 RMB</span>
+                            <span class="sub-text" id="merchantPostRmb">≈ 33.56 RMB</span>
                         </div>
                     </div>
                     <div class="input-row hide" id="customerPostItem">
                         <label>客户承担 (USD)</label>
                         <div class="input-group">
-                            <div id="customerPostUsd" style="font-weight:bold; color:var(--danger);">1.99</div>
-                            <span class="sub-text" id="customerPostRmb">≈ 13.93 RMB</span>
+                            <div id="customerPostUsd" style="font-weight:bold; color:var(--danger);">0.00</div>
+                            <span class="sub-text" id="customerPostRmb">≈ 0.00 RMB</span>
                         </div>
                     </div>
 
@@ -701,7 +700,7 @@
                         <label>平台佣金比例 (%)</label>
                         <div class="input-group">
                             <input type="number" id="platformRate" value="6" step="0.01">
-                            <span class="sub-text" id="platAmountUsd">= 0.00 USD</span>
+                            <span class="sub-text" id="platAmountUsd">= 0.72 USD</span>
                         </div>
                     </div>
                     <div class="input-row">
@@ -713,10 +712,10 @@
                     </div>
 
                     <div class="result-bar" style="background:#fff8e8; border:1px solid #ffb300;">
-                        <label>✅ 佣金&货损合计</label>
+                        <label>✅ 佣金&amp;货损合计</label>
                         <div class="input-group">
-                            <span id="totalCostUsd" class="val-blue">0.00 USD</span>
-                            <span class="sub-text">≈ <span id="totalCostRmb" class="val-blue">0.00 RMB</span></span>
+                            <span id="totalCostUsd" class="val-blue">0.72 USD</span>
+                            <span class="sub-text">≈ <span id="totalCostRmb" class="val-blue">5.04 RMB</span></span>
                         </div>
                     </div>
                 </div>
@@ -727,13 +726,13 @@
         <div class="column">
             <!-- 6. 定价 & 优惠券 -->
             <div class="card" id="card-pricing">
-                <div class="card-header">🏷️ 产品定价 & 优惠券</div>
+                <div class="card-header">🏷️ 产品定价 &amp; 优惠券</div>
                 <div class="card-body">
                     <div class="input-row">
                         <label>产品定价 (USD)</label>
                         <div class="input-group">
                             <input type="number" id="salePrice" value="11.99" step="0.01">
-                            <span class="sub-text" id="salePriceRmb">≈ 69.93 RMB</span>
+                            <span class="sub-text" id="salePriceRmb">≈ 83.93 RMB</span>
                         </div>
                     </div>
                     
@@ -753,34 +752,34 @@
                     <table class="preview-table">
                         <thead><tr><th>数量</th><th>定价</th><th>券</th><th>客付运</th><th>支付</th><th>均价</th><th>利润</th></tr></thead>
                         <tbody id="previewBody">
-                            <tr id="showItem1"><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                            <tr id="showItem2"><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                            <tr id="showItem3"><td>3</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                            <tr id="showItem4"><td>4</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                            <tr id="showItem5"><td>5</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                            <tr id="showItem6"><td>6</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem1"><td>1</td><td>11.99</td><td>0.00</td><td>0.00</td><td>11.99</td><td class="hl-val">11.99</td><td class="prof-pos">1.33</td></tr>
+                            <tr id="showItem2"><td>2</td><td>23.98</td><td>0.00</td><td>0.00</td><td>23.98</td><td class="hl-val">11.99</td><td class="prof-pos">6.03</td></tr>
+                            <tr id="showItem3"><td>3</td><td>35.97</td><td>0.00</td><td>0.00</td><td>35.97</td><td class="hl-val">11.99</td><td class="prof-pos">12.55</td></tr>
+                            <tr id="showItem4"><td>4</td><td>47.96</td><td>0.00</td><td>0.00</td><td>47.96</td><td class="hl-val">11.99</td><td class="prof-pos">18.55</td></tr>
+                            <tr id="showItem5"><td>5</td><td>59.95</td><td>0.00</td><td>0.00</td><td>59.95</td><td class="hl-val">11.99</td><td class="prof-pos">24.50</td></tr>
+                            <tr id="showItem6"><td>6</td><td>71.94</td><td>0.00</td><td>0.00</td><td>71.94</td><td class="hl-val">11.99</td><td class="prof-pos">31.02</td></tr>
                         </tbody>
                     </table>
 
                     <div class="result-bar" style="margin-top:10px;">
                         <label>✅ 当前匹配优惠券</label>
                         <div class="input-group">
-                            <span id="autoCouponText" class="val-blue">0.00 USD</span>
+                            <span id="autoCouponText" class="val-blue">0.00 USD (买1)</span>
                             <span class="sub-text" id="autoCouponRmb">≈ 0.00 RMB</span>
                         </div>
                     </div>
                     <div class="result-bar">
                         <label>✅ 客户最终支付 (USD)</label>
                         <div class="input-group">
-                            <span id="finalPriceText" class="highlight-green">9.99 USD</span>
-                            <span class="sub-text" id="finalPriceRmb">≈ 69.93 RMB</span>
+                            <span id="finalPriceText" class="highlight-green">11.99 USD</span>
+                            <span class="sub-text" id="finalPriceRmb">≈ 83.93 RMB</span>
                         </div>
                     </div>
                     <div class="result-bar" style="background:#fff8e8; border:1px solid #ffb300;">
                         <label style="color:#d93025;">✅ 单品实付均价 (USD)</label>
                         <div class="input-group">
-                            <span id="avgPrice" class="val-blue" style="color:#d93025;">9.99 USD</span>
-                            <span class="sub-text" style="color:#d93025;">≈ <span id="avgPriceRmb">69.93 RMB</span></span>
+                            <span id="avgPrice" class="val-blue" style="color:#d93025;">11.99 USD</span>
+                            <span class="sub-text" style="color:#d93025;">≈ <span id="avgPriceRmb">83.93</span></span>
                         </div>
                     </div>
                 </div>
@@ -788,37 +787,37 @@
 
             <!-- 7. 利润大屏 -->
             <div class="card profit-dashboard bg-green" id="profitBox">
-                <div class="card-header" style="grid-column: 1/-1;">✨ 最终利润 & ROI</div>
+                <div class="card-header" style="grid-column: 1/-1;">✨ 最终利润 &amp; ROI</div>
                 
                 <div class="p-item p-row1">
                     <span class="p-label">最终总成本(货+头+仓+邮+佣+达)</span>
-                    <div class="p-val" id="finalAllCostUsd">9.25 USD</div>
-                    <div class="p-sub" id="finalAllCostRmb">≈ 64.75 RMB</div>
+                    <div class="p-val" id="finalAllCostUsd">10.66 USD</div>
+                    <div class="p-sub" id="finalAllCostRmb">≈ 74.63 RMB</div>
                 </div>
                 <div class="p-item p-row1">
                     <span class="p-label">实际收入</span>
-                    <div class="p-val" id="actualIncomeUsd">9.99 USD</div>
-                    <div class="p-sub" id="actualIncomeRmb">≈ 69.93 RMB</div>
+                    <div class="p-val" id="actualIncomeUsd">11.99 USD</div>
+                    <div class="p-sub" id="actualIncomeRmb">≈ 83.93 RMB</div>
                 </div>
 
                 <div class="p-item p-row2">
                     <span class="p-label">平台扣(邮+佣+达)回款</span>
-                    <div class="p-val" id="platformNetIncomeUsd" style="font-size:18px;">0.00 USD</div>
-                    <div class="p-sub" id="platformNetIncomeRmb">≈ 0.00 RMB</div>
+                    <div class="p-val" id="platformNetIncomeUsd" style="font-size:18px;">6.48 USD</div>
+                    <div class="p-sub" id="platformNetIncomeRmb">≈ 45.33 RMB</div>
                 </div>
                 <div class="p-item p-row2">
                     <span class="p-label">利润率</span>
-                    <div class="p-val" id="profitRate" style="font-size:18px;">7.41 %</div>
+                    <div class="p-val" id="profitRate" style="font-size:18px;">11.08 %</div>
                 </div>
                 <div class="p-item p-row2">
                     <span class="p-label">ROI</span>
-                    <div class="p-val" id="breakEvenRoi" style="font-size:18px;">13.50</div>
+                    <div class="p-val" id="breakEvenRoi" style="font-size:18px;">9.03</div>
                 </div>
 
                 <div class="p-item p-row3">
                     <span class="p-label">✅ 最终利润</span>
-                    <div class="p-val" id="finalProfitUsd" style="font-size:36px;">0.74 USD</div>
-                    <div class="p-sub" id="finalProfitRmb">≈ 5.18 RMB</div>
+                    <div class="p-val" id="finalProfitUsd" style="font-size:36px;">1.33 USD</div>
+                    <div class="p-sub" id="finalProfitRmb">≈ 9.30 RMB</div>
                 </div>
             </div>
         </div>
@@ -836,13 +835,13 @@
             <div class="result-bar">
                 <label>💸 寄样总成本</label>
                 <div class="input-group">
-                    <span id="sampleCostUsd" class="val-blue">0.00 USD</span>
-                    <span class="sub-text" id="sampleCostRmb">≈ 0.00 RMB</span>
+                    <span id="sampleCostUsd" class="val-blue">1988.43 USD</span>
+                    <span class="sub-text" id="sampleCostRmb">≈ 13919.00 RMB</span>
                 </div>
             </div>
             <div class="result-bar" style="background:#e6f9e9; border:1px solid #28a745;">
                 <label style="color:#155724;">🎯 回本需销售 (单)</label>
-                <span id="sampleBreakEven" class="highlight-green" style="font-size:16px !important;">0</span>
+                <span id="sampleBreakEven" class="highlight-green" style="font-size:16px !important;">1497</span>
             </div>
             <!-- 增加 style="padding: 0 12px;" 以对齐 result-bar 的内容 -->
             <div style="font-size:12px; color:#999; margin-top:8px; line-height:1.4; padding: 0 12px;">
@@ -856,7 +855,7 @@
         <summary class="details-summary">🚚 TTS价卡26.1.15版</summary>
         <div class="details-content">
             <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。以下展示Zone 1-8及全区平均价。重量向上取整匹配。</div>
-            <div id="ttsTableContainer"></div>
+            <div id="ttsTableContainer"><table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>Zone 1</th><th>Zone 2</th><th>Zone 3</th><th>Zone 4</th><th>Zone 5</th><th>Zone 6</th><th>Zone 7</th><th>Zone 8</th><th>平均</th></tr></thead><tbody><tr><td>≤ 0.25</td><td>≤ 113</td><td>3.73</td><td>3.77</td><td>3.79</td><td>3.88</td><td>3.99</td><td>4.07</td><td>4.14</td><td>4.28</td><td class="rate-hl">3.96</td></tr><tr><td>≤ 0.5</td><td>≤ 227</td><td>4.11</td><td>4.17</td><td>4.20</td><td>4.25</td><td>4.35</td><td>4.40</td><td>4.46</td><td>4.58</td><td class="rate-hl">4.31</td></tr><tr><td>≤ 0.75</td><td>≤ 340</td><td>4.51</td><td>4.57</td><td>4.62</td><td>4.68</td><td>4.79</td><td>4.94</td><td>5.05</td><td>5.20</td><td class="rate-hl">4.79</td></tr><tr><td>≤ 1</td><td>≤ 454</td><td>5.97</td><td>5.97</td><td>5.97</td><td>5.97</td><td>6.05</td><td>6.23</td><td>6.53</td><td>6.88</td><td class="rate-hl">6.20</td></tr><tr><td>≤ 2</td><td>≤ 907</td><td>5.97</td><td>5.97</td><td>5.98</td><td>6.16</td><td>6.46</td><td>7.03</td><td>7.42</td><td>7.97</td><td class="rate-hl">6.62</td></tr><tr><td>≤ 3</td><td>≤ 1361</td><td>6.03</td><td>6.18</td><td>6.31</td><td>6.59</td><td>7.07</td><td>8.02</td><td>8.24</td><td>8.70</td><td class="rate-hl">7.14</td></tr><tr><td>≤ 4</td><td>≤ 1814</td><td>6.40</td><td>6.57</td><td>6.76</td><td>7.15</td><td>8.00</td><td>8.51</td><td>8.92</td><td>9.45</td><td class="rate-hl">7.72</td></tr><tr><td>≤ 5</td><td>≤ 2268</td><td>6.55</td><td>6.73</td><td>6.95</td><td>7.37</td><td>8.14</td><td>8.78</td><td>9.20</td><td>9.80</td><td class="rate-hl">7.94</td></tr><tr><td>≤ 10</td><td>≤ 4536</td><td>7.11</td><td>7.22</td><td>7.69</td><td>8.33</td><td>9.34</td><td>9.84</td><td>10.82</td><td>11.99</td><td class="rate-hl">9.04</td></tr><tr><td>≤ 15</td><td>≤ 6804</td><td>8.64</td><td>8.75</td><td>9.26</td><td>9.71</td><td>11.12</td><td>12.50</td><td>14.50</td><td>16.27</td><td class="rate-hl">11.34</td></tr><tr><td>≤ 20</td><td>≤ 9072</td><td>9.51</td><td>9.77</td><td>10.47</td><td>10.92</td><td>13.08</td><td>14.87</td><td>17.46</td><td>19.83</td><td class="rate-hl">13.24</td></tr></tbody></table></div>
         </div>
     </details>
 
@@ -865,7 +864,7 @@
         <summary class="details-summary">🚚 CBT价卡26.1.15版</summary>
         <div class="details-content">
             <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。以下展示Zone 1-8及全区平均价。重量向上取整匹配。</div>
-            <div id="cbtTableContainer"></div>
+            <div id="cbtTableContainer"><table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>Zone 1</th><th>Zone 2</th><th>Zone 3</th><th>Zone 4</th><th>Zone 5</th><th>Zone 6</th><th>Zone 7</th><th>Zone 8</th><th>平均</th></tr></thead><tbody><tr><td>≤ 0.25</td><td>≤ 113</td><td>2.99</td><td>3.08</td><td>3.23</td><td>3.30</td><td>3.46</td><td>3.53</td><td>3.60</td><td>3.73</td><td class="rate-hl">3.37</td></tr><tr><td>≤ 0.5</td><td>≤ 227</td><td>3.35</td><td>3.46</td><td>3.63</td><td>3.74</td><td>3.80</td><td>3.84</td><td>3.90</td><td>4.02</td><td class="rate-hl">3.72</td></tr><tr><td>≤ 0.75</td><td>≤ 340</td><td>3.53</td><td>3.66</td><td>3.85</td><td>3.99</td><td>4.22</td><td>4.35</td><td>4.47</td><td>4.61</td><td class="rate-hl">4.08</td></tr><tr><td>≤ 1</td><td>≤ 454</td><td>3.65</td><td>3.78</td><td>4.00</td><td>4.18</td><td>4.62</td><td>4.73</td><td>5.21</td><td>5.34</td><td class="rate-hl">4.44</td></tr><tr><td>≤ 2</td><td>≤ 907</td><td>3.94</td><td>4.15</td><td>4.42</td><td>4.71</td><td>5.50</td><td>5.70</td><td>6.19</td><td>6.38</td><td class="rate-hl">5.12</td></tr><tr><td>≤ 3</td><td>≤ 1361</td><td>4.12</td><td>4.35</td><td>4.58</td><td>4.94</td><td>5.83</td><td>6.05</td><td>6.60</td><td>6.90</td><td class="rate-hl">5.42</td></tr><tr><td>≤ 4</td><td>≤ 1814</td><td>4.23</td><td>4.48</td><td>4.80</td><td>5.24</td><td>6.17</td><td>6.40</td><td>7.03</td><td>7.41</td><td class="rate-hl">5.72</td></tr><tr><td>≤ 5</td><td>≤ 2268</td><td>4.28</td><td>4.56</td><td>5.23</td><td>5.67</td><td>6.50</td><td>6.71</td><td>7.35</td><td>7.80</td><td class="rate-hl">6.01</td></tr><tr><td>≤ 10</td><td>≤ 4536</td><td>4.84</td><td>5.24</td><td>5.92</td><td>6.41</td><td>7.88</td><td>8.25</td><td>9.14</td><td>9.34</td><td class="rate-hl">7.13</td></tr><tr><td>≤ 15</td><td>≤ 6804</td><td>5.44</td><td>6.04</td><td>6.94</td><td>7.42</td><td>9.83</td><td>10.43</td><td>11.24</td><td>11.32</td><td class="rate-hl">8.58</td></tr><tr><td>≤ 20</td><td>≤ 9072</td><td>6.21</td><td>7.06</td><td>7.86</td><td>8.58</td><td>11.53</td><td>12.27</td><td>13.25</td><td>13.48</td><td class="rate-hl">10.03</td></tr></tbody></table></div>
         </div>
     </details>
 
@@ -874,7 +873,7 @@
         <summary class="details-summary">🚚 FBT价卡26.1.15版</summary>
         <div class="details-content">
             <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。<b>显示金额为对应数量的总配送费（单价×数量）</b>，直观展示多件成本。</div>
-            <div id="fbtTableContainer"></div>
+            <div id="fbtTableContainer"><table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>1件总费</th><th>2件总费</th><th>3件总费</th><th>≥ 4件总费</th></tr></thead><tbody><tr><td>≤ 0.25</td><td>≤ 113</td><td class="rate-hl">4.28</td><td class="rate-hl">5.04</td><td class="rate-hl">5.73</td><td class="rate-hl">6.24</td></tr><tr><td>≤ 0.5</td><td>≤ 227</td><td class="rate-hl">4.52</td><td class="rate-hl">5.82</td><td class="rate-hl">7.08</td><td class="rate-hl">7.72</td></tr><tr><td>≤ 0.75</td><td>≤ 340</td><td class="rate-hl">4.70</td><td class="rate-hl">6.10</td><td class="rate-hl">7.83</td><td class="rate-hl">8.92</td></tr><tr><td>≤ 1</td><td>≤ 454</td><td class="rate-hl">5.10</td><td class="rate-hl">6.32</td><td class="rate-hl">8.34</td><td class="rate-hl">9.44</td></tr><tr><td>≤ 2</td><td>≤ 907</td><td class="rate-hl">5.71</td><td class="rate-hl">7.84</td><td class="rate-hl">9.42</td><td class="rate-hl">10.40</td></tr><tr><td>≤ 3</td><td>≤ 1361</td><td class="rate-hl">6.27</td><td class="rate-hl">8.60</td><td class="rate-hl">9.75</td><td class="rate-hl">12.04</td></tr><tr><td>≤ 4</td><td>≤ 1814</td><td class="rate-hl">6.92</td><td class="rate-hl">9.40</td><td class="rate-hl">11.73</td><td class="rate-hl">13.48</td></tr><tr><td>≤ 5</td><td>≤ 2268</td><td class="rate-hl">7.66</td><td class="rate-hl">10.18</td><td class="rate-hl">13.62</td><td class="rate-hl">18.16</td></tr><tr><td>≤ 6</td><td>≤ 2722</td><td class="rate-hl">8.58</td><td class="rate-hl">11.10</td><td class="rate-hl">16.05</td><td class="rate-hl">21.00</td></tr><tr><td>≤ 7</td><td>≤ 3175</td><td class="rate-hl">8.88</td><td class="rate-hl">11.80</td><td class="rate-hl">17.10</td><td class="rate-hl">22.40</td></tr><tr><td>≤ 8</td><td>≤ 3629</td><td class="rate-hl">9.22</td><td class="rate-hl">12.78</td><td class="rate-hl">18.27</td><td class="rate-hl">24.76</td></tr><tr><td>≤ 9</td><td>≤ 4082</td><td class="rate-hl">9.42</td><td class="rate-hl">13.14</td><td class="rate-hl">19.11</td><td class="rate-hl">25.08</td></tr><tr><td>≤ 10</td><td>≤ 4536</td><td class="rate-hl">9.63</td><td class="rate-hl">13.52</td><td class="rate-hl">19.68</td><td class="rate-hl">25.84</td></tr><tr><td>≤ 11</td><td>≤ 4990</td><td class="rate-hl">10.64</td><td class="rate-hl">15.16</td><td class="rate-hl">22.14</td><td class="rate-hl">29.12</td></tr><tr><td>≤ 12</td><td>≤ 5443</td><td class="rate-hl">10.75</td><td class="rate-hl">15.94</td><td class="rate-hl">23.31</td><td class="rate-hl">30.68</td></tr><tr><td>≤ 13</td><td>≤ 5897</td><td class="rate-hl">10.98</td><td class="rate-hl">16.14</td><td class="rate-hl">23.61</td><td class="rate-hl">31.08</td></tr><tr><td>≤ 14</td><td>≤ 6350</td><td class="rate-hl">11.44</td><td class="rate-hl">16.82</td><td class="rate-hl">24.63</td><td class="rate-hl">32.44</td></tr><tr><td>≤ 15</td><td>≤ 6804</td><td class="rate-hl">11.85</td><td class="rate-hl">17.56</td><td class="rate-hl">25.74</td><td class="rate-hl">33.92</td></tr><tr><td>≤ 16</td><td>≤ 7257</td><td class="rate-hl">12.67</td><td class="rate-hl">19.06</td><td class="rate-hl">27.99</td><td class="rate-hl">36.92</td></tr><tr><td>≤ 17</td><td>≤ 7711</td><td class="rate-hl">12.97</td><td class="rate-hl">21.40</td><td class="rate-hl">31.50</td><td class="rate-hl">41.60</td></tr><tr><td>≤ 18</td><td>≤ 8165</td><td class="rate-hl">13.34</td><td class="rate-hl">22.24</td><td class="rate-hl">32.76</td><td class="rate-hl">43.28</td></tr><tr><td>≤ 19</td><td>≤ 8618</td><td class="rate-hl">13.84</td><td class="rate-hl">23.38</td><td class="rate-hl">34.47</td><td class="rate-hl">45.56</td></tr><tr><td>≤ 20</td><td>≤ 9072</td><td class="rate-hl">14.11</td><td class="rate-hl">24.00</td><td class="rate-hl">35.40</td><td class="rate-hl">46.80</td></tr></tbody></table></div>
         </div>
     </details>
 
@@ -907,7 +906,7 @@
             • <strong>默认标准(Standard)</strong>：强制商家包邮，商家承担所有FBT费用。<br>
             • <strong>退出政策(Opt-Out)</strong>：
                 <br>&nbsp;&nbsp;- 订单金额(扣券后) ≥ $30：商家包邮。
-                <br>&nbsp;&nbsp;- 订单金额(扣券后) < $30：客户强制付$5.99运费，商家获得$0.75/件补贴。
+                <br>&nbsp;&nbsp;- 订单金额(扣券后) &lt; $30：客户强制付$5.99运费，商家获得$0.75/件补贴。
             </p>
 
             <p><strong>五、平台费用与佣金</strong><br>
@@ -919,7 +918,7 @@
             • <strong>最终总成本</strong> = 单品采购头程成本 + 尾程物流(商家承担部分) + 仓库/FBT费 + 佣金 + 货损。<br>
             • <strong>实际收入</strong> = 客户最终支付总额 (含客户运费)。<br>
             • <strong>最终利润</strong> = 实际收入 - 最终总成本。<br>
-            • <strong>ROI</strong> = 最终利润 > 0 ? (实际收入 ÷ 最终利润) : 无法保本。</p>
+            • <strong>ROI</strong> = 最终利润 &gt; 0 ? (实际收入 ÷ 最终利润) : 无法保本。</p>
 
             <p><strong>七、达人寄样成本</strong><br>
             • <strong>本土仓寄样</strong> = (单品采购头程成本 + 库内操作费 + 尾程运费(TTS或CBT)) × 寄样数量。<br>
@@ -1493,5 +1492,5 @@
 
     calculate();
 </script>
-</body>
-</html>
+
+</body></html>
