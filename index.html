@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Shop美国站利润计算表26.1.15版</title>
+    <title>TikTok Shop美国站利润计算表26.5.17版</title>
     <style>
         :root {
             --primary: #0078d7;
@@ -346,7 +346,7 @@
 
 <div class="container">
     <div class="header" id="mainHeader">
-        <h1>TikTok Shop美国站利润计算表26.1.15版</h1>
+        <h1>TikTok Shop美国站利润计算表26.5.17版</h1>
     </div>
 
     <!-- 竞对链接参考 (新增板块) -->
@@ -389,6 +389,17 @@
                         <input type="number" id="rate" value="7.0" step="0.01">
                     </div>
                     <hr class="divider">
+                    <!-- 新增：产品盒规尺寸 -->
+                    <div class="input-row">
+                        <label>产品盒规 (cm)</label>
+                        <div class="input-group">
+                            <input type="number" id="prodL" value="15" placeholder="长" style="width:45px; text-align:center; padding:0 2px;">
+                            <span style="color:#ccc">×</span>
+                            <input type="number" id="prodW" value="10" placeholder="宽" style="width:45px; text-align:center; padding:0 2px;">
+                            <span style="color:#ccc">×</span>
+                            <input type="number" id="prodH" value="5" placeholder="高" style="width:45px; text-align:center; padding:0 2px;">
+                        </div>
+                    </div>
                     <div class="input-row">
                         <label>产品重量 (g)</label>
                         <input type="number" id="productWeight" value="300" step="0.1">
@@ -582,7 +593,10 @@
                             <label>TTS 分区</label>
                             <select id="ttsZone" style="width:130px;">
                                 <option value="avg" selected>🌍全区平均</option>
-                                <option value="0">Zone 1</option><option value="1">Zone 2</option><option value="2">Zone 3</option><option value="3">Zone 4</option><option value="4">Zone 5</option><option value="5">Zone 6</option><option value="6">Zone 7</option><option value="7">Zone 8</option>
+                                <option value="0">Zone 1</option>
+                                <option value="1">Zone 3</option>
+                                <option value="2">Zone 5</option>
+                                <option value="3">Zone 7</option>
                             </select>
                         </div>
                         <!-- CBT 分区选择 (新增) -->
@@ -590,7 +604,10 @@
                             <label>CBT 分区</label>
                             <select id="cbtZone" style="width:130px;">
                                 <option value="avg" selected>🌍全区平均</option>
-                                <option value="0">Zone 1</option><option value="1">Zone 2</option><option value="2">Zone 3</option><option value="3">Zone 4</option><option value="4">Zone 5</option><option value="5">Zone 6</option><option value="6">Zone 7</option><option value="7">Zone 8</option>
+                                <option value="0">Zone 1</option>
+                                <option value="1">Zone 3</option>
+                                <option value="2">Zone 5</option>
+                                <option value="3">Zone 7</option>
                             </select>
                         </div>
 
@@ -760,14 +777,16 @@
 
                     <div style="font-size:12px; font-weight:bold; color:#555; margin-top:10px;">📊 实时计算预览 (含运费分担)</div>
                     <table class="preview-table">
-                        <thead><tr><th>数量</th><th>定价</th><th>券</th><th>客付运</th><th>支付</th><th>均价</th><th>利润</th></tr></thead>
+                        <!-- 修改：在表头添加了一列 ROI -->
+                        <thead><tr><th>数量</th><th>定价</th><th>券</th><th>客付运</th><th>支付</th><th>均价</th><th>利润</th><th>ROI</th></tr></thead>
                         <tbody id="previewBody">
-                            <tr id="showItem1"><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                            <tr id="showItem2"><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                            <tr id="showItem3"><td>3</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                            <tr id="showItem4"><td>4</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                            <tr id="showItem5"><td>5</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                            <tr id="showItem6"><td>6</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <!-- 修改：占位行各增加了一个 td 标签 -->
+                            <tr id="showItem1"><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem2"><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem3"><td>3</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem4"><td>4</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem5"><td>5</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            <tr id="showItem6"><td>6</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
                         </tbody>
                     </table>
 
@@ -905,25 +924,25 @@
 
     <!-- TTS 价卡 -->
     <details class="details-box" id="details-tts">
-        <summary class="details-summary">🚚 TTS价卡26.1.15版</summary>
+        <summary class="details-summary">🚚 TTS价卡26.5.17版</summary>
         <div class="details-content">
-            <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。以下展示Zone 1-8及全区平均价。重量向上取整匹配。</div>
+            <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。以下展示Zone 1, 3, 5, 7及全区平均价。重量向上取整匹配。</div>
             <div id="ttsTableContainer"></div>
         </div>
     </details>
 
     <!-- CBT 价卡 (新增) -->
     <details class="details-box" id="details-cbt">
-        <summary class="details-summary">🚚 CBT价卡26.1.15版</summary>
+        <summary class="details-summary">🚚 CBT价卡26.5.17版</summary>
         <div class="details-content">
-            <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。以下展示Zone 1-8及全区平均价。重量向上取整匹配。</div>
+            <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。以下展示Zone 1, 3, 5, 7及全区平均价。重量向上取整匹配。</div>
             <div id="cbtTableContainer"></div>
         </div>
     </details>
 
     <!-- FBT 价卡 -->
     <details class="details-box" id="details-fbt">
-        <summary class="details-summary">🚚 FBT价卡26.1.15版</summary>
+        <summary class="details-summary">🚚 FBT价卡26.5.17版</summary>
         <div class="details-content">
             <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。<b>显示金额为对应数量的总配送费（单价×数量）</b>，直观展示多件成本。</div>
             <div id="fbtTableContainer"></div>
@@ -948,7 +967,7 @@
             • <strong>第三方本土仓</strong>：成本 = 库内操作费 + 续件费 + 包材费 + 尾程运费。<br>
             &nbsp;&nbsp;- <strong>出库费 (库内操作费)</strong>：自动根据总重量计算 (0-2LB=$0.7, 2-5LB=$1.5, 5-10LB=$2, >10LB=$2)。<br>
             &nbsp;&nbsp;- <strong>包材费</strong>：发货1个=0，2-20个=$0.3，>20个需手动填写。<br>
-            &nbsp;&nbsp;- <strong>尾程运费</strong>：根据选择的 TTS 或 CBT 价卡计算。<br>
+            &nbsp;&nbsp;- <strong>尾程运费</strong>：根据选择的 TTS 或 CBT 价卡计算。计费重规则为取实际重量与体积重(长×宽×高(inch)÷166)的较大值。<br>
             • <strong>FBT仓</strong>：成本 = FBT一口价(含操作与配送，内置官方价卡)。<br>
             • <strong>运费承担方式</strong>：
                 <br>&nbsp;&nbsp;- 商家包邮：商家支付全额运费。
@@ -957,6 +976,7 @@
             </p>
 
             <p><strong>四、FBT特殊政策规则</strong><br>
+            • <strong>体积重新规</strong>：如果一件商品的实际重量≤2磅，且其体积≤332立方英寸，则仅根据实重计算；超过任一阈值，则取Max(实重，体积重)。体积重=长×宽×高÷166(英寸)。<br>
             • <strong>默认标准(Standard)</strong>：强制商家包邮，商家承担所有FBT费用。<br>
             • <strong>退出政策(Opt-Out)</strong>：
                 <br>&nbsp;&nbsp;- 订单金额(扣券后) ≥ $30：商家包邮。
@@ -1003,48 +1023,40 @@
 </div>
 
 <script>
-    // 定义价卡数据供计算和展示使用
-    const TTS_DATA = [
-        { maxLb: 0.25, prices: [3.73, 3.77, 3.79, 3.88, 3.99, 4.07, 4.14, 4.28] }, 
-        { maxLb: 0.50, prices: [4.11, 4.17, 4.20, 4.25, 4.35, 4.40, 4.46, 4.58] }, 
-        { maxLb: 0.75, prices: [4.51, 4.57, 4.62, 4.68, 4.79, 4.94, 5.05, 5.20] }, 
-        { maxLb: 1.00, prices: [5.97, 5.97, 5.97, 5.97, 6.05, 6.23, 6.53, 6.88] }, 
-        { maxLb: 2.00, prices: [5.97, 5.97, 5.98, 6.16, 6.46, 7.03, 7.42, 7.97] }, 
-        { maxLb: 3.00, prices: [6.03, 6.18, 6.31, 6.59, 7.07, 8.02, 8.24, 8.70] }, 
-        { maxLb: 4.00, prices: [6.40, 6.57, 6.76, 7.15, 8.00, 8.51, 8.92, 9.45] }, 
-        { maxLb: 5.00, prices: [6.55, 6.73, 6.95, 7.37, 8.14, 8.78, 9.20, 9.80] }, 
-        { maxLb: 10.0, prices: [7.11, 7.22, 7.69, 8.33, 9.34, 9.84, 10.82, 11.99] }, 
-        { maxLb: 15.0, prices: [8.64, 8.75, 9.26, 9.71, 11.12, 12.50, 14.50, 16.27] }, 
-        { maxLb: 20.0, prices: [9.51, 9.77, 10.47, 10.92, 13.08, 14.87, 17.46, 19.83] }
+    // 定义价卡数据供计算和展示使用 (对应最新的 4 个区域: Zone 1, Zone 3, Zone 5, Zone 7)
+    const TTS_DATA =[
+        { maxLb: 0.25, prices:[3.43, 3.49, 3.63, 3.78] }, 
+        { maxLb: 0.50, prices:[3.80, 3.90, 4.00, 4.10] }, 
+        { maxLb: 0.75, prices:[4.20, 4.31, 4.44, 4.69] }, 
+        { maxLb: 1.00, prices:[5.97, 5.97, 6.33, 6.84] }, 
+        { maxLb: 5.00, prices:[6.80, 7.22, 8.47, 10.24] }, 
+        { maxLb: 10.0, prices:[7.53, 8.23, 9.87, 11.64] }, 
+        { maxLb: 15.0, prices:[9.35, 10.06, 11.89, 15.45] }, 
+        { maxLb: 20.0, prices:[10.54, 11.60, 14.20, 18.87] }
     ];
 
-    const CBT_DATA = [
-        { maxLb: 0.25, prices: [2.99, 3.08, 3.23, 3.30, 3.46, 3.53, 3.60, 3.73] },
-        { maxLb: 0.50, prices: [3.35, 3.46, 3.63, 3.74, 3.80, 3.84, 3.90, 4.02] },
-        { maxLb: 0.75, prices: [3.53, 3.66, 3.85, 3.99, 4.22, 4.35, 4.47, 4.61] },
-        { maxLb: 1.00, prices: [3.65, 3.78, 4.00, 4.18, 4.62, 4.73, 5.21, 5.34] },
-        { maxLb: 2.00, prices: [3.94, 4.15, 4.42, 4.71, 5.50, 5.70, 6.19, 6.38] },
-        { maxLb: 3.00, prices: [4.12, 4.35, 4.58, 4.94, 5.83, 6.05, 6.60, 6.90] },
-        { maxLb: 4.00, prices: [4.23, 4.48, 4.80, 5.24, 6.17, 6.40, 7.03, 7.41] },
-        { maxLb: 5.00, prices: [4.28, 4.56, 5.23, 5.67, 6.50, 6.71, 7.35, 7.80] },
-        { maxLb: 10.0, prices: [4.84, 5.24, 5.92, 6.41, 7.88, 8.25, 9.14, 9.34] },
-        { maxLb: 15.0, prices: [5.44, 6.04, 6.94, 7.42, 9.83, 10.43, 11.24, 11.32] },
-        { maxLb: 20.0, prices: [6.21, 7.06, 7.86, 8.58, 11.53, 12.27, 13.25, 13.48] }
+    const CBT_DATA =[
+        { maxLb: 0.25, prices:[2.99, 3.23, 3.46, 3.60] },
+        { maxLb: 0.50, prices:[3.35, 3.63, 3.80, 3.90] },
+        { maxLb: 0.75, prices:[3.53, 3.85, 4.22, 4.47] },
+        { maxLb: 1.00, prices:[3.65, 4.00, 4.62, 5.21] },
+        { maxLb: 5.00, prices:[4.28, 5.23, 6.50, 7.35] },
+        { maxLb: 10.0, prices:[4.84, 5.92, 7.88, 9.14] }
     ];
 
-    const FBT_DATA = [
-        { max: 0.25, prices: [4.28, 2.52, 1.91, 1.56] }, { max: 0.50, prices: [4.52, 2.91, 2.36, 1.93] }, 
-        { max: 0.75, prices: [4.70, 3.05, 2.61, 2.23] }, { max: 1.00, prices: [5.10, 3.16, 2.78, 2.36] }, 
-        { max: 2.00, prices: [5.71, 3.92, 3.14, 2.60] }, { max: 3.00, prices: [6.27, 4.30, 3.25, 3.01] }, 
-        { max: 4.00, prices: [6.92, 4.70, 3.91, 3.37] }, { max: 5.00, prices: [7.66, 5.09, 4.54, 4.54] }, 
-        { max: 6.00, prices: [8.58, 5.55, 5.35, 5.25] }, { max: 7.00, prices: [8.88, 5.90, 5.70, 5.60] }, 
-        { max: 8.00, prices: [9.22, 6.39, 6.09, 6.19] }, { max: 9.00, prices: [9.42, 6.57, 6.37, 6.27] }, 
-        { max: 10.00, prices: [9.63, 6.76, 6.56, 6.46] }, { max: 11.00, prices: [10.64, 7.58, 7.38, 7.28] }, 
-        { max: 12.00, prices: [10.75, 7.97, 7.77, 7.67] }, { max: 13.00, prices: [10.98, 8.07, 7.87, 7.77] }, 
-        { max: 14.00, prices: [11.44, 8.41, 8.21, 8.11] }, { max: 15.00, prices: [11.85, 8.78, 8.58, 8.48] }, 
-        { max: 16.00, prices: [12.67, 9.53, 9.33, 9.23] }, { max: 17.00, prices: [12.97, 10.70, 10.50, 10.40] }, 
-        { max: 18.00, prices: [13.34, 11.12, 10.92, 10.82] }, { max: 19.00, prices: [13.84, 11.69, 11.49, 11.39] }, 
-        { max: 20.00, prices: [14.11, 12.00, 11.80, 11.70] }
+    const FBT_DATA =[
+        { max: 0.25, prices:[4.28, 2.52, 1.91, 1.56] }, { max: 0.50, prices:[4.52, 2.91, 2.36, 1.93] }, 
+        { max: 0.75, prices:[4.70, 3.05, 2.61, 2.23] }, { max: 1.00, prices:[5.10, 3.16, 2.78, 2.36] }, 
+        { max: 2.00, prices:[5.71, 3.92, 3.14, 2.60] }, { max: 3.00, prices:[6.27, 4.30, 3.25, 3.01] }, 
+        { max: 4.00, prices:[6.92, 4.70, 3.91, 3.37] }, { max: 5.00, prices:[7.66, 5.09, 4.54, 4.54] }, 
+        { max: 6.00, prices:[8.58, 5.55, 5.35, 5.25] }, { max: 7.00, prices:[8.88, 5.90, 5.70, 5.60] }, 
+        { max: 8.00, prices:[9.22, 6.39, 6.09, 6.19] }, { max: 9.00, prices:[9.42, 6.57, 6.37, 6.27] }, 
+        { max: 10.00, prices:[9.63, 6.76, 6.56, 6.46] }, { max: 11.00, prices:[10.64, 7.58, 7.38, 7.28] }, 
+        { max: 12.00, prices:[10.75, 7.97, 7.77, 7.67] }, { max: 13.00, prices:[10.98, 8.07, 7.87, 7.77] }, 
+        { max: 14.00, prices:[11.44, 8.41, 8.21, 8.11] }, { max: 15.00, prices:[11.85, 8.78, 8.58, 8.48] }, 
+        { max: 16.00, prices:[12.67, 9.53, 9.33, 9.23] }, { max: 17.00, prices:[12.97, 10.70, 10.50, 10.40] }, 
+        { max: 18.00, prices:[13.34, 11.12, 10.92, 10.82] }, { max: 19.00, prices:[13.84, 11.69, 11.49, 11.39] }, 
+        { max: 20.00, prices:[14.11, 12.00, 11.80, 11.70] }
     ];
 
     // 初始化默认数据存储
@@ -1061,7 +1073,7 @@
     // 初始化渲染价卡表格
     function renderRateTables() {
         // TTS 表格
-        let ttsHtml = `<table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>Zone 1</th><th>Zone 2</th><th>Zone 3</th><th>Zone 4</th><th>Zone 5</th><th>Zone 6</th><th>Zone 7</th><th>Zone 8</th><th>平均</th></tr></thead><tbody>`;
+        let ttsHtml = `<table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>Zone 1</th><th>Zone 3</th><th>Zone 5</th><th>Zone 7</th><th>平均</th></tr></thead><tbody>`;
         TTS_DATA.forEach(row => {
             const avg = (row.prices.reduce((a,b)=>a+b, 0) / row.prices.length).toFixed(2);
             const g = Math.round(row.maxLb * 453.59237);
@@ -1073,7 +1085,7 @@
         document.getElementById('ttsTableContainer').innerHTML = ttsHtml;
 
         // CBT 表格
-        let cbtHtml = `<table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>Zone 1</th><th>Zone 2</th><th>Zone 3</th><th>Zone 4</th><th>Zone 5</th><th>Zone 6</th><th>Zone 7</th><th>Zone 8</th><th>平均</th></tr></thead><tbody>`;
+        let cbtHtml = `<table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>Zone 1</th><th>Zone 3</th><th>Zone 5</th><th>Zone 7</th><th>平均</th></tr></thead><tbody>`;
         CBT_DATA.forEach(row => {
             const avg = (row.prices.reduce((a,b)=>a+b, 0) / row.prices.length).toFixed(2);
             const g = Math.round(row.maxLb * 453.59237);
@@ -1111,21 +1123,78 @@
     }
 
     function getTtsFee(weightG, zoneIdx) {
-        const lb = weightG / 453.59237; 
+        let lb = weightG / 453.59237; 
+        
+        // --- 新增：TTS 尾程体积重计费规则 ---
+        const pl = getVal('prodL');
+        const pw = getVal('prodW');
+        const ph = getVal('prodH');
+        const unitWeightG = getVal('productWeight');
+        if (pl > 0 && pw > 0 && ph > 0 && unitWeightG > 0) {
+            // 根据总重量算出预估的发货件数
+            const qty = Math.round(weightG / unitWeightG);
+            // 计算总件数的总体积 (立方英寸)
+            const vol_in3_total = (pl / 2.54) * (pw / 2.54) * (ph / 2.54) * qty;
+            // 计算总体积重 (lbs)
+            const dimLb_total = vol_in3_total / 166;
+            // 计费重量 = Max(实际总重量, 体积总重量)
+            lb = Math.max(lb, dimLb_total);
+        }
+        // --------------------------------
+
         let selectedRow = TTS_DATA.find(r => lb <= r.maxLb) || TTS_DATA[TTS_DATA.length - 1];
         if (zoneIdx === 'avg') return selectedRow.prices.reduce((a, b) => a + b, 0) / selectedRow.prices.length;
         return selectedRow.prices[parseInt(zoneIdx)];
     }
 
     function getCbtFee(weightG, zoneIdx) {
-        const lb = weightG / 453.59237; 
+        let lb = weightG / 453.59237; 
+        
+        // --- 新增：CBT 尾程体积重计费规则 ---
+        const pl = getVal('prodL');
+        const pw = getVal('prodW');
+        const ph = getVal('prodH');
+        const unitWeightG = getVal('productWeight');
+        if (pl > 0 && pw > 0 && ph > 0 && unitWeightG > 0) {
+            const qty = Math.round(weightG / unitWeightG);
+            const vol_in3_total = (pl / 2.54) * (pw / 2.54) * (ph / 2.54) * qty;
+            const dimLb_total = vol_in3_total / 166;
+            lb = Math.max(lb, dimLb_total);
+        }
+        // --------------------------------
+
         let selectedRow = CBT_DATA.find(r => lb <= r.maxLb) || CBT_DATA[CBT_DATA.length - 1];
         if (zoneIdx === 'avg') return selectedRow.prices.reduce((a, b) => a + b, 0) / selectedRow.prices.length;
         return selectedRow.prices[parseInt(zoneIdx)];
     }
 
     function getFbtUnitRate(weightG, qty) {
-        const lb = weightG / 453.59237;
+        let lb = weightG / 453.59237;
+        
+        // --- 核心修改：FBT 计费重规则 ---
+        const pl = getVal('prodL');
+        const pw = getVal('prodW');
+        const ph = getVal('prodH');
+        
+        // 如果输入了有效的盒规尺寸，进行体积重判断
+        if (pl > 0 && pw > 0 && ph > 0) {
+            // 将 cm 转换为 inch
+            const l_in = pl / 2.54;
+            const w_in = pw / 2.54;
+            const h_in = ph / 2.54;
+            const vol_in3 = l_in * w_in * h_in;
+            
+            // 最新 FBT 规则：实重 <= 2 磅，且体积 <= 332 立方英寸，按实重算
+            if (lb <= 2 && vol_in3 <= 332) {
+                // lb 保持原实重，不变化
+            } else {
+                // 否则取实际重量或体积重量中的较大值
+                const dimWeightLb = vol_in3 / 166;
+                lb = Math.max(lb, dimWeightLb);
+            }
+        }
+        // --------------------------------
+
         let colIdx = qty >= 4 ? 3 : qty - 1;
         let row = FBT_DATA.find(r => lb <= r.max);
         if (row) return row.prices[colIdx];
@@ -1457,9 +1526,12 @@
 
             let profit_i = finalP - costProd_i - costFull_i - fees_i;
             let profitClass = profit_i > 0 ? 'prof-pos' : 'prof-neg';
+            
+            // 修改：增加 ROI 的动态计算判断
+            let roi_i = profit_i > 0 ? formatNum(finalP / profit_i) : '-';
 
             document.getElementById('showItem'+i).innerHTML = 
-                `<td>${i}</td><td>${formatNum(totP)}</td><td>${formatNum(cp)}</td><td>${formatNum(cPost)}</td><td>${formatNum(finalP)}</td><td class="hl-val">${formatNum(avg)}</td><td class="${profitClass}">${formatNum(profit_i)}</td>`;
+                `<td>${i}</td><td>${formatNum(totP)}</td><td>${formatNum(cp)}</td><td>${formatNum(cPost)}</td><td>${formatNum(finalP)}</td><td class="hl-val">${formatNum(avg)}</td><td class="${profitClass}">${formatNum(profit_i)}</td><td>${roi_i}</td>`;
         }
 
         setTxt('autoCouponText', `${formatNum(couponVal)} USD (买${saleQty})`);
@@ -1625,8 +1697,8 @@
 
 
         // --- 全局红色警示逻辑 ---
-        const normalCards = ['card-base', 'card-ship', 'card-summary', 'card-warehouse', 'card-fees', 'card-pricing'];
-        const redDetails = ['details-competitor', 'details-breakeven', 'details-sample', 'details-tts', 'details-cbt', 'details-fbt', 'details-logic'];
+        const normalCards =['card-base', 'card-ship', 'card-summary', 'card-warehouse', 'card-fees', 'card-pricing'];
+        const redDetails =['details-competitor', 'details-breakeven', 'details-sample', 'details-tts', 'details-cbt', 'details-fbt', 'details-logic'];
         
         // 普通卡片变红 (细边框)
         normalCards.forEach(id => {
@@ -1670,7 +1742,7 @@
     // 重置按钮逻辑
     document.getElementById('resetBtn').addEventListener('click', () => {
         // 从 appDefaults 恢复
-        for (const [id, val] of Object.entries(appDefaults)) {
+        for (const[id, val] of Object.entries(appDefaults)) {
             const el = document.getElementById(id);
             if(el) el.value = val;
         }
