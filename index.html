@@ -389,7 +389,7 @@
                         <input type="number" id="rate" value="7.0" step="0.01">
                     </div>
                     <hr class="divider">
-                    <!-- 新增：产品盒规尺寸 -->
+                    <!-- 产品盒规尺寸 -->
                     <div class="input-row">
                         <label>产品盒规 (cm)</label>
                         <div class="input-group">
@@ -400,10 +400,18 @@
                             <input type="number" id="prodH" value="5" placeholder="高" style="width:45px; text-align:center; padding:0 2px;">
                         </div>
                     </div>
-                    <div class="input-row">
+                    <!-- 产品重量 -->
+                    <div class="input-row" style="margin-bottom: 4px;">
                         <label>产品重量 (g)</label>
                         <input type="number" id="productWeight" value="300" step="0.1">
                     </div>
+                    <!-- 实时重量换算及计费标准预览 (优化版排版) -->
+                    <div style="background:#f8f9fa; padding:12px; border-radius:6px; text-align:center; margin-bottom:12px; border: 1px dashed #ced4da; display: flex; justify-content: center; align-items: center;">
+                        <div id="weightPreviewText">
+                            <!-- JS 动态填充 -->
+                        </div>
+                    </div>
+
                     <div class="input-row">
                         <label>拿货个数</label>
                         <input type="number" id="buyNum" value="300" step="1">
@@ -492,7 +500,7 @@
                         </div>
                     </div>
 
-                    <!-- 打包费移动到此处 -->
+                    <!-- 打包费 -->
                     <hr class="divider">
                     <div class="input-row">
                         <label>单个打包费 (RMB)</label>
@@ -725,7 +733,7 @@
                             <span class="sub-text" id="platAmountUsd">= 0.00 USD</span>
                         </div>
                     </div>
-                    <!-- 新增：智能营销佣金 -->
+                    <!-- 智能营销佣金 -->
                     <div class="input-row">
                         <label>智能营销佣金比例 (%)</label>
                         <div class="input-group">
@@ -1097,6 +1105,48 @@
         el.style.color = res > 20.5 ? '#d93025' : '#0078d7';
     }
 
+    // 核心更新：实重与体积重换算预览
+    function updateWeightPreview() {
+        const weightG = getVal('productWeight');
+        const pl = getVal('prodL');
+        const pw = getVal('prodW');
+        const ph = getVal('prodH');
+        
+        const actLb = weightG / 453.59237;
+        let volLb = 0;
+        
+        if (pl > 0 && pw > 0 && ph > 0) {
+            let vol_in3 = (pl / 2.54) * (pw / 2.54) * (ph / 2.54);
+            volLb = vol_in3 / 166;
+        }
+        
+        const actStr = actLb.toFixed(2);
+        const volStr = volLb.toFixed(2);
+        
+        let operator = "=";
+        let actColor = "var(--primary)";
+        let volColor = "var(--primary)";
+
+        if (actLb > volLb) {
+            operator = ">";
+            actColor = "var(--danger)"; // 实重大，实重变红
+        } else if (actLb < volLb) {
+            operator = "<";
+            volColor = "var(--danger)"; // 体积重大，体积重变红
+        }
+        
+        const previewEl = document.getElementById('weightPreviewText');
+        if(previewEl) {
+            previewEl.innerHTML = `
+                <span style="font-size:14px; color:#555;">实重</span> 
+                <b style="color:${actColor}; font-size:18px; margin:0 5px;">${actStr} lb</b> 
+                <span style="color:#aaa; font-size:20px; font-weight:800; margin:0 15px;">${operator}</span> 
+                <span style="font-size:14px; color:#555;">体积重</span> 
+                <b style="color:${volColor}; font-size:18px; margin:0 5px;">${volStr} lb</b>
+            `;
+        }
+    }
+
     function getTtsFee(weightG, zoneIdx) {
         let lb = weightG / 453.59237; 
         const pl = getVal('prodL');
@@ -1239,6 +1289,9 @@
     });
 
     function calculate() {
+        calcVolWeight();
+        updateWeightPreview();
+
         const storageType = document.getElementById('storageType').value;
         const logisticsMode = document.getElementById('logisticsMode').value;
         const fbtPolicy = document.getElementById('fbtPolicy').value;
@@ -1255,8 +1308,6 @@
         } else {
              postTypeSelect.disabled = false;
         }
-
-        calcVolWeight();
 
         const rate = getVal('rate');
         const buyTotalRMB = (getVal('buyPrice') * getVal('buyNum')) + getVal('buyOther');
@@ -1385,7 +1436,7 @@
         const affiliateBase = Math.max(0, revenue - displayCust);
         const comm = affiliateBase * (getVal('commissionRate')/100);
         
-        // 平台佣金和智能营销佣金 依然基于总Revenue (含运费)
+        // 平台佣金和智能营销佣金 基于总Revenue (含运费)
         const plat = revenue * (getVal('platformRate')/100);
         const smartMkt = revenue * (getVal('smartMarketingRate')/100);
         const dmg = revenue * (getVal('damageRate')/100);
@@ -1443,9 +1494,11 @@
                 } else {
                     lm = getTtsFee(totalWeightG_i, document.getElementById('ttsZone').value);
                 }
+                
                 costFull_i = wh_base + wh_add + pkg + lm;
             }
             
+            // 预览表内部的佣金计算也需要同步更新逻辑
             let commBase_i = Math.max(0, finalP - cPost);
             let comm_i = commBase_i * (getVal('commissionRate')/100);
             let plat_i = finalP * (getVal('platformRate')/100);
