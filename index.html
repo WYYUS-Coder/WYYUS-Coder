@@ -511,18 +511,15 @@
 
             <!-- 3. 成本汇总 -->
             <div class="card" id="card-summary" style="border-color: var(--primary);">
-                <!-- 标题修改 -->
                 <div class="card-header" style="background:#f0f8ff; color:var(--primary);">📊 国内成本统计 (采购+头程+杂费）</div>
                 <div class="card-body">
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
                         <div>
-                            <!-- 标签修改 -->
                             <div style="font-size:12px; color:#666;">总费用（RMB）</div>
                             <div id="allTotal" class="highlight-green">9339.00</div>
                             <div class="sub-text" id="allTotalUsd" style="text-align:center;">≈ 1334.14 USD</div>
                         </div>
                         <div style="border-left:1px solid #eee;">
-                            <!-- 标签修改 -->
                             <div style="font-size:12px; color:#666;">单个产品成本（RMB）</div>
                             <div id="perProductCost" class="highlight-green">31.13</div>
                             <div class="sub-text" id="perProductCostUsd" style="text-align:center;">≈ 4.45 USD</div>
@@ -555,7 +552,7 @@
                         </select>
                     </div>
 
-                    <!-- 尾程运输方式 (新增) -->
+                    <!-- 尾程运输方式 -->
                     <div class="input-row" id="logisticsModeItem">
                         <label>尾程运输方式</label>
                         <select id="logisticsMode" style="width:130px;">
@@ -599,7 +596,6 @@
                                 <option value="3">Zone 7</option>
                             </select>
                         </div>
-                        <!-- CBT 分区选择 (新增) -->
                         <div class="input-row hide" id="cbtZoneItem">
                             <label>CBT 分区</label>
                             <select id="cbtZone" style="width:130px;">
@@ -621,12 +617,11 @@
                         <div class="input-row" id="localAddOutFeeItem">
                             <label>续件费 (USD)</label>
                             <div class="input-group">
-                                <!-- Default to 0 for qty=1 -->
                                 <input type="number" id="localAddOutFee" value="0" step="0.01">
                                 <span class="sub-text" id="localAddOutFeeRmb">≈ 0.00 RMB</span>
                             </div>
                         </div>
-                        <!-- 新增 包材费 (USD) -->
+                        <!-- 包材费 -->
                         <div class="input-row" id="localPkgFeeItem">
                             <label>包材费 (USD)</label>
                             <div class="input-group">
@@ -715,7 +710,7 @@
 
                     <hr class="divider">
 
-                    <!-- 修改后的佣金输入区域 -->
+                    <!-- 佣金输入区域 -->
                     <div class="input-row">
                         <label>达人佣金比例 (%)</label>
                         <div class="input-group">
@@ -728,6 +723,14 @@
                         <div class="input-group">
                             <input type="number" id="platformRate" value="6" step="0.01">
                             <span class="sub-text" id="platAmountUsd">= 0.00 USD</span>
+                        </div>
+                    </div>
+                    <!-- 新增：智能营销佣金 -->
+                    <div class="input-row">
+                        <label>智能营销佣金比例 (%)</label>
+                        <div class="input-group">
+                            <input type="number" id="smartMarketingRate" value="3.5" step="0.01">
+                            <span class="sub-text" id="smartMarketingAmountUsd">= 0.00 USD</span>
                         </div>
                     </div>
                     <div class="input-row">
@@ -777,10 +780,8 @@
 
                     <div style="font-size:12px; font-weight:bold; color:#555; margin-top:10px;">📊 实时计算预览 (含运费分担)</div>
                     <table class="preview-table">
-                        <!-- 修改：在表头添加了一列 ROI -->
                         <thead><tr><th>数量</th><th>定价</th><th>券</th><th>客付运</th><th>支付</th><th>均价</th><th>利润</th><th>ROI</th></tr></thead>
                         <tbody id="previewBody">
-                            <!-- 修改：占位行各增加了一个 td 标签 -->
                             <tr id="showItem1"><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
                             <tr id="showItem2"><td>2</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
                             <tr id="showItem3"><td>3</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
@@ -789,34 +790,12 @@
                             <tr id="showItem6"><td>6</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
                         </tbody>
                     </table>
-
-                    <div class="result-bar" style="margin-top:10px;">
-                        <label>✅ 当前匹配优惠券</label>
-                        <div class="input-group">
-                            <span id="autoCouponText" class="val-blue">0.00 USD</span>
-                            <span class="sub-text" id="autoCouponRmb">≈ 0.00 RMB</span>
-                        </div>
-                    </div>
-                    <div class="result-bar">
-                        <label>✅ 客户最终支付 (USD)</label>
-                        <div class="input-group">
-                            <span id="finalPriceText" class="highlight-green">9.99 USD</span>
-                            <span class="sub-text" id="finalPriceRmb">≈ 69.93 RMB</span>
-                        </div>
-                    </div>
-                    <div class="result-bar" style="background:#fff8e8; border:1px solid #ffb300;">
-                        <label style="color:#d93025;">✅ 单品实付均价 (USD)</label>
-                        <div class="input-group">
-                            <span id="avgPrice" class="val-blue" style="color:#d93025;">9.99 USD</span>
-                            <span class="sub-text" style="color:#d93025;">≈ <span id="avgPriceRmb">69.93 RMB</span></span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
             <!-- 7. 利润大屏 -->
             <div class="card profit-dashboard bg-green" id="profitBox">
-                <div class="card-header" style="grid-column: 1/-1;">✨ 最终利润 & ROI</div>
+                <div class="card-header" style="grid-column: 1/-1; font-size: 16px;">✨ 最终利润 & ROI</div>
                 
                 <div class="p-item p-row1">
                     <span class="p-label">最终总成本(货+头+仓+邮+佣+达)</span>
@@ -830,7 +809,7 @@
                 </div>
 
                 <div class="p-item p-row2">
-                    <span class="p-label">平台扣(邮+佣+达)回款</span>
+                    <span class="p-label">平台扣(邮+佣+营+达)回款</span>
                     <div class="p-val" id="platformNetIncomeUsd" style="font-size:18px;">0.00 USD</div>
                     <div class="p-sub" id="platformNetIncomeRmb">≈ 0.00 RMB</div>
                 </div>
@@ -839,14 +818,14 @@
                     <div class="p-val" id="profitRate" style="font-size:18px;">7.41 %</div>
                 </div>
                 <div class="p-item p-row2">
-                    <span class="p-label">ROI</span>
-                    <div class="p-val" id="breakEvenRoi" style="font-size:18px;">13.50</div>
+                    <span class="p-label" style="font-size:14px;">ROI</span>
+                    <div class="p-val" id="breakEvenRoi" style="font-size:26px;">13.50</div>
                 </div>
 
                 <div class="p-item p-row3">
-                    <span class="p-label">✅ 最终利润</span>
-                    <div class="p-val" id="finalProfitUsd" style="font-size:36px;">0.74 USD</div>
-                    <div class="p-sub" id="finalProfitRmb">≈ 5.18 RMB</div>
+                    <span class="p-label" style="font-size:16px;">✅ 最终利润</span>
+                    <div class="p-val" id="finalProfitUsd" style="font-size:46px;">0.74 USD</div>
+                    <div class="p-sub" id="finalProfitRmb" style="font-size:16px;">≈ 5.18 RMB</div>
                 </div>
             </div>
         </div>
@@ -872,7 +851,7 @@
                 <span id="beTotalCost" class="val-blue">0.00</span>
             </div>
             <div class="result-bar hide">
-                <label>💵 单件回款贡献 (USD)=（平台扣(邮+佣+达)回款-仓库费用 ）</label>
+                <label>💵 单件回款贡献 (USD)=（平台扣款-仓库费用 ）</label>
                 <span id="beUnitCashFlow" class="val-blue">0.00</span>
             </div>
             <!-- END HIDDEN -->
@@ -899,7 +878,6 @@
     <details class="details-box" id="details-sample">
         <summary class="details-summary">🎁 此定价策略下-达人寄样成本测算</summary>
         <div class="details-content">
-            <!-- 增加 style="padding: 0 12px;" 以对齐下方 result-bar 的内容 -->
             <div class="input-row" style="padding: 0 12px;">
                 <label>🎁 寄样数量 (个)</label>
                 <input type="number" id="sampleNum" value="200" step="1">
@@ -915,7 +893,6 @@
                 <label style="color:#155724;">🎯 寄样总成本回本需销售 (单)</label>
                 <span id="sampleBreakEven" class="highlight-green" style="font-size:16px !important;">0</span>
             </div>
-            <!-- 增加 style="padding: 0 12px;" 以对齐 result-bar 的内容 -->
             <div style="font-size:12px; color:#999; margin-top:8px; line-height:1.4; padding: 0 12px;">
                 注：此测算回本需销售多少单量为预估，因为广告佣金低于公开佣金，自然流出单和广告出单佣金比例不一样。若广告佣金出单比例多，回本需销售的单量比公开佣金少。
             </div>
@@ -931,7 +908,7 @@
         </div>
     </details>
 
-    <!-- CBT 价卡 (新增) -->
+    <!-- CBT 价卡 -->
     <details class="details-box" id="details-cbt">
         <summary class="details-summary">🚚 CBT价卡26.5.17版</summary>
         <div class="details-content">
@@ -986,10 +963,11 @@
             <p><strong>五、平台费用与佣金</strong><br>
             • <strong>达人佣金</strong> = (客户最终支付金额 - 客户承担运费) × 佣金比例。<br>
             • <strong>平台佣金</strong> = 客户最终支付金额 × 佣金比例。<br>
+            • <strong>智能营销佣金</strong> = 客户最终支付金额 × 佣金比例。<br>
             • <strong>货损/退货</strong> = 客户最终支付金额 × 比例。</p>
 
             <p><strong>六、利润与ROI</strong><br>
-            • <strong>最终总成本</strong> = 单品采购头程成本 + 尾程物流(商家承担部分) + 仓库/FBT费 + 佣金 + 货损。<br>
+            • <strong>最终总成本</strong> = 单品采购头程成本 + 尾程物流(商家承担部分) + 仓库/FBT费 + 平台佣金 + 智能营销佣金 + 达人佣金 + 货损。<br>
             • <strong>实际收入</strong> = 客户最终支付总额 (含客户运费)。<br>
             • <strong>最终利润</strong> = 实际收入 - 最终总成本。<br>
             • <strong>ROI</strong> = 最终利润 > 0 ? (实际收入 ÷ 最终利润) : 无法保本。</p>
@@ -1002,11 +980,11 @@
             <p><strong>八、需回本销售件数测算</strong><br>
             • <strong>国内成本统计 (采购+头程+杂费）总费用</strong> = (拿货总价 + 头程总价 + 总打包费) ÷ 汇率。<br>
             • <strong>单件回款贡献 (盈利时)</strong>：
-                <br>&nbsp;&nbsp;- 本土仓：平台扣(邮+佣+达)回款 - 仓库费用
-                <br>&nbsp;&nbsp;- FBT仓：平台扣(邮+佣+达)回款<br>
+                <br>&nbsp;&nbsp;- 本土仓：平台扣(邮+佣+营+达)回款 - 仓库费用
+                <br>&nbsp;&nbsp;- FBT仓：平台扣(邮+佣+营+达)回款<br>
             • <strong>单件回款贡献 (亏损时)</strong>：
-                <br>&nbsp;&nbsp;- 本土仓：平台扣(邮+佣+达)回款 - 仓库费用 - 单个产品成本
-                <br>&nbsp;&nbsp;- FBT仓：平台扣(邮+佣+达)回款 - 单个产品成本<br>
+                <br>&nbsp;&nbsp;- 本土仓：平台扣(邮+佣+营+达)回款 - 仓库费用 - 单个产品成本
+                <br>&nbsp;&nbsp;- FBT仓：平台扣(邮+佣+营+达)回款 - 单个产品成本<br>
             • <strong>需回本销量件数(向上取整)</strong> = 总费用 ÷ 单件回款贡献。<br>
             • <strong>最终纯利润件数</strong> = 拿货个数 - 需回本销量件数。<br>
             • <strong>售完最终纯利润件数后利润</strong> = (拿货个数 × 单件回款贡献) - 总费用。<br>
@@ -1096,18 +1074,15 @@
         cbtHtml += `</tbody></table>`;
         document.getElementById('cbtTableContainer').innerHTML = cbtHtml;
 
-        // FBT 表格 - 修改为显示总费用 (单价 * 数量)
-        // 修正：最后一列标题改为 "≥ 4件总费"
+        // FBT 表格
         let fbtHtml = `<table class="rate-table"><thead><tr><th>重量(lb)</th><th>重量(g)</th><th>1件总费</th><th>2件总费</th><th>3件总费</th><th>≥ 4件总费</th></tr></thead><tbody>`;
         FBT_DATA.forEach(row => {
             const g = Math.round(row.max * 453.59237);
             fbtHtml += `<tr><td>≤ ${row.max}</td><td>≤ ${g}</td>`;
-            // 0:Qty1, 1:Qty2, 2:Qty3, 3:Qty4+
-            // 计算总价：单价 * 数量
-            fbtHtml += `<td class="rate-hl">${row.prices[0].toFixed(2)}</td>`; // 1件
-            fbtHtml += `<td class="rate-hl">${(row.prices[1] * 2).toFixed(2)}</td>`; // 2件
-            fbtHtml += `<td class="rate-hl">${(row.prices[2] * 3).toFixed(2)}</td>`; // 3件
-            fbtHtml += `<td class="rate-hl">${(row.prices[3] * 4).toFixed(2)}</td>`; // 4件
+            fbtHtml += `<td class="rate-hl">${row.prices[0].toFixed(2)}</td>`; 
+            fbtHtml += `<td class="rate-hl">${(row.prices[1] * 2).toFixed(2)}</td>`; 
+            fbtHtml += `<td class="rate-hl">${(row.prices[2] * 3).toFixed(2)}</td>`; 
+            fbtHtml += `<td class="rate-hl">${(row.prices[3] * 4).toFixed(2)}</td>`; 
             fbtHtml += `</tr>`;
         });
         fbtHtml += `</tbody></table>`;
@@ -1124,24 +1099,16 @@
 
     function getTtsFee(weightG, zoneIdx) {
         let lb = weightG / 453.59237; 
-        
-        // --- 新增：TTS 尾程体积重计费规则 ---
         const pl = getVal('prodL');
         const pw = getVal('prodW');
         const ph = getVal('prodH');
         const unitWeightG = getVal('productWeight');
         if (pl > 0 && pw > 0 && ph > 0 && unitWeightG > 0) {
-            // 根据总重量算出预估的发货件数
             const qty = Math.round(weightG / unitWeightG);
-            // 计算总件数的总体积 (立方英寸)
             const vol_in3_total = (pl / 2.54) * (pw / 2.54) * (ph / 2.54) * qty;
-            // 计算总体积重 (lbs)
             const dimLb_total = vol_in3_total / 166;
-            // 计费重量 = Max(实际总重量, 体积总重量)
             lb = Math.max(lb, dimLb_total);
         }
-        // --------------------------------
-
         let selectedRow = TTS_DATA.find(r => lb <= r.maxLb) || TTS_DATA[TTS_DATA.length - 1];
         if (zoneIdx === 'avg') return selectedRow.prices.reduce((a, b) => a + b, 0) / selectedRow.prices.length;
         return selectedRow.prices[parseInt(zoneIdx)];
@@ -1149,8 +1116,6 @@
 
     function getCbtFee(weightG, zoneIdx) {
         let lb = weightG / 453.59237; 
-        
-        // --- 新增：CBT 尾程体积重计费规则 ---
         const pl = getVal('prodL');
         const pw = getVal('prodW');
         const ph = getVal('prodH');
@@ -1161,8 +1126,6 @@
             const dimLb_total = vol_in3_total / 166;
             lb = Math.max(lb, dimLb_total);
         }
-        // --------------------------------
-
         let selectedRow = CBT_DATA.find(r => lb <= r.maxLb) || CBT_DATA[CBT_DATA.length - 1];
         if (zoneIdx === 'avg') return selectedRow.prices.reduce((a, b) => a + b, 0) / selectedRow.prices.length;
         return selectedRow.prices[parseInt(zoneIdx)];
@@ -1170,35 +1133,26 @@
 
     function getFbtUnitRate(weightG, qty) {
         let lb = weightG / 453.59237;
-        
-        // --- 核心修改：FBT 计费重规则 ---
         const pl = getVal('prodL');
         const pw = getVal('prodW');
         const ph = getVal('prodH');
         
-        // 如果输入了有效的盒规尺寸，进行体积重判断
         if (pl > 0 && pw > 0 && ph > 0) {
-            // 将 cm 转换为 inch
             const l_in = pl / 2.54;
             const w_in = pw / 2.54;
             const h_in = ph / 2.54;
             const vol_in3 = l_in * w_in * h_in;
-            
-            // 最新 FBT 规则：实重 <= 2 磅，且体积 <= 332 立方英寸，按实重算
             if (lb <= 2 && vol_in3 <= 332) {
-                // lb 保持原实重，不变化
+                // lb 保持原实重
             } else {
-                // 否则取实际重量或体积重量中的较大值
                 const dimWeightLb = vol_in3 / 166;
                 lb = Math.max(lb, dimWeightLb);
             }
         }
-        // --------------------------------
 
         let colIdx = qty >= 4 ? 3 : qty - 1;
         let row = FBT_DATA.find(r => lb <= r.max);
         if (row) return row.prices[colIdx];
-        // 超重补丁逻辑
         if (lb <= 50) return 18.00 + (Math.max(0, Math.ceil(lb - 21)) * 0.40);
         return 41.32 + (Math.max(0, Math.ceil(lb - 50)) * 0.75);
     }
@@ -1210,7 +1164,6 @@
         return getVal('postStep' + Math.ceil(count)); 
     }
 
-    // --- 自动计算出库费 (New Logic) ---
     function getWeightBasedOutboundFee(weightG) {
         const weightLb = weightG / 453.59237;
         if (weightLb <= 2) return 0.70;
@@ -1221,27 +1174,19 @@
 
     function autoCalcLocalOutFee() {
         const type = document.getElementById('storageType').value;
-        if (type !== 'local') return; // Only for local
+        if (type !== 'local') return; 
 
         const weightG = getVal('productWeight');
         const qty = parseFloat(document.getElementById('storageProductNum').value) || 1;
-        
-        // Calculate Total Weight in Grams
         const totalWeightG = weightG * qty;
-        
         const fee = getWeightBasedOutboundFee(totalWeightG);
 
-        // Set the value
         document.getElementById('localOutFee').value = fee.toFixed(2);
-        
-        // Trigger calculation to update total costs
         calculate();
     }
 
-    // Attach listeners for auto-calculation of Outbound Fee
     document.getElementById('productWeight').addEventListener('input', autoCalcLocalOutFee);
     document.getElementById('storageProductNum').addEventListener('input', () => {
-        // Also trigger packaging fee logic
         const qty = parseFloat(document.getElementById('storageProductNum').value) || 0;
         const pkgEl = document.getElementById('localPkgFee');
         if (qty === 1) {
@@ -1249,15 +1194,12 @@
         } else if (qty > 1 && qty <= 20) {
             pkgEl.value = 0.3;
         }
-        
-        // Update Add Fee (Total)
         const addFeeTotal = Math.max(0, qty - 1) * 0.3;
         document.getElementById('localAddOutFee').value = addFeeTotal.toFixed(2);
         
         autoCalcLocalOutFee();
     });
 
-    // Add event listener for the new Current Sold input
     document.getElementById('currentSoldNum').addEventListener('input', calculate);
 
     document.getElementById('storageType').addEventListener('change', function() {
@@ -1270,7 +1212,7 @@
             postTypeSelect.value = 'merchantFree';
             postTypeSelect.disabled = false;
             logisticsModeItem.classList.remove('hide'); 
-            autoCalcLocalOutFee(); // Recalculate based on current inputs when switching back
+            autoCalcLocalOutFee(); 
         } else {
             const fbtPolicyEl = document.getElementById('fbtPolicy');
             fbtPolicyEl.value = 'standard';
@@ -1302,7 +1244,6 @@
         const fbtPolicy = document.getElementById('fbtPolicy').value;
         const postTypeSelect = document.getElementById('postType');
         
-        // Ensure locks are enforced during calculation
         if (storageType === 'fbt') {
             if (fbtPolicy === 'standard') {
                 postTypeSelect.value = 'merchantFree'; 
@@ -1365,16 +1306,12 @@
             setTxt('fbtOnePriceRmb', `≈ ${formatNum(fbtTotal*rate)} RMB`);
             whFeeUSD = fbtTotal; 
         } else {
-            // Local Warehouse Logic
             const pkgFee = getVal('localPkgFee');
             setTxt('localPkgFeeRmb', `≈ ${formatNum(pkgFee*rate)} RMB`);
-            
             setTxt('localOutFeeRmb', `≈ ${formatNum(getVal('localOutFee')*rate)} RMB`);
             setTxt('localAddOutFeeRmb', `≈ ${formatNum(getVal('localAddOutFee')*rate)} RMB`);
-
             whFeeUSD = getVal('localOutFee') + getVal('localAddOutFee') + pkgFee;
             
-            // TTS vs CBT Logic
             if (logisticsMode === 'cbt') {
                 document.getElementById('ttsZoneItem').classList.add('hide');
                 document.getElementById('cbtZoneItem').classList.remove('hide');
@@ -1413,7 +1350,7 @@
         let merchPost = 0, custPost = 0, fbtReimburse = 0;
         let forcedPost = false;
         
-        const salePrice = getVal('salePrice'); setTxt('salePriceRmb', `≈ ${formatNum(salePrice*rate)} RMB`);
+        const salePrice = getVal('salePrice'); 
         const couponVal = getCouponValue(saleQty);
         const orderVal = (salePrice * saleQty) - couponVal;
 
@@ -1443,23 +1380,23 @@
         setTxt('fbtReimburse', `${formatNum(fbtReimburse)} USD`);
         
         const revenue = orderVal + displayCust;
-        setTxt('finalPriceText', `${formatNum(revenue)} USD`); setTxt('finalPriceRmb', `≈ ${formatNum(revenue*rate)} RMB`);
-        setTxt('avgPrice', `${formatNum(revenue/saleQty)} USD`); setTxt('avgPriceRmb', formatNum((revenue/saleQty)*rate));
 
         // 达人佣金计算逻辑更新：基于 (最终支付 - 运费)
         const affiliateBase = Math.max(0, revenue - displayCust);
         const comm = affiliateBase * (getVal('commissionRate')/100);
         
-        // 平台佣金和货损 依然基于总Revenue (含运费)
+        // 平台佣金和智能营销佣金 依然基于总Revenue (含运费)
         const plat = revenue * (getVal('platformRate')/100);
+        const smartMkt = revenue * (getVal('smartMarketingRate')/100);
         const dmg = revenue * (getVal('damageRate')/100);
 
         // 更新佣金显示的金额
         setTxt('commAmountUsd', `= ${formatNum(comm)} USD`);
         setTxt('platAmountUsd', `= ${formatNum(plat)} USD`);
+        setTxt('smartMarketingAmountUsd', `= ${formatNum(smartMkt)} USD`);
         setTxt('dmgAmountUsd', `= ${formatNum(dmg)} USD`);
 
-        const totalFee = comm + plat + dmg;
+        const totalFee = comm + plat + smartMkt + dmg;
         setTxt('totalCostUsd', `${formatNum(totalFee)} USD`); setTxt('totalCostRmb', `${formatNum(totalFee*rate)} RMB`);
 
         // 预览表格循环计算
@@ -1475,7 +1412,6 @@
                 } else if(postType === 'customerAll') {
                     if(isFbt) cPost = getFbtUnitRate(getVal('productWeight'), i) * i;
                     else {
-                        // Check logistics mode for table calc
                         if (logisticsMode === 'cbt') {
                             cPost = getCbtFee(getVal('productWeight') * i, document.getElementById('cbtZone').value);
                         } else {
@@ -1495,48 +1431,37 @@
                 let sub = (isFbt && fbtPolicy === 'optOut' && valBefore < 30) ? (0.75 * i) : 0;
                 costFull_i = ft - sub;
             } else {
-                // FIXED LOGIC: Calculate baseOutFee based on Total Weight for THIS quantity (i)
                 let totalWeightG_i = getVal('productWeight') * i;
                 let wh_base = getWeightBasedOutboundFee(totalWeightG_i);
-                
-                // Add Item Fee (Total) = (qty-1)*0.3
                 let wh_add = Math.max(0, i - 1) * 0.3;
-                
-                // Packaging Fee Logic for Preview (Consistent with main logic)
                 let pkg = 0;
                 if(i > 1 && i <= 20) pkg = 0.3;
                 
-                // Last Mile
                 let lm = 0;
                 if(logisticsMode === 'cbt') {
                     lm = getCbtFee(totalWeightG_i, document.getElementById('cbtZone').value);
                 } else {
                     lm = getTtsFee(totalWeightG_i, document.getElementById('ttsZone').value);
                 }
-                
                 costFull_i = wh_base + wh_add + pkg + lm;
             }
             
-            // 预览表内部的佣金计算也需要同步更新逻辑
             let commBase_i = Math.max(0, finalP - cPost);
             let comm_i = commBase_i * (getVal('commissionRate')/100);
             let plat_i = finalP * (getVal('platformRate')/100);
+            let smartMkt_i = finalP * (getVal('smartMarketingRate')/100);
             let dmg_i = finalP * (getVal('damageRate')/100);
-            let fees_i = comm_i + plat_i + dmg_i;
+            let fees_i = comm_i + plat_i + smartMkt_i + dmg_i;
 
             let profit_i = finalP - costProd_i - costFull_i - fees_i;
             let profitClass = profit_i > 0 ? 'prof-pos' : 'prof-neg';
             
-            // 修改：增加 ROI 的动态计算判断
             let roi_i = profit_i > 0 ? formatNum(finalP / profit_i) : '-';
 
             document.getElementById('showItem'+i).innerHTML = 
                 `<td>${i}</td><td>${formatNum(totP)}</td><td>${formatNum(cp)}</td><td>${formatNum(cPost)}</td><td>${formatNum(finalP)}</td><td class="hl-val">${formatNum(avg)}</td><td class="${profitClass}">${formatNum(profit_i)}</td><td>${roi_i}</td>`;
         }
 
-        setTxt('autoCouponText', `${formatNum(couponVal)} USD (买${saleQty})`);
-        setTxt('autoCouponRmb', `≈ ${formatNum(couponVal*rate)} RMB`);
-        
         const costProd = unitCostUSD * saleQty;
         let costFull = 0;
         if(isFbt) costFull = whFeeUSD - fbtReimburse; 
@@ -1549,8 +1474,8 @@
         setTxt('finalAllCostUsd', `${formatNum(finalCost)} USD`); setTxt('finalAllCostRmb', `≈ ${formatNum(finalCost*rate)} RMB`);
         setTxt('actualIncomeUsd', `${formatNum(revenue)} USD`); setTxt('actualIncomeRmb', `≈ ${formatNum(revenue*rate)} RMB`);
         
-        // 逻辑修正：扣除 Affiliate Commission
-        let platNet = isFbt ? (revenue - whFeeUSD - plat - comm) : (revenue - lastMileUSD - plat - comm);
+        // 扣除平台佣金、智能营销佣金和达人佣金
+        let platNet = isFbt ? (revenue - whFeeUSD - plat - smartMkt - comm) : (revenue - lastMileUSD - plat - smartMkt - comm);
         setTxt('platformNetIncomeUsd', `${formatNum(platNet)} USD`); setTxt('platformNetIncomeRmb', `≈ ${formatNum(platNet*rate)} RMB`);
 
         setTxt('finalProfitUsd', `${formatNum(profit)} USD`); setTxt('finalProfitRmb', `≈ ${formatNum(profit*rate)} RMB`);
@@ -1572,22 +1497,15 @@
         if(isFbt) {
             sampleFulfillmentCost = whFeeUSD; 
         } else {
-            // Local warehouse sample fulfillment:
-            // Single unit dispatch cost logic
             const singlePkgFee = 0; 
             const weightG = getVal('productWeight');
-            
-            // Base Outbound Fee for single unit weight
             const singleWhOut = getWeightBasedOutboundFee(weightG);
-            
-            // Last Mile for single piece
             let singleLastMile = 0;
             if(logisticsMode === 'cbt') {
                 singleLastMile = getCbtFee(weightG, document.getElementById('cbtZone').value);
             } else {
                 singleLastMile = getTtsFee(weightG, document.getElementById('ttsZone').value);
             }
-            
             sampleFulfillmentCost = singleWhOut + singlePkgFee + singleLastMile;
         }
         
@@ -1597,7 +1515,6 @@
         setTxt('sampleCostUsd', `${formatNum(totalSampleCost)} USD`);
         setTxt('sampleCostRmb', `≈ ${formatNum(totalSampleCost * rate)} RMB`);
 
-        // 回本单量计算 (Samples)
         let sampleBreakEvenSales = 0;
         if(profit > 0) {
             sampleBreakEvenSales = Math.ceil(totalSampleCost / profit); 
@@ -1607,42 +1524,30 @@
         setTxt('sampleBreakEven', sampleBreakEvenSales);
 
         // --- 需回本销售件数测算逻辑 (Breakeven Sales) ---
-        // 1. Total Sunk Cost = Procurement Cost / Rate
         const totalSunkCostUSD = allTotal / rate;
         setTxt('beTotalCost', formatNum(totalSunkCostUSD));
 
-        // 2. Cash Flow Per Unit (Contribution Margin)
-        // LOGIC UPDATED as per request:
         let cashFlowPerUnit = 0;
-        
         if (profit > 0) {
-            // 盈利时:
             if (isFbt) {
-                 // FBT: platNet already deducts whFeeUSD. So Contribution = platNet
                  cashFlowPerUnit = platNet; 
             } else {
-                 // Local: platNet only deducts shipping. We deduct warehouse fees (out+pkg).
                  cashFlowPerUnit = platNet - whFeeUSD;
             }
         } else {
-            // 亏损时:
             if (isFbt) {
-                 // FBT: platNet - unitCostUSD
                  cashFlowPerUnit = platNet - unitCostUSD;
             } else {
-                 // Local: platNet - warehouse - unitCostUSD
                  cashFlowPerUnit = platNet - whFeeUSD - unitCostUSD;
             }
         }
         
         setTxt('beUnitCashFlow', formatNum(cashFlowPerUnit));
 
-        // 3. Break-even Sales Qty
         let beQty = 0;
         if (cashFlowPerUnit > 0) {
             beQty = Math.ceil(totalSunkCostUSD / cashFlowPerUnit);
         } else {
-            // If contribution is negative or zero, you can never break even on sunk costs plus variable loss
             if(profit <= 0 && cashFlowPerUnit <= 0) {
                  beQty = "无法回本 (单品负贡献)";
             } else if (profit <= 0) {
@@ -1656,7 +1561,6 @@
         }
         setTxt('beQty', beQty);
 
-        // 4. Net Profit Units
         let netUnits = 0;
         if (typeof beQty === 'number') {
             netUnits = Math.max(0, getVal('buyNum') - beQty);
@@ -1665,8 +1569,6 @@
         }
         setTxt('beNetUnits', netUnits);
 
-        // 5. Total Profit after Break-even
-        // Uses ROUNDED contribution to match user expectation from visual inspection
         let contributionRounded = parseFloat(cashFlowPerUnit.toFixed(2));
         let beTotalProfit = (getVal('buyNum') * contributionRounded) - totalSunkCostUSD;
         
@@ -1682,7 +1584,6 @@
             beTotalProfitEl.classList.add('prof-neg');
         }
 
-        // 6. Current Net Profit/Loss (New)
         const currentSold = parseFloat(document.getElementById('currentSoldNum').value) || 0;
         const currentProfit = (currentSold * contributionRounded) - totalSunkCostUSD;
         const cpEl = document.getElementById('currentNetProfit');
@@ -1695,43 +1596,36 @@
             cpEl.style.fontWeight = 'bold';
         }
 
-
         // --- 全局红色警示逻辑 ---
         const normalCards =['card-base', 'card-ship', 'card-summary', 'card-warehouse', 'card-fees', 'card-pricing'];
         const redDetails =['details-competitor', 'details-breakeven', 'details-sample', 'details-tts', 'details-cbt', 'details-fbt', 'details-logic'];
         
-        // 普通卡片变红 (细边框)
         normalCards.forEach(id => {
             const el = document.getElementById(id);
             if(profit <= 0) el.classList.add('card-danger');
             else el.classList.remove('card-danger');
         });
 
-        // 折叠面板变红
         redDetails.forEach(id => {
             const el = document.getElementById(id);
             if(profit <= 0) el.classList.add('details-danger');
             else el.classList.remove('details-danger');
         });
 
-        // 头部标题变红
         const headerEl = document.getElementById('mainHeader');
         if(profit <= 0) headerEl.classList.add('header-danger');
         else headerEl.classList.remove('header-danger');
     }
 
-    // 记录初始数据
     function saveToDefaults() {
         document.querySelectorAll('input, select').forEach(el => {
             appDefaults[el.id] = el.value;
         });
     }
 
-    // 初始化运行
-    renderRateTables(); // 渲染表格
-    saveToDefaults(); // 页面加载时先保存一次HTML中的默认值
+    renderRateTables(); 
+    saveToDefaults(); 
     
-    // 保存初始数据按钮逻辑
     document.getElementById('saveInitBtn').addEventListener('click', () => {
         if(confirm('确定将当前页面的所有输入值保存为“初始数据”吗？\n点击“重置数据”按钮将恢复到此状态。')) {
             saveToDefaults();
@@ -1739,20 +1633,16 @@
         }
     });
 
-    // 重置按钮逻辑
     document.getElementById('resetBtn').addEventListener('click', () => {
-        // 从 appDefaults 恢复
         for (const[id, val] of Object.entries(appDefaults)) {
             const el = document.getElementById(id);
             if(el) el.value = val;
         }
 
-        // 特殊联动逻辑处理
         const storageType = document.getElementById('storageType').value;
         const fbtPolicy = document.getElementById('fbtPolicy').value;
         const postTypeSelect = document.getElementById('postType');
         
-        // 重置后重新触发锁定逻辑
         if (storageType === 'fbt') {
             document.getElementById('logisticsModeItem').classList.add('hide');
             if (fbtPolicy === 'standard') {
