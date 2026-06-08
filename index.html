@@ -346,7 +346,7 @@
 
 <div class="container">
     <div class="header" id="mainHeader">
-        <h1>TikTok Shop美国站利润计算表26.5.17版</h1>
+        <h1>TikTok Shop美国站利润计算表26.6.18版</h1>
     </div>
 
     <!-- 竞对链接参考 (新增板块) -->
@@ -917,7 +917,7 @@
 
     <!-- TTS 价卡 -->
     <details class="details-box" id="details-tts">
-        <summary class="details-summary">🚚 TTS价卡26.5.17版</summary>
+        <summary class="details-summary">🚚 TTS价卡26.6.18版</summary>
         <div class="details-content">
             <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。以下展示Zone 1-8及全区平均价。重量向上取整匹配。</div>
             <div id="ttsTableContainer"></div>
@@ -926,7 +926,7 @@
 
     <!-- CBT 价卡 -->
     <details class="details-box" id="details-cbt">
-        <summary class="details-summary">🚚 CBT价卡26.5.17版</summary>
+        <summary class="details-summary">🚚 CBT价卡26.6.18版</summary>
         <div class="details-content">
             <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。以下展示Zone 1-8及全区平均价。重量向上取整匹配。</div>
             <div id="cbtTableContainer"></div>
@@ -935,7 +935,7 @@
 
     <!-- FBT 价卡 -->
     <details class="details-box" id="details-fbt">
-        <summary class="details-summary">🚚 FBT价卡26.5.17版</summary>
+        <summary class="details-summary">🚚 FBT价卡26.6.18版</summary>
         <div class="details-content">
             <div style="margin-bottom:10px; font-size:12px; color:#666;">单位：USD。<b>显示金额为对应数量的总配送费（单价×数量）</b>，直观展示多件成本。</div>
             <div id="fbtTableContainer"></div>
@@ -969,7 +969,7 @@
             </p>
 
             <p><strong>四、FBT特殊政策规则</strong><br>
-            • <strong>体积重新规</strong>：如果一件商品的实际重量≤2磅，且其体积≤332立方英寸，则仅根据实重计算；超过任一阈值，则取Max(实重，体积重)。体积重=长×宽×高÷166(英寸)。<br>
+            • <strong>体积重新规</strong>：如果一件商品的实际重量≤2磅，且其体积≤332立方英寸，则仅根据实重计算；超过任一阈值，则取Max(实重，体积重)。体积重=长×宽×高(inch)÷166(英寸)<br>
             • <strong>默认标准(Standard)</strong>：强制商家包邮，商家承担所有FBT费用。<br>
             • <strong>退出政策(Opt-Out)</strong>：
                 <br>&nbsp;&nbsp;- 订单金额(扣券后) ≥ $30：商家包邮。
@@ -1017,7 +1017,7 @@
 </div>
 
 <script>
-    // 恢复为完整的 Zone 1 ~ Zone 8 价卡数据
+    // 定义价卡数据供计算和展示使用 (恢复至Zone 1-8完整版)
     const TTS_DATA =[
         { maxLb: 0.25, prices:[3.43, 3.46, 3.49, 3.56, 3.63, 3.71, 3.78, 3.86] }, 
         { maxLb: 0.50, prices:[3.80, 3.85, 3.90, 3.95, 4.00, 4.05, 4.10, 4.15] }, 
@@ -1047,18 +1047,59 @@
     ];
 
     const FBT_DATA =[
-        { max: 0.25, prices:[4.28, 2.52, 1.91, 1.56] }, { max: 0.50, prices:[4.52, 2.91, 2.36, 1.93] }, 
-        { max: 0.75, prices:[4.70, 3.05, 2.61, 2.23] }, { max: 1.00, prices:[5.10, 3.16, 2.78, 2.36] }, 
-        { max: 2.00, prices:[5.71, 3.92, 3.14, 2.60] }, { max: 3.00, prices:[6.27, 4.30, 3.25, 3.01] }, 
-        { max: 4.00, prices:[6.92, 4.70, 3.91, 3.37] }, { max: 5.00, prices:[7.66, 5.09, 4.54, 4.54] }, 
-        { max: 6.00, prices:[8.58, 5.55, 5.35, 5.25] }, { max: 7.00, prices:[8.88, 5.90, 5.70, 5.60] }, 
-        { max: 8.00, prices:[9.22, 6.39, 6.09, 6.19] }, { max: 9.00, prices:[9.42, 6.57, 6.37, 6.27] }, 
-        { max: 10.00, prices:[9.63, 6.76, 6.56, 6.46] }, { max: 11.00, prices:[10.64, 7.58, 7.38, 7.28] }, 
-        { max: 12.00, prices:[10.75, 7.97, 7.77, 7.67] }, { max: 13.00, prices:[10.98, 8.07, 7.87, 7.77] }, 
-        { max: 14.00, prices:[11.44, 8.41, 8.21, 8.11] }, { max: 15.00, prices:[11.85, 8.78, 8.58, 8.48] }, 
-        { max: 16.00, prices:[12.67, 9.53, 9.33, 9.23] }, { max: 17.00, prices:[12.97, 10.70, 10.50, 10.40] }, 
-        { max: 18.00, prices:[13.34, 11.12, 10.92, 10.82] }, { max: 19.00, prices:[13.84, 11.69, 11.49, 11.39] }, 
-        { max: 20.00, prices:[14.11, 12.00, 11.80, 11.70] }
+        { max: 0.25, prices:[4.28, 2.52, 1.91, 1.56] }, 
+        { max: 0.50, prices:[4.52, 2.91, 2.36, 1.93] }, 
+        { max: 0.75, prices:[4.70, 3.05, 2.61, 2.23] }, 
+        { max: 1.00, prices:[5.10, 3.16, 2.78, 2.36] }, 
+        { max: 2.00, prices:[5.71, 3.92, 3.14, 2.60] }, 
+        { max: 3.00, prices:[6.27, 4.30, 3.25, 2.76] }, 
+        { max: 4.00, prices:[6.92, 4.70, 3.55, 3.12] }, 
+        { max: 5.00, prices:[7.66, 5.09, 4.54, 4.54] }, 
+        { max: 6.00, prices:[8.58, 6.19, 5.46, 5.46] }, 
+        { max: 7.00, prices:[8.88, 6.50, 6.14, 6.08] }, 
+        { max: 8.00, prices:[9.22, 6.90, 6.70, 6.50] }, 
+        { max: 9.00, prices:[9.42, 7.00, 6.77, 6.59] }, 
+        { max: 10.00, prices:[9.63, 7.46, 7.30, 7.30] }, 
+        { max: 11.00, prices:[10.64, 8.30, 8.10, 8.10] }, 
+        { max: 12.00, prices:[10.75, 9.20, 9.00, 9.00] }, 
+        { max: 13.00, prices:[10.98, 10.04, 10.04, 10.04] }, 
+        { max: 14.00, prices:[11.44, 10.42, 10.42, 10.42] }, 
+        { max: 15.00, prices:[11.85, 10.80, 10.80, 10.80] }, 
+        { max: 16.00, prices:[12.67, 12.67, 12.67, 12.67] }, 
+        { max: 17.00, prices:[12.90, 12.90, 12.90, 12.90] }, 
+        { max: 18.00, prices:[13.25, 13.25, 13.25, 13.25] }, 
+        { max: 19.00, prices:[13.51, 13.51, 13.51, 13.51] }, 
+        { max: 20.00, prices:[13.80, 13.80, 13.80, 13.80] },
+        { max: 21.00, prices:[14.52, 14.52, 14.52, 14.52] },
+        { max: 22.00, prices:[14.86, 14.86, 14.86, 14.86] },
+        { max: 23.00, prices:[15.13, 15.13, 15.13, 15.13] },
+        { max: 24.00, prices:[15.67, 15.67, 15.67, 15.67] },
+        { max: 25.00, prices:[15.90, 15.90, 15.90, 15.90] },
+        { max: 26.00, prices:[16.38, 16.38, 16.38, 16.38] },
+        { max: 27.00, prices:[16.63, 16.63, 16.63, 16.63] },
+        { max: 28.00, prices:[17.25, 17.25, 17.25, 17.25] },
+        { max: 29.00, prices:[17.45, 17.45, 17.45, 17.45] },
+        { max: 30.00, prices:[17.88, 17.88, 17.88, 17.88] },
+        { max: 31.00, prices:[18.46, 18.46, 18.46, 18.46] },
+        { max: 32.00, prices:[18.51, 18.51, 18.51, 18.51] },
+        { max: 33.00, prices:[19.05, 19.05, 19.05, 19.05] },
+        { max: 34.00, prices:[19.47, 19.47, 19.47, 19.47] },
+        { max: 35.00, prices:[19.86, 19.86, 19.86, 19.86] },
+        { max: 36.00, prices:[20.30, 20.30, 20.30, 20.30] },
+        { max: 37.00, prices:[20.56, 20.56, 20.56, 20.56] },
+        { max: 38.00, prices:[20.89, 20.89, 20.89, 20.89] },
+        { max: 39.00, prices:[21.48, 21.48, 21.48, 21.48] },
+        { max: 40.00, prices:[21.51, 21.51, 21.51, 21.51] },
+        { max: 41.00, prices:[22.10, 22.10, 22.10, 22.10] },
+        { max: 42.00, prices:[22.30, 22.30, 22.30, 22.30] },
+        { max: 43.00, prices:[22.90, 22.90, 22.90, 22.90] },
+        { max: 44.00, prices:[23.21, 23.21, 23.21, 23.21] },
+        { max: 45.00, prices:[23.30, 23.30, 23.30, 23.30] },
+        { max: 46.00, prices:[23.77, 23.77, 23.77, 23.77] },
+        { max: 47.00, prices:[24.04, 24.04, 24.04, 24.04] },
+        { max: 48.00, prices:[24.38, 24.38, 24.38, 24.38] },
+        { max: 49.00, prices:[24.50, 24.50, 24.50, 24.50] },
+        { max: 50.00, prices:[24.52, 24.52, 24.52, 24.52] }
     ];
 
     // 初始化默认数据存储
@@ -1229,7 +1270,8 @@
         let colIdx = qty >= 4 ? 3 : qty - 1;
         let row = FBT_DATA.find(r => lb <= r.max);
         if (row) return row.prices[colIdx];
-        if (lb <= 50) return 18.00 + (Math.max(0, Math.ceil(lb - 21)) * 0.40);
+        
+        // 当重量大于 50lb 时的特殊处理规则：
         return 41.32 + (Math.max(0, Math.ceil(lb - 50)) * 0.75);
     }
 
